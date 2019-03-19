@@ -1,0 +1,63 @@
+<resources>
+    <string name="app_name">MealPlus</string>
+    <string name="edit_message">Enter a message</string>
+    <string name="button_send">Send</string>
+    <string name="log_in_button">Log-In</string>
+    <string name="register_button">Register</string>
+    <string name="todo">TODO</string>
+    <string name="mealPlusLogoDescription">meal_plus_logo</string>
+    <string name="pathBarRegistrationText"><![CDATA[Registration]]></string>
+    <string name="pathBarAdviserRegistrationText"><![CDATA[Registration < Adviser]]></string>
+    <string name="foreNameFieldText">Forename*</string>
+    <string name="surnameFieldText">Surname*</string>
+    <string name="emailFieldText">Email Address*</string>
+    <string name="confirmEmailFieldText">Confirm Email Address*</string>
+    <string name="passwordFieldText">Password*</string>
+    <string name="confirmPasswordFieldText">Confirm Password*</string>
+    <string name="mandatoryText">* Field is mandatory</string>
+
+    <string name="registrationNumberFieldText">Registration Number*</string>
+    <string name="occupationFieldText">Occupation*</string>
+    <string name="Address1FieldText">Address 1*</string>
+    <string name="Address2FieldText">Address 2</string>
+    <string name="postcodeFieldText">Post Code*</string>
+    <string name="phoneNumberFieldText">Phone Number*</string>
+    <string name="registerButtonText">Register</string>
+    <string name="RegistrationSuccesText">You are now registered</string>
+    <string name="loginNavBar">Log-In</string>
+    <string name="emailText">Email address</string>
+    <string name="passwordText">Password</string>
+    <string name="registrationSuccesNavBar"><![CDATA[Registration > Customer > Succes]]></string>
+    <string name="mainPageNavBar">Main</string>
+    <string name="customerRegistrationNavBar2"><![CDATA[Registration < Customer < Fitness Data]]></string>
+    <string name="ageField">Age</string>
+    <string name="sizeField">Size (m)</string>
+    <string name="weightField">Weight (kg)</string>
+    <string name="activityLevel">Activity level</string>
+    <string name="seekBarLow">Low</string>
+    <string name="seekBarMedium">Medium</string>
+    <string name="seekBarHigh">High</string>
+    <string name="goalText">Goal</string>
+    <string name="weighGoalText">Goal</string>
+    <string name="weightGoalLoss">Loss</string>
+    <string name="weighGoalMaintenance">Maintenance</string>
+    <string name="weightGoalGain">Gain</string>
+    <string name="changeText">Fitness data can be changed from settings menu</string>
+
+    <string-array name="title">
+        <item>Mx</item>
+        <item>Mrs</item>
+        <item>Ms</item>
+        <item>Mr</item>
+    </string-array>
+    <string name="title_activity_register_adviser_last">RegisterAdviserLast</string>
+    <string name="adviserLastNavBar"><![CDATA[Registration < Adviser < Finish]]></string>
+    <string name="thankYouText">Thank you for using MealPlus!</string>
+    <string name="processingApplicationText">We are now processing you application as an Adviser and will be in touch with you shortly!</string>
+    <string name="confirmButtonText">Confirm</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="adviser">Adviser</string>
+    <string name="customer">Customer</string>
+    <string name="account_type">Account Type</string>
+</resources>

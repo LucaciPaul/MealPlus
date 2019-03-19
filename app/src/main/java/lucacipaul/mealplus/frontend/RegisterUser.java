@@ -1,0 +1,124 @@
+package lucacipaul.mealplus.frontend;
+
+import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.Switch;
+import android.widget.Toast;
+
+import lucacipaul.mealplus.backend.Adviser;
+import lucacipaul.mealplus.backend.Customer;
+import lucacipaul.mealplus.backend.Title;
+
+public class RegisterUser extends AppCompatActivity implements OnItemSelectedListener {
+
+    public static final String EXTRA_CUSTOMER = "lucacipaul.mealplus.frontend.LoginActivity.Customer.EXTRA_CUSTOMER";
+    public static final String EXTRA_ADVISER = "lucacipaul.mealplus.frontend.LoginActivity.Adviser.EXTRA_ADVISER";
+
+    String[] titles={"Title", "Mx", "Mrs", "Ms", "Mr"};
+
+    private int titleSpinPos = 0;
+
+    EditText firstName, lastName, email, cemail, pwd, cpwd;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.register_user_activity);
+
+        Spinner titleSpin = (Spinner)findViewById(R.id.titleSpinner);
+        titleSpin.setOnItemSelectedListener(this);
+
+        ArrayAdapter titleAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, titles);
+        titleAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        titleSpin.setAdapter(titleAdapter);
+
+        firstName = (EditText)findViewById(R.id.firstnameField);
+        lastName = (EditText)findViewById(R.id.surnameField);
+        email = (EditText)findViewById(R.id.emailField);
+        cemail = (EditText)findViewById(R.id.confirmEmailField);
+        pwd = (EditText)findViewById(R.id.passwordField);
+        cpwd = (EditText)findViewById(R.id.confirmPasswordField);
+    }
+
+    //Performing action onItemSelected and onNothing selected
+    @Override
+    public void onItemSelected(AdapterView<?> spinner, View arg1, int position, long id) {
+        switch(spinner.getId()) {
+            case R.id.titleSpinner:
+                titleSpinPos = position;
+                Toast.makeText(getApplicationContext(), titles[position], Toast.LENGTH_LONG).show();
+                break;
+        }
+    }
+    @Override
+    public void onNothingSelected(AdapterView<?> arg0) { }
+
+    public void confirmButtonClicked(View view){
+
+        if(!sanityCheckUser()) return;
+
+        Switch s = findViewById(R.id.accountSwitch);
+        if (s.isChecked()){
+            Intent intent = new Intent(this, RegisterCustomer.class);
+
+            Adviser adviser = new Adviser();
+            adviser.setTitle(Title.values()[titleSpinPos]);
+            adviser.setFirstName(firstName.getText().toString());
+            adviser.setLastName(lastName.getText().toString());
+            adviser.setEmail(email.getText().toString());
+            adviser.setPwd(pwd.getText().toString());
+
+            intent.putExtra(EXTRA_ADVISER, adviser);
+            startActivity(intent);
+        } else {
+            Intent intent = new Intent(this, RegisterCustomer.class);
+
+            Customer customer = new Customer();
+            customer.setTitle(Title.values()[titleSpinPos]);
+            customer.setFirstName(firstName.getText().toString());
+            customer.setLastName(lastName.getText().toString());
+            customer.setEmail(email.getText().toString());
+            customer.setPwd(pwd.getText().toString());
+
+            intent.putExtra(EXTRA_CUSTOMER, customer);
+            startActivity(intent);
+        }
+    }
+
+    private boolean sanityCheckUser() {
+
+        if(titleSpinPos == 0 ||
+                firstName.getText().toString().isEmpty() ||
+                lastName.getText().toString().isEmpty() ||
+                email.getText().toString().isEmpty() ||
+                pwd.getText().toString().isEmpty() )
+        {
+            Toast.makeText(getApplicationContext(), "Fill in mandatory fields empty!", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        if(cemail.getText().toString().equalsIgnoreCase(email.getText().toString()))
+        {
+            Toast.makeText(getApplicationContext(), "Please confirm your e-mail!", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        if(cpwd.getText().toString().equalsIgnoreCase(cpwd.getText().toString()))
+        {
+            Toast.makeText(getApplicationContext(), "Please confirm your password!", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+
+        return true;
+    }
+
+}
