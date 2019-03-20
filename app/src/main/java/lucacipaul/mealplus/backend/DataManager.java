@@ -231,8 +231,6 @@ public class DataManager {
 		// Sanity checks to make sure the email
 		// does not exist.
 		ArrayList<User> users = searchAccount(user.getEmail());
-		for(User u:users)
-			System.out.println(u.getEmail());
 		if(!users.isEmpty()) {
 			return false;
 		}

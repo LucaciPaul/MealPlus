@@ -6,6 +6,12 @@ public class DietLogEntry {
 	private Food food;
 	private float quantity;
 
+	public DietLogEntry() {}
+	public DietLogEntry(Items item) {
+		if(item instanceof Recipe) recipe = (Recipe)item;
+		else if(item instanceof Food) food = (Food)item;
+	}
+
 	public Food getFood() {
 		return this.food;
 	}
