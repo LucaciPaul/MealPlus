@@ -2,7 +2,7 @@ package lucacipaul.mealplus.backend;
 
 import java.util.Date;
 
-public class User {
+public class User{
 
 	private Title title;
 	private String firstName;

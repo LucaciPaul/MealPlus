@@ -29,14 +29,25 @@ public class Customer extends User implements Parcelable {
 	public Customer() {}
 
 	protected Customer(Parcel in) {
-		age = in.readInt();
-		size = in.readFloat();
-		weight = in.readFloat();
-		pendingRequest = in.readByte() != 0;
+
+        setFirstName(in.readString());
+        setLastName(in.readString());
+        setEmail(in.readString());
+        setPwd(in.readString());
+        setRegistrationDate((Date) in.readSerializable());
+        setTitle((Title) in.readSerializable());
+        age = in.readInt();
+        size = in.readFloat();
+        weight = in.readFloat();
+        goal = (Goal) in.readSerializable();
+        activityLevel = (ActivityLevel) in.readSerializable();
+        gender = (Gender) in.readSerializable();
+
+		/*pendingRequest = in.readByte() != 0;
 		carbsPerDay = in.readFloat();
 		proteinsPerDay = in.readFloat();
 		fatsPerDay = in.readFloat();
-		caloriesPerDay = in.readFloat();
+		caloriesPerDay = in.readFloat();*/
 	}
 
 	public static final Creator<Customer> CREATOR = new Creator<Customer>() {
@@ -58,14 +69,25 @@ public class Customer extends User implements Parcelable {
 
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
-		dest.writeInt(age);
-		dest.writeFloat(size);
-		dest.writeFloat(weight);
-		dest.writeByte((byte) (pendingRequest ? 1 : 0));
+
+        dest.writeString(getFirstName());
+        dest.writeString(getLastName());
+        dest.writeString(getEmail());
+        dest.writeString(getPwd());
+        dest.writeSerializable(getRegistrationDate());
+        dest.writeSerializable(getTitle());
+        dest.writeInt(age);
+        dest.writeFloat(size);
+        dest.writeFloat(weight);
+        dest.writeSerializable(goal);
+        dest.writeSerializable(activityLevel);
+        dest.writeSerializable(gender);
+
+		/*dest.writeByte((byte) (pendingRequest ? 1 : 0));
 		dest.writeFloat(carbsPerDay);
 		dest.writeFloat(proteinsPerDay);
 		dest.writeFloat(fatsPerDay);
-		dest.writeFloat(caloriesPerDay);
+		dest.writeFloat(caloriesPerDay);*/
 	}
 
 	public int getAge() {

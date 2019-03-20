@@ -12,16 +12,18 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import java.util.Date;
+
 import lucacipaul.mealplus.backend.Adviser;
 import lucacipaul.mealplus.backend.Customer;
 import lucacipaul.mealplus.backend.Title;
 
 public class RegisterUser extends AppCompatActivity implements OnItemSelectedListener {
 
-    public static final String EXTRA_CUSTOMER = "lucacipaul.mealplus.frontend.LoginActivity.Customer.EXTRA_CUSTOMER";
-    public static final String EXTRA_ADVISER = "lucacipaul.mealplus.frontend.LoginActivity.Adviser.EXTRA_ADVISER";
+    public static final String EXTRA_CUSTOMER = "lucacipaul.mealplus.frontend.RegisterUser.EXTRA_CUSTOMER";
+    public static final String EXTRA_ADVISER = "lucacipaul.mealplus.frontend.RegisterUser.EXTRA_ADVISER";
 
-    String[] titles={"Title", "Mx", "Mrs", "Ms", "Mr"};
+    String[] titles={"Mx", "Mrs", "Ms", "Mr"};
 
     private int titleSpinPos = 0;
 
@@ -40,7 +42,7 @@ public class RegisterUser extends AppCompatActivity implements OnItemSelectedLis
 
         titleSpin.setAdapter(titleAdapter);
 
-        firstName = (EditText)findViewById(R.id.firstnameField);
+        firstName = (EditText)findViewById(R.id.forenameField);
         lastName = (EditText)findViewById(R.id.surnameField);
         email = (EditText)findViewById(R.id.emailField);
         cemail = (EditText)findViewById(R.id.confirmEmailField);
@@ -75,6 +77,7 @@ public class RegisterUser extends AppCompatActivity implements OnItemSelectedLis
             adviser.setLastName(lastName.getText().toString());
             adviser.setEmail(email.getText().toString());
             adviser.setPwd(pwd.getText().toString());
+            adviser.setRegistrationDate(new Date());
 
             intent.putExtra(EXTRA_ADVISER, adviser);
             startActivity(intent);
@@ -87,6 +90,7 @@ public class RegisterUser extends AppCompatActivity implements OnItemSelectedLis
             customer.setLastName(lastName.getText().toString());
             customer.setEmail(email.getText().toString());
             customer.setPwd(pwd.getText().toString());
+            customer.setRegistrationDate(new Date());
 
             intent.putExtra(EXTRA_CUSTOMER, customer);
             startActivity(intent);
@@ -95,8 +99,7 @@ public class RegisterUser extends AppCompatActivity implements OnItemSelectedLis
 
     private boolean sanityCheckUser() {
 
-        if(titleSpinPos == 0 ||
-                firstName.getText().toString().isEmpty() ||
+        if(firstName.getText().toString().isEmpty() ||
                 lastName.getText().toString().isEmpty() ||
                 email.getText().toString().isEmpty() ||
                 pwd.getText().toString().isEmpty() )
@@ -105,13 +108,13 @@ public class RegisterUser extends AppCompatActivity implements OnItemSelectedLis
             return false;
         }
 
-        if(cemail.getText().toString().equalsIgnoreCase(email.getText().toString()))
+        if(!cemail.getText().toString().equalsIgnoreCase(email.getText().toString()))
         {
             Toast.makeText(getApplicationContext(), "Please confirm your e-mail!", Toast.LENGTH_LONG).show();
             return false;
         }
 
-        if(cpwd.getText().toString().equalsIgnoreCase(cpwd.getText().toString()))
+        if(!cpwd.getText().toString().equalsIgnoreCase(pwd.getText().toString()))
         {
             Toast.makeText(getApplicationContext(), "Please confirm your password!", Toast.LENGTH_LONG).show();
             return false;

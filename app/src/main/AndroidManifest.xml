@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="lucacipaul.mealplus">
+    package="lucacipaul.mealplus.frontend">
 
     <application
         android:allowBackup="false"
@@ -11,19 +11,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".frontend.LoginActivity">
+        <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".frontend.RegisterAdviser" />
-        <activity android:name=".frontend.RegisterAdviserFinal" />
-        <activity android:name=".frontend.RegisterCustomer" />
-        <activity android:name=".frontend.RegisterCustomerFinal" />
-        <activity android:name=".frontend.RegisterUser" />
-        <activity android:name=".frontend.CustomerDashboard" />
+        <activity android:name=".RegisterAdviser" />
+        <activity android:name=".RegisterAdviserFinal" />
+        <activity android:name=".RegisterCustomer" />
+        <activity android:name=".RegisterCustomerFinal" />
+        <activity android:name=".RegisterUser" />
+        <activity android:name=".CustomerDashboard" />
+        <activity android:name=".ViewItem" />
+        <activity android:name=".SearchResults" />
     </application>
 
 </manifest>

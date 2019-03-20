@@ -16,6 +16,8 @@ public class Adviser extends User implements Parcelable {
 	private String phoneNo;
 	private boolean approved;
 
+	public Adviser() {}
+
 	protected Adviser(Parcel in) {
 		customers = in.createTypedArrayList(Customer.CREATOR);
 		regNo = in.readString();

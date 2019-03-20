@@ -14,6 +14,8 @@ import android.widget.Spinner;
 import android.widget.Toast;
 import android.view.View;
 
+import java.util.Date;
+
 import lucacipaul.mealplus.backend.ActivityLevel;
 import lucacipaul.mealplus.backend.Customer;
 import lucacipaul.mealplus.backend.DataManager;
@@ -24,11 +26,11 @@ import lucacipaul.mealplus.backend.Goal;
 public class RegisterCustomer extends AppCompatActivity
         implements OnItemSelectedListener, OnSeekBarChangeListener {
 
-    public static final String EXTRA_CUSTOMER_FINAL = "lucacipaul.mealplus.frontend.LoginActivity.Customer.EXTRA_CUSTOMER_FINAL";
-    private String[] genders = {"Gender", "Female", "Male", "Mx"};
-    private String[] goals = {"Goal", "Lose Weight", "Keep Weight", "Gain Weight"};
+    public static final String EXTRA_CUSTOMER_FINAL = "lucacipaul.mealplus.frontend.RegisterCustomer.EXTRA_CUSTOMER_FINAL";
+    private String[] genders = {"Female", "Male", "Other"};
+    private String[] goals = {"Lose Weight", "Keep Weight", "Gain Weight"};
 
-    private int activityProgress = -1;
+    private int activityProgress = 0;
     private int genderSpinPos = 0;
     private int goalSpinPos = 0;
 
@@ -49,6 +51,7 @@ public class RegisterCustomer extends AppCompatActivity
         activityBar.setOnSeekBarChangeListener(this);
 
         activityBar.setMax(2);
+        activityBar.setProgress(0);
 
         ArrayAdapter genderAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, genders);
         ArrayAdapter goalAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, goals);
@@ -84,26 +87,25 @@ public class RegisterCustomer extends AppCompatActivity
 
     public void registerButtonClicked(View view) {
 
-        if(sanityCheckCustomer()) return;
+        if(!sanityCheckCustomer()) return;
 
         Customer customer = getIntent().getParcelableExtra(RegisterUser.EXTRA_CUSTOMER);
+        Toast.makeText(getApplicationContext(), customer.getRegistrationDate().toString(), Toast.LENGTH_LONG).show();
         customer.setAge(Integer.parseInt(age.getText().toString()));
         customer.setWeight(Float.parseFloat(weight.getText().toString()));
         customer.setSize(Float.parseFloat(size.getText().toString()));
         customer.setActivityLevel(ActivityLevel.values()[activityProgress]);
         customer.setGoal(Goal.values()[goalSpinPos]);
         customer.setGender(Gender.values()[genderSpinPos]);
-        customer.setDefaultNutritionalValues();
+        //customer.setDefaultNutritionalValues();
 
-        DataManager.getInstance().register(customer);
-
-        Intent intent = new Intent(this, CustomerDashboard.class);
-        intent.putExtra(EXTRA_CUSTOMER_FINAL, customer);
-        startActivity(intent);
-    }
-
-    private boolean sanityCheck() {
-
+       /* if(!DataManager.getInstance().register(customer)) {
+            Toast.makeText(getApplicationContext(), "Go back and check e-mail and password!", Toast.LENGTH_LONG).show();
+        } else {
+            Intent intent = new Intent(this, CustomerDashboard.class);
+            intent.putExtra(EXTRA_CUSTOMER_FINAL, customer);
+            startActivity(intent);
+        }*/
     }
 
     @Override
@@ -122,8 +124,7 @@ public class RegisterCustomer extends AppCompatActivity
 
     private boolean sanityCheckCustomer() {
 
-        if(genderSpinPos == 0 || goalSpinPos == 0 ||
-                age.getText().toString().isEmpty() ||
+        if(age.getText().toString().isEmpty() ||
                 size.getText().toString().isEmpty() ||
                 weight.getText().toString().isEmpty() )
         {
