@@ -33,15 +33,15 @@ public class DataManager {
 		
 		for (User usr : Dummy.customers) {
 			if(usr.getEmail().contains(email))
-					users.add(usr);
+					users.add((Customer)usr);
 		}
 		for (User usr : Dummy.advisers) {
 			if(usr.getEmail().contains(email))
-					users.add(usr);
+					users.add((Adviser)usr);
 		}
 		for (User usr : Dummy.admins) {
 			if(usr.getEmail().contains(email))
-					users.add(usr);
+					users.add((Admin)usr);
 		}
 		return users;
 	}
@@ -198,8 +198,17 @@ public class DataManager {
 		if(users.size() == 1 && users.get(0).getEmail().equalsIgnoreCase(email)) {
 			User usr = users.get(0);
 			if(usr.getPwd().equals(hashPassword(usr, pwd))) { // Critical bug fixed here, make sure to have { } @Paul.
-				loggedUser = usr;
-				return usr;
+				if(usr instanceof Customer) {
+					loggedUser = (Customer)usr;
+					return (Customer)usr;
+				} else if(usr instanceof Adviser) {
+					loggedUser = (Adviser)usr;
+					return (Adviser)usr;
+				}else if(usr instanceof Admin) {
+					loggedUser = (Admin)usr;
+					return (Admin)usr;
+				}
+
 			}
 		}
 		// Email was not found in the users array.
@@ -221,8 +230,6 @@ public class DataManager {
 		// Sanity checks to make sure the email
 		// does not exist.
 		ArrayList<User> users = searchAccount(user.getEmail());
-		for(User u:users)
-			System.out.println(u.getEmail());
 		if(!users.isEmpty()) {
 			return false;
 		}

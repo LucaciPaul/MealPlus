@@ -3,6 +3,7 @@ package lucacipaul.mealplus.backend;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.io.Serializable;
 import java.util.*;
 
 public class Customer extends User implements Parcelable {
@@ -29,25 +30,53 @@ public class Customer extends User implements Parcelable {
 	public Customer() {}
 
 	protected Customer(Parcel in) {
-
-        setFirstName(in.readString());
-        setLastName(in.readString());
-        setEmail(in.readString());
-        setPwd(in.readString());
-        setRegistrationDate((Date) in.readSerializable());
-        setTitle((Title) in.readSerializable());
-        age = in.readInt();
-        size = in.readFloat();
-        weight = in.readFloat();
-        goal = (Goal) in.readSerializable();
-        activityLevel = (ActivityLevel) in.readSerializable();
-        gender = (Gender) in.readSerializable();
-
-		/*pendingRequest = in.readByte() != 0;
+		super(in);
+		adviser = in.readParcelable(Adviser.class.getClassLoader());
+		dietLog = in.readParcelable(DietLog.class.getClassLoader());
+		reports = in.createTypedArrayList(Report.CREATOR);
+		ownedFood = in.createTypedArrayList(Food.CREATOR);
+		ownedRecipes = in.createTypedArrayList(Recipe.CREATOR);
+		age = in.readInt();
+		size = in.readFloat();
+		weight = in.readFloat();
+		gender = (Gender) in.readSerializable();
+		activityLevel = (ActivityLevel) in.readSerializable();
+		goal = (Goal) in.readSerializable();
+		pendingRequest = in.readByte() != 0;
 		carbsPerDay = in.readFloat();
 		proteinsPerDay = in.readFloat();
 		fatsPerDay = in.readFloat();
-		caloriesPerDay = in.readFloat();*/
+		caloriesPerDay = in.readFloat();
+		dislikedItems = in.createTypedArrayList(DietLogEntry.CREATOR);
+		frequentlyEaten = in.createTypedArrayList(DietLogEntry.CREATOR);
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		super.writeToParcel(dest, flags);
+		dest.writeParcelable(adviser, flags);
+		dest.writeParcelable(dietLog, flags);
+		dest.writeTypedList(reports);
+		dest.writeTypedList(ownedFood);
+		dest.writeTypedList(ownedRecipes);
+		dest.writeInt(age);
+		dest.writeFloat(size);
+		dest.writeFloat(weight);
+		dest.writeSerializable(gender);
+		dest.writeSerializable(activityLevel);
+		dest.writeSerializable(goal);
+		dest.writeByte((byte) (pendingRequest ? 1 : 0));
+		dest.writeFloat(carbsPerDay);
+		dest.writeFloat(proteinsPerDay);
+		dest.writeFloat(fatsPerDay);
+		dest.writeFloat(caloriesPerDay);
+		dest.writeTypedList(dislikedItems);
+		dest.writeTypedList(frequentlyEaten);
+	}
+
+	@Override
+	public int describeContents() {
+		return 0;
 	}
 
 	public static final Creator<Customer> CREATOR = new Creator<Customer>() {
@@ -61,34 +90,6 @@ public class Customer extends User implements Parcelable {
 			return new Customer[size];
 		}
 	};
-
-	@Override
-	public int describeContents() {
-		return 0;
-	}
-
-	@Override
-	public void writeToParcel(Parcel dest, int flags) {
-
-        dest.writeString(getFirstName());
-        dest.writeString(getLastName());
-        dest.writeString(getEmail());
-        dest.writeString(getPwd());
-        dest.writeSerializable(getRegistrationDate());
-        dest.writeSerializable(getTitle());
-        dest.writeInt(age);
-        dest.writeFloat(size);
-        dest.writeFloat(weight);
-        dest.writeSerializable(goal);
-        dest.writeSerializable(activityLevel);
-        dest.writeSerializable(gender);
-
-		/*dest.writeByte((byte) (pendingRequest ? 1 : 0));
-		dest.writeFloat(carbsPerDay);
-		dest.writeFloat(proteinsPerDay);
-		dest.writeFloat(fatsPerDay);
-		dest.writeFloat(caloriesPerDay);*/
-	}
 
 	public int getAge() {
 		return this.age;

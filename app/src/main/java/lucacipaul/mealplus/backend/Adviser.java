@@ -19,6 +19,7 @@ public class Adviser extends User implements Parcelable {
 	public Adviser() {}
 
 	protected Adviser(Parcel in) {
+		super(in);
 		customers = in.createTypedArrayList(Customer.CREATOR);
 		regNo = in.readString();
 		occupation = in.readString();
@@ -27,6 +28,24 @@ public class Adviser extends User implements Parcelable {
 		postCode = in.readString();
 		phoneNo = in.readString();
 		approved = in.readByte() != 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		super.writeToParcel(dest, flags);
+		dest.writeTypedList(customers);
+		dest.writeString(regNo);
+		dest.writeString(occupation);
+		dest.writeString(addr1);
+		dest.writeString(addr2);
+		dest.writeString(postCode);
+		dest.writeString(phoneNo);
+		dest.writeByte((byte) (approved ? 1 : 0));
+	}
+
+	@Override
+	public int describeContents() {
+		return 0;
 	}
 
 	public static final Creator<Adviser> CREATOR = new Creator<Adviser>() {
@@ -40,23 +59,6 @@ public class Adviser extends User implements Parcelable {
 			return new Adviser[size];
 		}
 	};
-
-	@Override
-	public int describeContents() {
-		return 0;
-	}
-
-	@Override
-	public void writeToParcel(Parcel dest, int flags) {
-		dest.writeTypedList(customers);
-		dest.writeString(regNo);
-		dest.writeString(occupation);
-		dest.writeString(addr1);
-		dest.writeString(addr2);
-		dest.writeString(postCode);
-		dest.writeString(phoneNo);
-		dest.writeByte((byte) (approved ? 1 : 0));
-	}
 
 	public String getRegNo() {
 		return this.regNo;

@@ -90,7 +90,6 @@ public class RegisterCustomer extends AppCompatActivity
         if(!sanityCheckCustomer()) return;
 
         Customer customer = getIntent().getParcelableExtra(RegisterUser.EXTRA_CUSTOMER);
-        Toast.makeText(getApplicationContext(), customer.getRegistrationDate().toString(), Toast.LENGTH_LONG).show();
         customer.setAge(Integer.parseInt(age.getText().toString()));
         customer.setWeight(Float.parseFloat(weight.getText().toString()));
         customer.setSize(Float.parseFloat(size.getText().toString()));
@@ -99,13 +98,13 @@ public class RegisterCustomer extends AppCompatActivity
         customer.setGender(Gender.values()[genderSpinPos]);
         //customer.setDefaultNutritionalValues();
 
-       /* if(!DataManager.getInstance().register(customer)) {
+        if(!DataManager.getInstance().register(customer)) {
             Toast.makeText(getApplicationContext(), "Go back and check e-mail and password!", Toast.LENGTH_LONG).show();
         } else {
             Intent intent = new Intent(this, CustomerDashboard.class);
             intent.putExtra(EXTRA_CUSTOMER_FINAL, customer);
             startActivity(intent);
-        }*/
+        }
     }
 
     @Override
