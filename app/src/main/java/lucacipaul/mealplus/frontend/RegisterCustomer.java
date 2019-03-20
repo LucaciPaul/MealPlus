@@ -19,6 +19,7 @@ import java.util.Date;
 import lucacipaul.mealplus.backend.ActivityLevel;
 import lucacipaul.mealplus.backend.Customer;
 import lucacipaul.mealplus.backend.DataManager;
+import lucacipaul.mealplus.backend.DietLog;
 import lucacipaul.mealplus.backend.Gender;
 import lucacipaul.mealplus.backend.Goal;
 
@@ -96,6 +97,7 @@ public class RegisterCustomer extends AppCompatActivity
         customer.setActivityLevel(ActivityLevel.values()[activityProgress]);
         customer.setGoal(Goal.values()[goalSpinPos]);
         customer.setGender(Gender.values()[genderSpinPos]);
+        customer.setDietLog(new DietLog());
         //customer.setDefaultNutritionalValues();
 
         if(!DataManager.getInstance().register(customer)) {

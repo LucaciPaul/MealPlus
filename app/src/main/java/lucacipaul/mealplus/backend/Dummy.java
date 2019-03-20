@@ -76,8 +76,11 @@ public class Dummy {
     	customers.add(c);
     	
     	c = new Customer();
-    	c.setFirstName("Sadonis"); c.setLastName("Ignas"); c.setEmail("s@email.com"); c.setRegistrationDate(new Date()); c.setPwd(DataManager.getInstance().hashPassword(c, "password"));
-    	customers.add(c);
+		dietLog = new DietLog();
+		c.setFirstName("Sadonis"); c.setLastName("Ignas"); c.setEmail("s@email.com"); c.setRegistrationDate(new Date()); c.setPwd(DataManager.getInstance().hashPassword(c, "password"));
+		dietLogs.add(dietLog);
+		c.setDietLog(dietLogs.get(1));
+		customers.add(c);
     	
     	// Advisers
     	Adviser adv = new Adviser();

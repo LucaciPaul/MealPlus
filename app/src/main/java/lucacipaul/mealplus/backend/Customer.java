@@ -10,9 +10,9 @@ public class Customer extends User implements Parcelable {
 
 	private Adviser adviser;
 	private DietLog dietLog;
-	private ArrayList<Report> reports;
-	private ArrayList<Food> ownedFood;
-	private ArrayList<Recipe> ownedRecipes;
+	private ArrayList<Report> reports = new ArrayList<Report>();
+	private ArrayList<Food> ownedFood = new ArrayList<Food>();
+	private ArrayList<Recipe> ownedRecipes = new ArrayList<Recipe>();
 	private int age;
 	private float size;
 	private float weight;
@@ -24,8 +24,8 @@ public class Customer extends User implements Parcelable {
 	private float proteinsPerDay;
 	private float fatsPerDay;
 	private float caloriesPerDay;
-	private ArrayList<DietLogEntry> dislikedItems;
-	private ArrayList<DietLogEntry> frequentlyEaten;
+	private ArrayList<DietLogEntry> dislikedItems = new ArrayList<DietLogEntry>();
+	private ArrayList<DietLogEntry> frequentlyEaten = new ArrayList<DietLogEntry>();
 
 	public Customer() {}
 

@@ -9,7 +9,7 @@ import java.util.*;
 public class DietLog implements Parcelable {
 
 	private String email;
-	private String date;
+	private Date date;
 	private boolean closed;
 	private ArrayList<DietLogEntry> breakfast = new ArrayList<DietLogEntry>();
 	private ArrayList<DietLogEntry> snack1 = new ArrayList<DietLogEntry>();
@@ -22,12 +22,14 @@ public class DietLog implements Parcelable {
 	private float fatsTotal;
 	private float proteinsTotal;
 
-	public DietLog() {}
+	public DietLog() {
+	    date = new Date();
+    }
 
 
 	protected DietLog(Parcel in) {
 		email = in.readString();
-		date = in.readString();
+		date = (Date) in.readSerializable();
 		closed = in.readByte() != 0;
 		breakfast = in.createTypedArrayList(DietLogEntry.CREATOR);
 		snack1 = in.createTypedArrayList(DietLogEntry.CREATOR);
@@ -44,7 +46,7 @@ public class DietLog implements Parcelable {
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
 		dest.writeString(email);
-		dest.writeString(date);
+		dest.writeSerializable(date);
 		dest.writeByte((byte) (closed ? 1 : 0));
 		dest.writeTypedList(breakfast);
 		dest.writeTypedList(snack1);
@@ -75,7 +77,7 @@ public class DietLog implements Parcelable {
 		}
 	};
 
-	public String getDate() {
+	public Date getDate() {
 		return this.date;
 	}
 
@@ -83,7 +85,7 @@ public class DietLog implements Parcelable {
 	 * 
 	 * @param date
 	 */
-	public void setDate(String date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
 
@@ -223,22 +225,22 @@ public class DietLog implements Parcelable {
 	public float getProteinsTotal() {
 		float proteins=0;
 		for (DietLogEntry entry: getBreakfast()) {
-			proteins += entry.getEntry().getFats();
+			proteins += entry.getEntry().getProteins();
 		}
 		for (DietLogEntry entry: getSnack1()) {
-			proteins += entry.getEntry().getFats();
+			proteins += entry.getEntry().getProteins();
 		}
 		for (DietLogEntry entry: getLunch()) {
-			proteins += entry.getEntry().getFats();
+			proteins += entry.getEntry().getProteins();
 		}
 		for (DietLogEntry entry: getSnack2()) {
-			proteins += entry.getEntry().getFats();
+			proteins += entry.getEntry().getProteins();
 		}
 		for (DietLogEntry entry: getDinner()) {
-			proteins += entry.getEntry().getFats();
+			proteins += entry.getEntry().getProteins();
 		}
 		for (DietLogEntry entry: getSnack3()) {
-			proteins += entry.getEntry().getFats();
+			proteins += entry.getEntry().getProteins();
 		}
 
 		setProteinsTotal(proteins);

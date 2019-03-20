@@ -34,8 +34,9 @@ public class LoginActivity extends AppCompatActivity {
         EditText pwd = (EditText)findViewById(R.id.passwordField);
 
         User user = DataManager.getInstance().login(email.getText().toString(), pwd.getText().toString());
+
         if(user != null) {
-            System.out.println(((Customer)user).getDietLog().getBreakfast().get(0).getEntry().getName());
+            System.out.println(((Customer)user).getDietLog());
 
             Intent intent = new Intent(this, CustomerDashboard.class);
             intent.putExtra(EXTRA_CUSTOMER_LOGIN, (Customer)user);

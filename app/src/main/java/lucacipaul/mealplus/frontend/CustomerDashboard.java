@@ -74,7 +74,7 @@ public class CustomerDashboard extends AppCompatActivity {
         proteinsAllowed.setText(Float.toString(customer.getProteinsPerDay()));
         proteinsUsed.setText(Float.toString(customer.getDietLog().getProteinsTotal()));
         fatsAllowed.setText(Float.toString(customer.getFatsPerDay()));
-        fatsUsed.setText(Float.toString(customer.getDietLog().getProteinsTotal()));
+        fatsUsed.setText(Float.toString(customer.getDietLog().getFatsTotal()));
     }
 
     private ArrayList<String> parseItemNames(ArrayList<DietLogEntry> entries){
