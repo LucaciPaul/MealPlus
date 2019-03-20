@@ -33,15 +33,15 @@ public class DataManager {
 		
 		for (User usr : Dummy.customers) {
 			if(usr.getEmail().contains(email))
-					users.add(usr);
+					users.add((Customer)usr);
 		}
 		for (User usr : Dummy.advisers) {
 			if(usr.getEmail().contains(email))
-					users.add(usr);
+					users.add((Adviser)usr);
 		}
 		for (User usr : Dummy.admins) {
 			if(usr.getEmail().contains(email))
-					users.add(usr);
+					users.add((Admin)usr);
 		}
 		return users;
 	}
@@ -53,19 +53,19 @@ public class DataManager {
 			// Special sellpoint check if item is Food
 			// (because only Food has sellpoints).
 			if(item instanceof Food) {
-				if(!DataManager.ContainsArrayItem(sellpoints, ((Food) item).getSellpoints())) continue;
+				if(!DataManager.hasFilter(sellpoints, ((Food) item).getSellpoints())) continue;
 			}
 			
 			// Do a general filter on items.
-			if(DataManager.ContainsArrayItem(amenities, item.getAmenities()) &&
-			   DataManager.ContainsArrayItem(types, item.getTypes()) ) {
+			if(DataManager.hasFilter(amenities, item.getAmenities()) &&
+			   DataManager.hasFilter(types, item.getTypes()) ) {
 				entries.add(item);
 			}
 		}
 		return entries;
 	}
 
-	private static <T> boolean ContainsArrayItem(ArrayList<T> i, ArrayList<T> o) {
+	private static <T> boolean hasFilter(ArrayList<T> i, ArrayList<T> o) {
 		if(i == null) return true;
 		if(o == null) return false;
 
@@ -75,19 +75,20 @@ public class DataManager {
 		return false;
 	}
 
-	private static <T extends Items> void ConcatItems(ArrayList<Items> original, ArrayList<T> add) {
+	private static <T extends Items> void concatItems(ArrayList<Items> original, ArrayList<T> add) {
 		for(T a : add)
-			original.add(a);
+		    if(!original.contains(a))
+			    original.add(a);
 	}
 
-	private static ArrayList<Items> DietLogEntriesToItems(ArrayList<DietLogEntry> entries) {
+	private static ArrayList<Items> dietLogEntriesToItems(ArrayList<DietLogEntry> entries) {
 		ArrayList<Items> items = new ArrayList<Items>();
 		for(DietLogEntry entry : entries)
 			items.add(entry.getEntry());
 		return items;
 	}
 
-	private static ArrayList<DietLogEntry> ItemsToDietLogEntries(ArrayList<Items> items) {
+	private static ArrayList<DietLogEntry> itemsToDietLogEntries(ArrayList<Items> items) {
 		ArrayList<DietLogEntry> entries = new ArrayList<DietLogEntry>();
 
 		for(Items item : items) {
@@ -106,7 +107,7 @@ public class DataManager {
 		return entries;
 	}
 
-	private static ArrayList<Items> RemoveDuplicates(ArrayList<Items> items) {
+	private static ArrayList<Items> removeDuplicates(ArrayList<Items> items) {
 		ArrayList<Items> newArray = new ArrayList<Items>();
 
 		for(Items item : items) {
@@ -116,7 +117,7 @@ public class DataManager {
 		return newArray;
 	}
 
-	private static <E> void RemoveFromArrayByArray(ArrayList<E> items, ArrayList<E> toRemove) {
+	private static <E> void removeDislikedItems(ArrayList<E> items, ArrayList<E> toRemove) {
 		for(E e : toRemove)
 			items.remove(e);
 	}
@@ -143,15 +144,15 @@ public class DataManager {
 
 		// Add items to unfiltered depending on settings.
 		if(searchSelfMade) {
-			ConcatItems(unfiltered, customer.getOwnedFood());
-			ConcatItems(unfiltered, customer.getOwnedRecipes());
+            concatItems(unfiltered, customer.getOwnedFood());
+            concatItems(unfiltered, customer.getOwnedRecipes());
 		}
 		if(searchFrequentlyEaten) {
-			ConcatItems(unfiltered, DietLogEntriesToItems(customer.getFrequentlyEaten()));
+            concatItems(unfiltered, dietLogEntriesToItems(customer.getFrequentlyEaten()));
 		}
 		if(!searchSelfMade && !searchFrequentlyEaten) {
-			ConcatItems(unfiltered, Dummy.foods);
-			ConcatItems(unfiltered, Dummy.recipes);
+            concatItems(unfiltered, Dummy.foods);
+            concatItems(unfiltered, Dummy.recipes);
 		}
 		
 		
@@ -164,12 +165,12 @@ public class DataManager {
 		ArrayList<Items> tokenSearchedItems = searchUnpublishedItems(token, true, unfiltered);
 		ArrayList<Items> filtered = filterItems(tokenSearchedItems, amenities, types, sellpoints);
 
-		RemoveFromArrayByArray(filtered, DietLogEntriesToItems(customer.getDislikedItems()));
+        removeDislikedItems(filtered, dietLogEntriesToItems(customer.getDislikedItems()));
 
 		// TODO: implement the frequently-eaten
 		// TODO: recommendations.
 
-		return ItemsToDietLogEntries(RemoveDuplicates(filtered));
+		return itemsToDietLogEntries(removeDuplicates(filtered));
 	}
 
 	/**
@@ -208,8 +209,17 @@ public class DataManager {
 		if(users.size() == 1 && users.get(0).getEmail().equalsIgnoreCase(email)) {
 			User usr = users.get(0);
 			if(usr.getPwd().equals(hashPassword(usr, pwd))) { // Critical bug fixed here, make sure to have { } @Paul.
-				loggedUser = usr;
-				return usr;
+				if(usr instanceof Customer) {
+					loggedUser = (Customer)usr;
+					return (Customer)usr;
+				} else if(usr instanceof Adviser) {
+					loggedUser = (Adviser)usr;
+					return (Adviser)usr;
+				}else if(usr instanceof Admin) {
+					loggedUser = (Admin)usr;
+					return (Admin)usr;
+				}
+
 			}
 		}
 		// Email was not found in the users array.

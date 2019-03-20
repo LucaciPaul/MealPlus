@@ -1,8 +1,11 @@
 package lucacipaul.mealplus.backend;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.*;
 
-public class Items {
+public class Items implements Parcelable {
 
 	private String name;
 	private User author;
@@ -13,6 +16,46 @@ public class Items {
 	private float carbs;
 	private float fats;
 	private float proteins;
+
+	public Items() {}
+
+	protected Items(Parcel in) {
+		author = in.readParcelable(User.class.getClassLoader());
+		name = in.readString();
+		isPublic = in.readByte() != 0;
+		calories = in.readFloat();
+		carbs = in.readFloat();
+		fats = in.readFloat();
+		proteins = in.readFloat();
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeParcelable(author, flags);
+		dest.writeString(name);
+		dest.writeByte((byte) (isPublic ? 1 : 0));
+		dest.writeFloat(calories);
+		dest.writeFloat(carbs);
+		dest.writeFloat(fats);
+		dest.writeFloat(proteins);
+	}
+
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	public static final Creator<Items> CREATOR = new Creator<Items>() {
+		@Override
+		public Items createFromParcel(Parcel in) {
+			return new Items(in);
+		}
+
+		@Override
+		public Items[] newArray(int size) {
+			return new Items[size];
+		}
+	};
 
 	public String getName() {
 		return this.name;

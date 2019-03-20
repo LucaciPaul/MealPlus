@@ -69,7 +69,7 @@ public class RegisterUser extends AppCompatActivity implements OnItemSelectedLis
 
         Switch s = findViewById(R.id.accountSwitch);
         if (s.isChecked()){
-            Intent intent = new Intent(this, RegisterCustomer.class);
+            Intent intent = new Intent(this, RegisterAdviser.class);
 
             Adviser adviser = new Adviser();
             adviser.setTitle(Title.values()[titleSpinPos]);

@@ -8,10 +8,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import lucacipaul.mealplus.backend.Adviser;
+import lucacipaul.mealplus.backend.DataManager;
 
 public class RegisterAdviser extends AppCompatActivity {
 
-    private static final String EXTRA_ADVISER_FINAL = "lucacipaul.mealplus.frontend.LoginActivity.Adviser.EXTRA_ADVISER_FINAL";
     EditText rNo, occupation, address1, address2, postCode, phone;
 
     @Override
@@ -39,9 +39,12 @@ public class RegisterAdviser extends AppCompatActivity {
         adviser.setPostCode(postCode.getText().toString());
         adviser.setPhoneNo(phone.getText().toString());
 
-        Intent intent = new Intent(this, RegisterAdviserFinal.class);
-        intent.putExtra(EXTRA_ADVISER_FINAL, adviser);
-        startActivity(intent);
+        if(!DataManager.getInstance().register(adviser)) {
+            Toast.makeText(getApplicationContext(), "Go back and check e-mail and password!", Toast.LENGTH_LONG).show();
+        } else {
+            Intent intent = new Intent(this, RegisterAdviserFinal.class);
+            startActivity(intent);
+        }
     }
 
     private boolean sanityCheckAdviser() {

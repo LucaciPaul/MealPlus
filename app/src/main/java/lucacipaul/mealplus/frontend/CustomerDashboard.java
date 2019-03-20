@@ -70,11 +70,11 @@ public class CustomerDashboard extends AppCompatActivity {
         caloriesAllowed.setText(Float.toString(customer.getCaloriesPerDay()));
         caloriesUsed.setText(Float.toString(customer.getDietLog().getCaloriesTotal()));
         carbsAllowed.setText(Float.toString(customer.getCarbsPerDay()));
-        carbsAllowed.setText(Float.toString(customer.getDietLog().getCarbsTotal()));
+        carbsUsed.setText(Float.toString(customer.getDietLog().getCarbsTotal()));
         proteinsAllowed.setText(Float.toString(customer.getProteinsPerDay()));
         proteinsUsed.setText(Float.toString(customer.getDietLog().getProteinsTotal()));
         fatsAllowed.setText(Float.toString(customer.getFatsPerDay()));
-        fatsUsed.setText(Float.toString(customer.getDietLog().getProteinsTotal()));
+        fatsUsed.setText(Float.toString(customer.getDietLog().getFatsTotal()));
     }
 
     private ArrayList<String> parseItemNames(ArrayList<DietLogEntry> entries){
