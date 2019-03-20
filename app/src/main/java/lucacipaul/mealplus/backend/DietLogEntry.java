@@ -10,36 +10,10 @@ public class DietLogEntry implements Parcelable {
 	private float quantity;
 
 	public DietLogEntry() {}
-
-	protected DietLogEntry(Parcel in) {
-		recipe = in.readParcelable(Recipe.class.getClassLoader());
-		food = in.readParcelable(Food.class.getClassLoader());
-		quantity = in.readFloat();
+	public DietLogEntry(Items item) {
+		if(item instanceof Recipe) recipe = (Recipe)item;
+		else if(item instanceof Food) food = (Food)item;
 	}
-
-	@Override
-	public void writeToParcel(Parcel dest, int flags) {
-		dest.writeParcelable(recipe, flags);
-		dest.writeParcelable(food, flags);
-		dest.writeFloat(quantity);
-	}
-
-	@Override
-	public int describeContents() {
-		return 0;
-	}
-
-	public static final Creator<DietLogEntry> CREATOR = new Creator<DietLogEntry>() {
-		@Override
-		public DietLogEntry createFromParcel(Parcel in) {
-			return new DietLogEntry(in);
-		}
-
-		@Override
-		public DietLogEntry[] newArray(int size) {
-			return new DietLogEntry[size];
-		}
-	};
 
 	public Food getFood() {
 		return this.food;
