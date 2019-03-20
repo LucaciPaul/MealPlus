@@ -106,6 +106,21 @@ public class DataManager {
 		return entries;
 	}
 
+	private static ArrayList<Items> RemoveDuplicates(ArrayList<Items> items) {
+		ArrayList<Items> newArray = new ArrayList<Items>();
+
+		for(Items item : items) {
+			if(!newArray.contains(item)) newArray.add(item);
+		}
+
+		return newArray;
+	}
+
+	private static <E> void RemoveFromArrayByArray(ArrayList<E> items, ArrayList<E> toRemove) {
+		for(E e : toRemove)
+			items.remove(e);
+	}
+
 	/**
 	 * 
 	 * @param token
@@ -141,25 +156,20 @@ public class DataManager {
 		
 		
 		/**
-		 * 1. How does the code from above avoid duplicates into unfiltered? self-made items can also be under frequently-eaten.
-		 * 2. What happens if the self-made and frequently-eaten are empty arrays?
+		 * 1. X How does the code from above avoid duplicates into unfiltered? self-made items can also be under frequently-eaten.
+		 * 2. TODO: TEST What happens if the self-made and frequently-eaten are empty arrays?
 		 */
-		
-		
-		
 
 		// Filter items by token and other settings.
 		ArrayList<Items> tokenSearchedItems = searchUnpublishedItems(token, true, unfiltered);
 		ArrayList<Items> filtered = filterItems(tokenSearchedItems, amenities, types, sellpoints);
 
-		// TODO: check Customer blacklisted foods.
-		// TODO: check Customer disliked foods.
-		
+		RemoveFromArrayByArray(filtered, DietLogEntriesToItems(customer.getDislikedItems()));
+
 		// TODO: implement the frequently-eaten
-		
 		// TODO: recommendations.
 
-		return ItemsToDietLogEntries(filtered);
+		return ItemsToDietLogEntries(RemoveDuplicates(filtered));
 	}
 
 	/**
