@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 import java.io.Serializable;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Customer extends User implements Parcelable {
 
@@ -24,8 +25,8 @@ public class Customer extends User implements Parcelable {
 	private float proteinsPerDay;
 	private float fatsPerDay;
 	private float caloriesPerDay;
-	private ArrayList<DietLogEntry> dislikedItems = new ArrayList<DietLogEntry>();
-	private ArrayList<DietLogEntry> frequentlyEaten = new ArrayList<DietLogEntry>();
+	private ArrayList<DietLogEntry> dislikedItems;
+	private HashMap<Items, Integer> frequentlyEaten;
 
 	public Customer() {}
 
@@ -224,8 +225,26 @@ public class Customer extends User implements Parcelable {
 	}
 
 	public void setDefaultNutritionalValues() {
-		// TODO - implement Customer.setDefaultNutritionalValues
-		throw new UnsupportedOperationException();
+
+		// Formula calculated by the Harris-Benedict equation (https://www.livestrong.com/article/178764-caloric-intake-formula/)
+		if(this.gender == Gender.Female) this.caloriesPerDay = (int)(655.1 + 9.563*this.getWeight() + 1.850*this.getSize()-4.676*this.getAge());
+		else 							 this.caloriesPerDay = (int)(66.5 + 13.75*this.getWeight() + 5.003*this.getSize()-6.755*this.getAge());
+
+		if(this.goal == Goal.GainWeight) this.caloriesPerDay *= 1.1;
+		else if(this.goal == Goal.LoseWeight) this.caloriesPerDay *= 0.9;
+
+		// Calculated according to https://en.m.wikipedia.org/wiki/Harris%E2%80%93Benedict_equation
+		if(this.activityLevel == ActivityLevel.High) this.caloriesPerDay *= 2.25;
+		if(this.activityLevel == ActivityLevel.Medium) this.caloriesPerDay *= 1.76;
+		if(this.activityLevel == ActivityLevel.Low) this.caloriesPerDay *= 1.53;
+
+		// Carbs - %50 of calories divided by 4.
+		// Fats - %30 of calories divided by 8.
+		// Proteins - %20 of calories divided by 4.
+		// All values are rounded up to 1 decimal place.
+		this.setCarbsPerDay((float)Math.round(this.caloriesPerDay*0.5/4*10)/10);
+		this.setFatsPerDay((float)Math.round(this.caloriesPerDay*0.3/8*10)/10);
+		this.setProteinsPerDay((float)Math.round(this.caloriesPerDay*0.2/4*10)/10);
 	}
 
 	/**
@@ -333,14 +352,56 @@ public class Customer extends User implements Parcelable {
 	}
 
 	public ArrayList<DietLogEntry> getFrequentlyEaten() {
-		return this.frequentlyEaten;
+		return getFrequentlyEaten(5);
+	}
+	public ArrayList<DietLogEntry> getFrequentlyEaten(int count) {
+		Object[] sorted = sortByValue(this.frequentlyEaten).entrySet().toArray();
+		ArrayList<DietLogEntry> entries = new ArrayList<DietLogEntry>(count);
+
+		for(int i = 0; i < count; i++)
+			entries.add(new DietLogEntry(((Map.Entry<Items, Integer>)sorted[5]).getKey()));
+
+		return entries;
+	}
+
+	private static HashMap<Items, Integer> sortByValue(HashMap<Items, Integer> hm)
+	{
+		// Create a list from elements of HashMap
+		List<Map.Entry<Items, Integer> > list =
+				new LinkedList<Map.Entry<Items, Integer> >(hm.entrySet());
+
+		// Sort the list
+		Collections.sort(list, new Comparator<Map.Entry<Items, Integer> >() {
+			public int compare(Map.Entry<Items, Integer> o1,
+							   Map.Entry<Items, Integer> o2)
+			{
+				return (o1.getValue()).compareTo(o2.getValue());
+			}
+		});
+
+		// put data from sorted list to hashmap
+		HashMap<Items, Integer> temp = new LinkedHashMap<Items, Integer>();
+		for (Map.Entry<Items, Integer> aa : list) {
+			temp.put(aa.getKey(), aa.getValue());
+		}
+		return temp;
 	}
 
 	/**
-	 * 
+	 * All foods that the customer eats should be called on this. This function will then
+	 * count how often this food is eaten and determine by that if it's a frequently eaten food or not.
+	 * To get the request we will use 'getFrequentlyEaten'.
 	 * @param frequentlyEaten
 	 */
 	public void addFrequentlyEaten(DietLogEntry frequentlyEaten) {
-		this.frequentlyEaten.add(frequentlyEaten);
+		Items key = frequentlyEaten.getEntry();
+		if(this.frequentlyEaten.containsKey(key))
+			// If the item is in the array (previously eaten),
+			// then we just increment the counter.
+			this.frequentlyEaten.put(key, this.frequentlyEaten.get(key) + 1);
+		else
+			// The item is not in the array (never eaten before),
+			// therefore add a new entry with the value 1 (eaten once).
+			this.frequentlyEaten.put(key, 1);
 	}
 }
