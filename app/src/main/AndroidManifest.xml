@@ -26,6 +26,9 @@
         <activity android:name=".CustomerDashboard" />
         <activity android:name=".ViewItem" />
         <activity android:name=".SearchResults" />
+        <activity android:name=".SearchItems" />
+        <activity android:name=".AdviserDashboard" />
+        <activity android:name=".SearchUser" />
     </application>
 
 </manifest>

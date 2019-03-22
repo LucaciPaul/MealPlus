@@ -8,6 +8,7 @@ public class DietLogEntry implements Parcelable {
 	private Recipe recipe;
 	private Food food;
 	private float quantity;
+	private Meal meal = null;
 
 	public DietLogEntry() {}
 	public DietLogEntry(Items item) {
@@ -19,6 +20,20 @@ public class DietLogEntry implements Parcelable {
 		recipe = in.readParcelable(Recipe.class.getClassLoader());
 		food = in.readParcelable(Food.class.getClassLoader());
 		quantity = in.readFloat();
+		meal = (Meal) in.readSerializable();
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeParcelable(recipe, flags);
+		dest.writeParcelable(food, flags);
+		dest.writeFloat(quantity);
+		dest.writeSerializable(meal);
+	}
+
+	@Override
+	public int describeContents() {
+		return 0;
 	}
 
 	public static final Creator<DietLogEntry> CREATOR = new Creator<DietLogEntry>() {
@@ -32,18 +47,6 @@ public class DietLogEntry implements Parcelable {
 			return new DietLogEntry[size];
 		}
 	};
-
-	@Override
-	public int describeContents() {
-		return 0;
-	}
-
-	@Override
-	public void writeToParcel(Parcel dest, int flags) {
-		dest.writeParcelable(recipe, flags);
-		dest.writeParcelable(food, flags);
-		dest.writeFloat(quantity);
-	}
 
 	public Food getFood() {
 		return this.food;
@@ -84,5 +87,13 @@ public class DietLogEntry implements Parcelable {
 	public Items getEntry() {
 		if(food != null) return food;
 		return recipe;
+	}
+
+	public Meal getMeal() {
+		return this.meal;
+	}
+
+	public void setMeal(Meal meal) {
+		this.meal = meal;
 	}
 }

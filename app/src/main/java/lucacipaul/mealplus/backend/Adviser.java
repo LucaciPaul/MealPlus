@@ -7,7 +7,7 @@ import java.util.*;
 
 public class Adviser extends User implements Parcelable {
 
-	private ArrayList<Customer> customers;
+	private ArrayList<Customer> customers = new ArrayList<>();
 	private String regNo;
 	private String occupation;
 	private String addr1;
@@ -154,7 +154,7 @@ public class Adviser extends User implements Parcelable {
 		else if(customer.getAdviser() != null &&
 				customer.getPendingRequest() == true) return 0;
 
-		customer.setAdviser(this);
+		customer.setAdviser(this.getEmail());
 		customer.setPendingRequest(true);
 		return 1;
 	}

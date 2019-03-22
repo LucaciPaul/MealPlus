@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import lucacipaul.mealplus.backend.Admin;
+import lucacipaul.mealplus.backend.Adviser;
 import lucacipaul.mealplus.backend.Customer;
 import lucacipaul.mealplus.backend.DataManager;
 import lucacipaul.mealplus.backend.Dummy;
@@ -15,7 +17,7 @@ import lucacipaul.mealplus.backend.User;
 public class LoginActivity extends AppCompatActivity {
 
     public static final String EXTRA_CUSTOMER_LOGIN = "lucacipaul.mealplus.frontend.LoginActivity.EXTRA_CUSTOMER_LOGIN";
-    //public static final String EXTRA_ADVISER = "lucacipaul.mealplus.frontend.LoginActivity.EXTRA_ADVISER_LOGIN";
+    public static final String EXTRA_ADVISER_LOGIN = "lucacipaul.mealplus.frontend.LoginActivity.EXTRA_ADVISER_LOGIN";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,18 +31,25 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void mainLoginButtonClicked(View view) {
+    public void mainLoginButtonClicked(View view) throws IllegalAccessException {
         EditText email = (EditText)findViewById(R.id.emailField);
         EditText pwd = (EditText)findViewById(R.id.passwordField);
 
         User user = DataManager.getInstance().login(email.getText().toString(), pwd.getText().toString());
 
         if(user != null) {
-            System.out.println(((Customer)user).getDietLog());
-
-            Intent intent = new Intent(this, CustomerDashboard.class);
-            intent.putExtra(EXTRA_CUSTOMER_LOGIN, (Customer)user);
-            startActivity(intent);
+            Intent intent;
+            if(user instanceof Customer){
+                intent = new Intent(this, CustomerDashboard.class);
+                intent.putExtra(EXTRA_CUSTOMER_LOGIN, (Customer)user);
+                startActivity(intent);
+            } else if(user instanceof Adviser) {
+                intent = new Intent(this, AdviserDashboard.class);
+                intent.putExtra(EXTRA_ADVISER_LOGIN, (Adviser)user);
+                startActivity(intent);
+            } else if(user instanceof Admin) {
+                // [Prototype] No Admin Dashboard available
+            }
         } else {
             Toast.makeText(getApplicationContext(), "Invalid login", Toast.LENGTH_LONG).show();
         }

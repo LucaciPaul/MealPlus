@@ -8,7 +8,7 @@ import java.util.*;
 
 public class Customer extends User implements Parcelable {
 
-	private Adviser adviser;
+	private String adviserEmail;
 	private DietLog dietLog;
 	private ArrayList<Report> reports = new ArrayList<Report>();
 	private ArrayList<Food> ownedFood = new ArrayList<Food>();
@@ -31,8 +31,8 @@ public class Customer extends User implements Parcelable {
 
 	protected Customer(Parcel in) {
 		super(in);
-		adviser = in.readParcelable(Adviser.class.getClassLoader());
 		dietLog = in.readParcelable(DietLog.class.getClassLoader());
+		adviserEmail = in.readString();
 		reports = in.createTypedArrayList(Report.CREATOR);
 		ownedFood = in.createTypedArrayList(Food.CREATOR);
 		ownedRecipes = in.createTypedArrayList(Recipe.CREATOR);
@@ -54,8 +54,8 @@ public class Customer extends User implements Parcelable {
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
 		super.writeToParcel(dest, flags);
-		dest.writeParcelable(adviser, flags);
 		dest.writeParcelable(dietLog, flags);
+		dest.writeString(adviserEmail);
 		dest.writeTypedList(reports);
 		dest.writeTypedList(ownedFood);
 		dest.writeTypedList(ownedRecipes);
@@ -230,14 +230,14 @@ public class Customer extends User implements Parcelable {
 
 	/**
 	 * 
-	 * @param adviser
+	 * @param adviserEmail
 	 */
-	public void setAdviser(Adviser adviser) {
-		this.adviser = adviser;
+	public void setAdviser(String adviserEmail) {
+		this.adviserEmail = adviserEmail;
 	}
 
-	public Adviser getAdviser() {
-		return this.adviser;
+	public String getAdviser() {
+		return this.adviserEmail;
 	}
 
 	public ArrayList<Report> getReports() {

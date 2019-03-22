@@ -77,4 +77,16 @@
     <string name="settings">Settings</string>
     <string name="create_food">Create Food</string>
     <string name="see_past_reports">See Past Reports</string>
+    <string name="logout">Logout</string>
+    <string name="foods_recipes_other_keywords"><![CDATA[Foods, Recipes & Other Keywords]]></string>
+    <string name="search">Search</string>
+    <string name="togglebutton">ToggleButton</string>
+    <string name="search_for_frequently_eaten">Search for Frequently Eaten</string>
+    <string name="search_self_made_foods_and_recipes">Search Self-Made Foods and Recipes</string>
+    <string name="amenities">Amenities</string>
+    <string name="sellpoints">Sellpoints</string>
+    <string name="food_type">Food Type</string>
+    <string name="search_customer">Search Customer</string>
+    <string name="log_out">Log Out</string>
+    <string name="display_associated_customers">Display Associated Customers</string>
 </resources>

@@ -90,7 +90,10 @@ public class Dummy {
     	
     	adv = new Adviser();
     	adv.setFirstName("Viktorija"); adv.setLastName("Kolasnikova"); adv.setEmail("v@email.com"); adv.setRegistrationDate(new Date()); adv.setPwd(DataManager.getInstance().hashPassword(adv, "password"));
+    	adv.getAssociatedCustomers().add(customers.get(0));
+    	customers.get(0).setAdviser(adv.getEmail()); customers.get(0).setPendingRequest(false);
     	advisers.add(adv);
+
     	
     	//Admins
     	Admin admin = new Admin();
