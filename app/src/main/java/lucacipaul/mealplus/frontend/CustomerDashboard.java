@@ -17,6 +17,7 @@ import java.util.Map;
 
 import lucacipaul.mealplus.backend.Adviser;
 import lucacipaul.mealplus.backend.Customer;
+import lucacipaul.mealplus.backend.DataManager;
 import lucacipaul.mealplus.backend.DietLogEntry;
 import lucacipaul.mealplus.backend.Meal;
 
@@ -27,7 +28,7 @@ public class CustomerDashboard extends AppCompatActivity
     public static final String EXTRA_MEAL = "lucacipaul.mealplus.frontend.CustomerDashboard.EXTRA_MEAL";
     public static final String EXTRA_CUSTOMER = "lucacipaul.mealplus.frontend.CustomerDashboard.EXTRA_CUSTOMER";
 
-    Customer customer;
+    public static Customer customer;
 
     TextView caloriesAllowed, carbsAllowed, proteinsAllowed, fatsAllowed;
     TextView caloriesUsed, carbsUsed, proteinsUsed, fatsUsed;
@@ -42,7 +43,7 @@ public class CustomerDashboard extends AppCompatActivity
 
         customer = getIntent().getParcelableExtra(RegisterCustomer.EXTRA_CUSTOMER_FINAL);
         if(customer == null) {
-            customer = getIntent().getParcelableExtra(LoginActivity.EXTRA_CUSTOMER_LOGIN);
+            customer = (Customer) DataManager.getLoggedUser(); // getIntent().getParcelableExtra(LoginActivity.EXTRA_CUSTOMER_LOGIN);
         }
         if (customer == null) {
             customer = getIntent().getParcelableExtra(SearchResults.EXTRA_CUSTOMER);
@@ -151,7 +152,9 @@ public class CustomerDashboard extends AppCompatActivity
         }
     }
 
+    public static Meal meal;
     public void addBreakfastButtonClicked(View view) {
+        meal = Meal.Breakfast;
         Intent intent = new Intent(this, SearchItems.class);
         intent.putExtra(EXTRA_MEAL, Meal.Breakfast);
         intent.putExtra(EXTRA_CUSTOMER, customer);

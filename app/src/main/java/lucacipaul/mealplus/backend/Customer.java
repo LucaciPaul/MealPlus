@@ -25,8 +25,8 @@ public class Customer extends User implements Parcelable {
 	private float proteinsPerDay;
 	private float fatsPerDay;
 	private float caloriesPerDay;
-	private ArrayList<DietLogEntry> dislikedItems;
-	private HashMap<Items, Integer> frequentlyEaten;
+	private ArrayList<DietLogEntry> dislikedItems = new ArrayList<>();
+	private HashMap<Items, Integer> frequentlyEaten = new HashMap<>();
 
 	public Customer() {}
 

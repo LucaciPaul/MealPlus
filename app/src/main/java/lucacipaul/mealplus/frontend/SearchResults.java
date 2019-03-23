@@ -23,10 +23,12 @@ public class SearchResults extends AppCompatActivity implements AdapterView.OnIt
     ArrayAdapter resultsAdapter;
 
 
-    ArrayList<DietLogEntry> entries; boolean dietLogEntries = false;
-    Customer customer;
-    Adviser adviser;
-    ArrayList<Customer> linkedCustomers; boolean linkedCustomerAccounts = false;
+    public static ArrayList<DietLogEntry> entries; boolean dietLogEntries = false;
+    public static Customer customer;
+    public static Adviser adviser;
+    public static ArrayList<Customer> linkedCustomers; boolean linkedCustomerAccounts = false;
+
+    public static DietLogEntry entry;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,12 +38,12 @@ public class SearchResults extends AppCompatActivity implements AdapterView.OnIt
         resultsListView = (ListView)findViewById(R.id.resultsList);
         resultsListView.setOnItemClickListener(this);
 
-        entries = getIntent().getParcelableArrayListExtra(SearchItems.EXTRA_RESULTS);
+        entries = SearchItems.results; // getIntent().getParcelableArrayListExtra(SearchItems.EXTRA_RESULTS);
         linkedCustomers = getIntent().getParcelableArrayListExtra(AdviserDashboard.EXTRA_LINKED_CUSTOMERS);
 
         if(entries!=null) {
             resultsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, CustomerDashboard.parseItemNames(entries));
-            customer = getIntent().getParcelableExtra(SearchItems.EXTRA_CUSTOMER);
+            customer = SearchItems.customer; //getIntent().getParcelableExtra(SearchItems.EXTRA_CUSTOMER);
             this.dietLogEntries = true;
         } else if(linkedCustomers!=null) {
             ArrayList<String> results = new ArrayList<String>();
@@ -58,6 +60,7 @@ public class SearchResults extends AppCompatActivity implements AdapterView.OnIt
 
         Intent intent;
         if(this.dietLogEntries) {
+            entry = entries.get(position);
             intent = new Intent(this, ViewItem.class);
             intent.putExtra(EXTRA_VIEW_ENTRY, entries.get(position));
             intent.putExtra(EXTRA_CUSTOMER, customer);

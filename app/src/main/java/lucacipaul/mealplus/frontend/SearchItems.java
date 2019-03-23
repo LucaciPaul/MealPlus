@@ -48,19 +48,20 @@ public class SearchItems extends AppCompatActivity{
     ArrayList<Amenities> amenitiesFilters = new ArrayList<>();
     ArrayList<Sellpoints> sellpointsFilters = new ArrayList<>();
 
-    Meal meal;
-    Customer customer;
+    public static Meal meal;
+    public static Customer customer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_item_activity);
 
-        meal = (Meal) getIntent().getSerializableExtra(CustomerDashboard.EXTRA_MEAL);
-        customer = getIntent().getParcelableExtra(CustomerDashboard.EXTRA_CUSTOMER);
+        meal = CustomerDashboard.meal; // (Meal) getIntent().getSerializableExtra(CustomerDashboard.EXTRA_MEAL);
+        customer = (Customer) CustomerDashboard.customer; // getIntent().getParcelableExtra(CustomerDashboard.EXTRA_CUSTOMER);
     }
 
 
+    public static ArrayList<DietLogEntry> results;
     public void searchItemButtonClicked(View view) {
 
         String token = ((EditText) findViewById(R.id.searchBarField)).getText().toString();
@@ -69,7 +70,7 @@ public class SearchItems extends AppCompatActivity{
         boolean selfMade = ((ToggleButton) findViewById(R.id.searchSelfMadeToggleButton)).isChecked();
         boolean recommend = ((ToggleButton) findViewById(R.id.recommendToggleButton)).isChecked();
 
-        ArrayList<DietLogEntry> results = DataManager.getInstance().
+        results = DataManager.getInstance().
                 searchItems(
                         customer,
                         token, amenitiesFilters, foodTypeFilters, sellpointsFilters,

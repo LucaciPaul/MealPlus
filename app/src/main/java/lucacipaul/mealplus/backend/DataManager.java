@@ -67,12 +67,12 @@ public class DataManager {
 		return entries;
 	}
 
-	private static <T> boolean hasFilter(ArrayList<T> i, ArrayList<T> o) {
-		if(i == null) return true;
-		if(o == null) return false;
+	private static <T> boolean hasFilter(ArrayList<T> selectedFilters, ArrayList<T> itemFilters) {
+		if(selectedFilters == null || selectedFilters.size() == 0) return true;
+		if(itemFilters == null) return false;
 
-		for (T t : o)
-			if(i.contains(t))
+		for (T t : itemFilters)
+			if(selectedFilters.contains(t))
 				return true;
 		return false;
 	}

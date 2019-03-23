@@ -10,6 +10,7 @@ import android.widget.TextView;
 import org.w3c.dom.Text;
 
 import lucacipaul.mealplus.backend.Customer;
+import lucacipaul.mealplus.backend.DataManager;
 import lucacipaul.mealplus.backend.DietLogEntry;
 
 public class ViewItem extends AppCompatActivity {
@@ -17,8 +18,8 @@ public class ViewItem extends AppCompatActivity {
     TextView calories, carbs, proteins, fats, name, author;
     EditText quantity;
     Button dislike, confirm;
-    DietLogEntry entry;
-    Customer customer;
+    public static DietLogEntry entry;
+    public static Customer customer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +35,7 @@ public class ViewItem extends AppCompatActivity {
         dislike = (Button)findViewById(R.id.dislikeButton);
         confirm = (Button)findViewById(R.id.addToMealButton);
 
-        entry = getIntent().getParcelableExtra(SearchResults.EXTRA_VIEW_ENTRY);
+        entry = SearchResults.entry; // getIntent().getParcelableExtra(SearchResults.EXTRA_VIEW_ENTRY);
         if(entry == null) {
             entry = getIntent().getParcelableExtra(CustomerDashboard.EXTRA_VIEW_ENTRY);
             quantity.setFocusable(false);
@@ -42,7 +43,7 @@ public class ViewItem extends AppCompatActivity {
             dislike.setVisibility(View.GONE);
             confirm.setVisibility(View.GONE);
         } else {
-            customer = getIntent().getParcelableExtra(SearchResults.EXTRA_CUSTOMER);
+            customer =  SearchResults.customer; // getIntent().getParcelableExtra(SearchResults.EXTRA_CUSTOMER);
         }
 
         name.setText(entry.getEntry().getName());
@@ -59,7 +60,7 @@ public class ViewItem extends AppCompatActivity {
     }
 
     public void dislikeButtonClicked(View view) {
-        if(entry.getFood() == null) {
+        if(entry.getFood() != null) {
             customer.dislikeFood(entry.getFood());
         } else {
             customer.dislikeRecipe(entry.getRecipe());
