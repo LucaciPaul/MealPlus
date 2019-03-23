@@ -228,7 +228,7 @@ public class DataManager {
 	}
 
 	public void logout() {
-
+		loggedUser = null;
 	}
 
 	/**
