@@ -28,20 +28,22 @@ public class DataManager {
 	 * 
 	 * @param email
 	 */
-	public ArrayList<User> searchAccount(String email) {
+	public ArrayList<User> searchAccount(String email, boolean customersOnly) {
 		ArrayList<User> users = new ArrayList<User>();
 		
 		for (User usr : Dummy.customers) {
 			if(usr.getEmail().contains(email))
 					users.add((Customer)usr);
 		}
-		for (User usr : Dummy.advisers) {
-			if(usr.getEmail().contains(email))
-					users.add((Adviser)usr);
-		}
-		for (User usr : Dummy.admins) {
-			if(usr.getEmail().contains(email))
-					users.add((Admin)usr);
+		if(!customersOnly) {
+			for (User usr : Dummy.advisers) {
+				if (usr.getEmail().contains(email))
+					users.add((Adviser) usr);
+			}
+			for (User usr : Dummy.admins) {
+				if (usr.getEmail().contains(email))
+					users.add((Admin) usr);
+			}
 		}
 		return users;
 	}
@@ -205,7 +207,7 @@ public class DataManager {
 
 		// No need to sanitise parameters, as if they do not
 		// match then it will just return false.
-		ArrayList<User> users = searchAccount(email);
+		ArrayList<User> users = searchAccount(email, false);
 		if(users.size() == 1 && users.get(0).getEmail().equalsIgnoreCase(email)) {
 			User usr = users.get(0);
 			if(usr.getPwd().equals(hashPassword(usr, pwd))) { // Critical bug fixed here, make sure to have { } @Paul.
@@ -226,6 +228,10 @@ public class DataManager {
 		return null;
 	}
 
+	public void logout() {
+
+	}
+
 	/**
 	 * 
 	 * @param user
@@ -240,7 +246,7 @@ public class DataManager {
 
 		// Sanity checks to make sure the email
 		// does not exist.
-		ArrayList<User> users = searchAccount(user.getEmail());
+		ArrayList<User> users = searchAccount(user.getEmail(), false);
 		if(!users.isEmpty()) {
 			return false;
 		}
