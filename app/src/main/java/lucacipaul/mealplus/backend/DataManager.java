@@ -348,14 +348,14 @@ public class DataManager {
 
 	private static boolean productsTokenMatch(String token, ArrayList<String> products) {
 		for(String s : products) {
-			if(s.toLowerCase().contains(token.toLowerCase()))
+			if((token == null || token.isEmpty()) || s.toLowerCase().contains(token.toLowerCase()))
 				return true;
 		}
 		return false;
 	}
 
 	private static boolean tokenMatch(String token, String item) {
-		return item != null && item.toLowerCase().contains(token.toLowerCase());
+		return item != null && ((token == null || token.isEmpty()) || item.toLowerCase().contains(token.toLowerCase()));
 	}
 
 }
