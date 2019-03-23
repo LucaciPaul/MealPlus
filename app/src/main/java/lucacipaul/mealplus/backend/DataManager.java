@@ -169,7 +169,6 @@ public class DataManager {
 
         removeDislikedItems(filtered, dietLogEntriesToItems(customer.getDislikedItems()));
 
-		// TODO: implement the frequently-eaten
 		// TODO: recommendations.
 
 		return itemsToDietLogEntries(removeDuplicates(filtered));
@@ -293,7 +292,7 @@ public class DataManager {
 
 		for(Items item : all) {
 			if(item.isPublic() == isPublic)
-				if(item.getName().toLowerCase().contains(token.toLowerCase())) {
+				if((token == null || token.isEmpty()) || item.getName().toLowerCase().contains(token.toLowerCase())) {
 					if(item instanceof Food) items.add(item);
 					if (item instanceof Recipe) {
 						Recipe recipe = (Recipe) item;
