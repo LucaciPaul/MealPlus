@@ -49,7 +49,7 @@ public class Customer extends User implements Parcelable {
 		fatsPerDay = in.readFloat();
 		caloriesPerDay = in.readFloat();
 		dislikedItems = in.createTypedArrayList(DietLogEntry.CREATOR);
-		frequentlyEaten = in.createTypedArrayList(DietLogEntry.CREATOR);
+		frequentlyEaten = (HashMap<Items, Integer>)in.readSerializable(); // Not tested
 	}
 
 	@Override
@@ -72,7 +72,7 @@ public class Customer extends User implements Parcelable {
 		dest.writeFloat(fatsPerDay);
 		dest.writeFloat(caloriesPerDay);
 		dest.writeTypedList(dislikedItems);
-		dest.writeTypedList(frequentlyEaten);
+		dest.writeSerializable(frequentlyEaten);
 	}
 
 	@Override
