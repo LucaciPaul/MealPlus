@@ -156,38 +156,43 @@ public class CustomerDashboard extends AppCompatActivity
     public void addBreakfastButtonClicked(View view) {
         meal = Meal.Breakfast;
         Intent intent = new Intent(this, SearchItems.class);
-        intent.putExtra(EXTRA_MEAL, Meal.Breakfast);
-        intent.putExtra(EXTRA_CUSTOMER, customer);
+        //intent.putExtra(EXTRA_MEAL, Meal.Breakfast);
+        //intent.putExtra(EXTRA_CUSTOMER, customer);
         startActivity(intent);
     }
     public void addSnack1ButtonClicked(View view) {
+        meal = Meal.SnackOne;
         Intent intent = new Intent(this, SearchItems.class);
-        intent.putExtra(EXTRA_MEAL, Meal.SnackOne);
-        intent.putExtra(EXTRA_CUSTOMER, customer);
+        //intent.putExtra(EXTRA_MEAL, Meal.SnackOne);
+        //intent.putExtra(EXTRA_CUSTOMER, customer);
         startActivity(intent);
     }
     public void addLunchButtonClicked(View view) {
+        meal = Meal.Lunch;
         Intent intent = new Intent(this, SearchItems.class);
-        intent.putExtra(EXTRA_MEAL, Meal.Lunch);
-        intent.putExtra(EXTRA_CUSTOMER, customer);
+        //intent.putExtra(EXTRA_MEAL, Meal.Lunch);
+        //intent.putExtra(EXTRA_CUSTOMER, customer);
         startActivity(intent);
     }
     public void addSnack2ButtonClicked(View view) {
+        meal = Meal.SnackTwo;
         Intent intent = new Intent(this, SearchItems.class);
-        intent.putExtra(EXTRA_MEAL, Meal.SnackTwo);
-        intent.putExtra(EXTRA_CUSTOMER, customer);
+        //intent.putExtra(EXTRA_MEAL, Meal.SnackTwo);
+        //intent.putExtra(EXTRA_CUSTOMER, customer);
         startActivity(intent);
     }
     public void addDinnerButtonClicked(View view) {
+        meal = Meal.Dinner;
         Intent intent = new Intent(this, SearchItems.class);
-        intent.putExtra(EXTRA_MEAL, Meal.Dinner);
-        intent.putExtra(EXTRA_CUSTOMER, customer);
+        //intent.putExtra(EXTRA_MEAL, Meal.Dinner);
+        //intent.putExtra(EXTRA_CUSTOMER, customer);
         startActivity(intent);
     }
     public void addSnack3ButtonClicked(View view) {
+        meal = Meal.SnackThree;
         Intent intent = new Intent(this, SearchItems.class);
-        intent.putExtra(EXTRA_MEAL, Meal.SnackThree);
-        intent.putExtra(EXTRA_CUSTOMER, customer);
+        //intent.putExtra(EXTRA_MEAL, Meal.SnackThree);
+        //intent.putExtra(EXTRA_CUSTOMER, customer);
         startActivity(intent);
     }
 }

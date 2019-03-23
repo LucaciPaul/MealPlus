@@ -352,14 +352,15 @@ public class Customer extends User implements Parcelable {
 	}
 
 	public ArrayList<DietLogEntry> getFrequentlyEaten() {
-		return getFrequentlyEaten(5);
+		int defaultSize = frequentlyEaten.size() > 5 ? 5 : frequentlyEaten.size();
+		return getFrequentlyEaten(defaultSize);
 	}
 	public ArrayList<DietLogEntry> getFrequentlyEaten(int count) {
 		Object[] sorted = sortByValue(this.frequentlyEaten).entrySet().toArray();
 		ArrayList<DietLogEntry> entries = new ArrayList<DietLogEntry>(count);
 
 		for(int i = 0; i < count; i++)
-			entries.add(new DietLogEntry(((Map.Entry<Items, Integer>)sorted[5]).getKey()));
+			entries.add(new DietLogEntry(((Map.Entry<Items, Integer>)sorted[i]).getKey()));
 
 		return entries;
 	}

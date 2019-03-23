@@ -71,6 +71,7 @@ public class Dummy {
     	
     	c.setFirstName("Paul"); c.setLastName("Lucaci"); c.setEmail("p@email.com"); c.setRegistrationDate(new Date()); c.setPwd(DataManager.getInstance().hashPassword(c, "password"));
     	c.setCaloriesPerDay(2000); c.setCarbsPerDay(200); c.setProteinsPerDay(300); c.setFatsPerDay(400);
+    	c.addFrequentlyEaten(new DietLogEntry(food)); c.addFrequentlyEaten(new DietLogEntry(food)); c.addFrequentlyEaten(new DietLogEntry(food));
     	dietLogs.get(0).setCustomer(c.getEmail());
     	c.setDietLog(dietLogs.get(0));
     	customers.add(c);

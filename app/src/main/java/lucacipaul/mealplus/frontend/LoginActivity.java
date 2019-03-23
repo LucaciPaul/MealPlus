@@ -41,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
             Intent intent;
             if(user instanceof Customer){
                 intent = new Intent(this, CustomerDashboard.class);
-                intent.putExtra(EXTRA_CUSTOMER_LOGIN, (Customer)user);
+                // intent.putExtra(EXTRA_CUSTOMER_LOGIN, (Customer)user);
                 startActivity(intent);
             } else if(user instanceof Adviser) {
                 intent = new Intent(this, AdviserDashboard.class);

@@ -83,7 +83,7 @@ public class SearchItems extends AppCompatActivity{
 
         Intent intent = new Intent(this, SearchResults.class);
         intent.putParcelableArrayListExtra(EXTRA_RESULTS, results);
-        intent.putExtra(EXTRA_CUSTOMER, customer);
+        //intent.putExtra(EXTRA_CUSTOMER, customer);
         startActivity(intent);
     }
 
