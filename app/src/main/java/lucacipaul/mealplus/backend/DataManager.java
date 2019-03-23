@@ -243,6 +243,12 @@ public class DataManager {
 		if(!sanityCheckInputField(user.getFirstName(), false) || !sanityCheckInputField(user.getLastName(), false)) return false;
 		if(!sanityCheckInputField(user.getPwd(), true)) return false;
 
+		// Sanity checks for advisers.
+		if(user instanceof Adviser) {
+			Adviser adviser = (Adviser)user;
+			if(!sanityCheckAdviser(adviser)) return false; // Registration number or Phone number already exists.
+		}
+
 		// Sanity checks to make sure the email
 		// does not exist.
 		ArrayList<User> users = searchAccount(user.getEmail(), false);
@@ -358,4 +364,14 @@ public class DataManager {
 		return item != null && ((token == null || token.isEmpty()) || item.toLowerCase().contains(token.toLowerCase()));
 	}
 
+	// Checks if registrationNumber and phoneNumber are unique to this new adviser.
+	// true if unique, false otherwise.
+	private static boolean sanityCheckAdviser(Adviser adviser) {
+		for (Adviser other : Dummy.advisers) {
+			System.out.println("i");
+			if(adviser.getRegNo().equals(other.getRegNo()) || adviser.getPhoneNo().equals(other.getPhoneNo()))
+				return false;
+		}
+		return true;
+	}
 }
