@@ -294,6 +294,7 @@ public class DataManager {
 			return false;
 		}
 
+		user.setPwd(hashPassword(user, user.getPwd())); // Hash password before adding it to the database.
 		if(user instanceof Customer) {
 			loggedUser = (Customer)user;
 			return Dummy.customers.add((Customer) user);
