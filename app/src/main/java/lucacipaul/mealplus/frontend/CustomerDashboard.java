@@ -45,6 +45,7 @@ public class CustomerDashboard extends AppCompatActivity
         setContentView(R.layout.customer_dashboard_activity);
 
         customerDashboardContext = getBaseContext();
+
         if(getIntent().getBooleanExtra(LoginActivity.EXTRA_CUSTOMER_LOGIN, false)) {
             customer = (Customer) DataManager.getLoggedUser();
         } else if(getIntent().getBooleanExtra(RegisterCustomer.EXTRA_CUSTOMER_FINAL, false)) {
