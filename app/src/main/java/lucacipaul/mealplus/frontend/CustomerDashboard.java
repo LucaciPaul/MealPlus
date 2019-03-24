@@ -184,6 +184,7 @@ public class CustomerDashboard extends AppCompatActivity
 
     public void closeDietLogButtonClicked(View view) {
         customer.getDietLog().setClosed(true);
+
         Report report = new Report();
         report.setDietLog(customer.getDietLog());
         report.setCustomer(customer);
@@ -191,8 +192,11 @@ public class CustomerDashboard extends AppCompatActivity
         report.setCarbsPerDay(customer.getCarbsPerDay());
         report.setProteinsPerDay(customer.getProteinsPerDay());
         report.setFatsPerDay(customer.getFatsPerDay());
+        customer.getReports().add(report);
         Dummy.reports.add(report);
+
         customer.setDietLog(new DietLog());
+
         updateFields();
         updateLists();
     }

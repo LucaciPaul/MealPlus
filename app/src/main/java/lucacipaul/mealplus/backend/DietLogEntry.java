@@ -1,9 +1,6 @@
 package lucacipaul.mealplus.backend;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
-public class DietLogEntry implements Parcelable {
+public class DietLogEntry {
 
 	private Recipe recipe;
 	private Food food;
@@ -16,39 +13,7 @@ public class DietLogEntry implements Parcelable {
 		else if(item instanceof Food) food = (Food)item;
 	}
 
-	protected DietLogEntry(Parcel in) {
-		recipe = in.readParcelable(Recipe.class.getClassLoader());
-		food = in.readParcelable(Food.class.getClassLoader());
-		quantity = in.readFloat();
-		meal = (Meal) in.readSerializable();
-	}
-
-	@Override
-	public void writeToParcel(Parcel dest, int flags) {
-		dest.writeParcelable(recipe, flags);
-		dest.writeParcelable(food, flags);
-		dest.writeFloat(quantity);
-		dest.writeSerializable(meal);
-	}
-
-	@Override
-	public int describeContents() {
-		return 0;
-	}
-
-	public static final Creator<DietLogEntry> CREATOR = new Creator<DietLogEntry>() {
-		@Override
-		public DietLogEntry createFromParcel(Parcel in) {
-			return new DietLogEntry(in);
-		}
-
-		@Override
-		public DietLogEntry[] newArray(int size) {
-			return new DietLogEntry[size];
-		}
-	};
-
-	public Food getFood() {
+    public Food getFood() {
 		return this.food;
 	}
 
