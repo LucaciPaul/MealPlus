@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".CustomerDashboard">
 
-    <android.support.v4.widget.NestedScrollView
+    <ScrollView
         android:id="@+id/scrollableCustomerDashboard"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -16,7 +16,6 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
-        android:nestedScrollingEnabled="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -195,7 +194,8 @@
                     <ListView
                         android:id="@+id/breakfastList"
                         android:layout_width="wrap_content"
-                        android:layout_height="130dp" />
+                        android:layout_height="130dp"
+                        android:nestedScrollingEnabled="true" />
                 </TableRow>
 
                 <TableRow
@@ -231,7 +231,8 @@
                     <ListView
                         android:id="@+id/snack1List"
                         android:layout_width="match_parent"
-                        android:layout_height="130dp" />
+                        android:layout_height="130dp"
+                        android:nestedScrollingEnabled="true" />
                 </TableRow>
 
                 <TableRow
@@ -267,7 +268,8 @@
                     <ListView
                         android:id="@+id/lunchList"
                         android:layout_width="match_parent"
-                        android:layout_height="130dp" />
+                        android:layout_height="130dp"
+                        android:nestedScrollingEnabled="true" />
                 </TableRow>
 
                 <TableRow
@@ -304,7 +306,8 @@
                     <ListView
                         android:id="@+id/snack2List"
                         android:layout_width="match_parent"
-                        android:layout_height="130dp" />
+                        android:layout_height="130dp"
+                        android:nestedScrollingEnabled="true" />
                 </TableRow>
 
                 <TableRow
@@ -340,7 +343,8 @@
                     <ListView
                         android:id="@+id/dinnerList"
                         android:layout_width="match_parent"
-                        android:layout_height="130dp" />
+                        android:layout_height="130dp"
+                        android:nestedScrollingEnabled="true" />
                 </TableRow>
 
                 <TableRow
@@ -376,7 +380,8 @@
                     <ListView
                         android:id="@+id/snack3List"
                         android:layout_width="match_parent"
-                        android:layout_height="130dp" />
+                        android:layout_height="130dp"
+                        android:nestedScrollingEnabled="true" />
 
                 </TableRow>
 
@@ -469,6 +474,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/createFoodButton" />
 
         </android.support.constraint.ConstraintLayout>
-    </android.support.v4.widget.NestedScrollView>
+    </ScrollView>
 
 </android.support.constraint.ConstraintLayout>

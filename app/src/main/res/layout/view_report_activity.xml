@@ -194,7 +194,21 @@
                     <ListView
                         android:id="@+id/breakfastList"
                         android:layout_width="wrap_content"
-                        android:layout_height="130dp" />
+                        android:layout_height="130dp"
+                        android:nestedScrollingEnabled="true" />
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/breakfastButtonRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <Button
+                        android:id="@+id/addBreakfastButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="addBreakfastButtonClicked"
+                        android:text="Add Entry" />
                 </TableRow>
 
                 <TableRow
@@ -217,7 +231,21 @@
                     <ListView
                         android:id="@+id/snack1List"
                         android:layout_width="match_parent"
-                        android:layout_height="130dp" />
+                        android:layout_height="130dp"
+                        android:nestedScrollingEnabled="true" />
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/snack1ButtonRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <Button
+                        android:id="@+id/addSnack1Button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="addSnack1ButtonClicked"
+                        android:text="Add Entry" />
                 </TableRow>
 
                 <TableRow
@@ -240,7 +268,21 @@
                     <ListView
                         android:id="@+id/lunchList"
                         android:layout_width="match_parent"
-                        android:layout_height="130dp" />
+                        android:layout_height="130dp"
+                        android:nestedScrollingEnabled="true" />
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/lunchButtonRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <Button
+                        android:id="@+id/addLunchButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="addLunchButtonClicked"
+                        android:text="Add Entry" />
                 </TableRow>
 
                 <TableRow
@@ -264,7 +306,21 @@
                     <ListView
                         android:id="@+id/snack2List"
                         android:layout_width="match_parent"
-                        android:layout_height="130dp" />
+                        android:layout_height="130dp"
+                        android:nestedScrollingEnabled="true" />
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/snack2ButtonRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <Button
+                        android:id="@+id/addSnack2Button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="addSnack2ButtonClicked"
+                        android:text="Add Entry" />
                 </TableRow>
 
                 <TableRow
@@ -287,7 +343,21 @@
                     <ListView
                         android:id="@+id/dinnerList"
                         android:layout_width="match_parent"
-                        android:layout_height="130dp" />
+                        android:layout_height="130dp"
+                        android:nestedScrollingEnabled="true" />
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/dinnerButtonRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <Button
+                        android:id="@+id/addDinnerButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="addDinnerButtonClicked"
+                        android:text="Add Entry" />
                 </TableRow>
 
                 <TableRow
@@ -310,10 +380,23 @@
                     <ListView
                         android:id="@+id/snack3List"
                         android:layout_width="match_parent"
-                        android:layout_height="130dp" />
+                        android:layout_height="130dp"
+                        android:nestedScrollingEnabled="true" />
 
                 </TableRow>
 
+                <TableRow
+                    android:id="@+id/snack3ButtonRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <Button
+                        android:id="@+id/addSnack3Button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="addSnack3ButtonClicked"
+                        android:text="Add Entry" />
+                </TableRow>
             </TableLayout>
 
         </android.support.constraint.ConstraintLayout>
