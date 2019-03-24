@@ -405,4 +405,12 @@ public class Customer extends User implements Parcelable {
 			// therefore add a new entry with the value 1 (eaten once).
 			this.frequentlyEaten.put(key, 1);
 	}
+
+	public int adviserStatus() {
+		if(this.getAdviser() != null &&
+				this.getPendingRequest() == false) return 1; // Adviser is associated
+		else if(this.getAdviser() != null &&
+				this.getPendingRequest() == true) return 0; // An invitation is pending an answer
+		return -1; // Adviser position is vacant for this Customer
+	}
 }

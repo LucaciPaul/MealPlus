@@ -28,7 +28,8 @@
         <activity android:name=".SearchResults" />
         <activity android:name=".SearchItems" />
         <activity android:name=".AdviserDashboard" />
-        <activity android:name=".SearchUser" />
+        <activity android:name=".ViewReport" />
+        <activity android:name=".Settings"></activity>
     </application>
 
 </manifest>

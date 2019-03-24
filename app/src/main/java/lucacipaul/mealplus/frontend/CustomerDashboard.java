@@ -27,6 +27,7 @@ public class CustomerDashboard extends AppCompatActivity
     public static final String EXTRA_VIEW_ENTRY = "lucacipaul.mealplus.frontend.CustomerDashboard.EXTRA_VIEW_ENTRY";
     public static final String EXTRA_MEAL = "lucacipaul.mealplus.frontend.CustomerDashboard.EXTRA_MEAL";
     public static final String EXTRA_CUSTOMER = "lucacipaul.mealplus.frontend.CustomerDashboard.EXTRA_CUSTOMER";
+    public static final String EXTRA_CUSTOMER_SETTINGS = "lucacipaul.mealplus.frontend.CustomerDashboard.EXTRA_CUSTOMER_SETTINGS";
 
     public static Customer customer;
 

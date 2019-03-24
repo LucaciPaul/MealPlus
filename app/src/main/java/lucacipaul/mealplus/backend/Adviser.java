@@ -148,15 +148,9 @@ public class Adviser extends User implements Parcelable {
 	 * 
 	 * @param customer
 	 */
-	public int sendAssociationRequest(Customer customer) {
-		if(customer.getAdviser() != null &&
-				customer.getPendingRequest() == false) return -1;
-		else if(customer.getAdviser() != null &&
-				customer.getPendingRequest() == true) return 0;
-
+	public void sendAssociationRequest(Customer customer) {
 		customer.setAdviser(this.getEmail());
 		customer.setPendingRequest(true);
-		return 1;
 	}
 
 	public boolean getApproved() {

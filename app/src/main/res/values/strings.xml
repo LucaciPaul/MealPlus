@@ -89,4 +89,6 @@
     <string name="search_customer">Search Customer</string>
     <string name="log_out">Log Out</string>
     <string name="display_associated_customers">Display Associated Customers</string>
+    <string name="key_in_account_e_mail">Key in Account E-mail</string>
+    <string name="request_settings">Request Settings</string>
 </resources>
