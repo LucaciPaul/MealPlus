@@ -22,13 +22,14 @@ public class Dummy {
 		ArrayList<Amenities> amenities = new ArrayList<Amenities>(); amenities.add(Amenities.Cooker);
 		ArrayList<Sellpoints> sellpoints = new ArrayList<Sellpoints>(); sellpoints.add(Sellpoints.Sainsbury); sellpoints.add(Sellpoints.Tesco);
 		food.setName("Eggs"); food.setPublic(true); food.setTypes(types); food.setAmenities(amenities); food.setSellpoints(sellpoints);
-		food.setCalories(100); food.setCarbs(200); food.setProteins(300); food.setFats(400);
+		food.setCalories(100); food.setCarbs(10); food.setProteins(20); food.setFats(30);
 		foods.add(food);
 
 		food = new Food();
 		types = new ArrayList<Types>(); types.add(Types.Vegan); types.add(Types.Vegetables);
 		sellpoints = new ArrayList<Sellpoints>(); sellpoints.add(Sellpoints.Tesco);
 		food.setName("Avocado Toast"); food.setPublic(true); food.setTypes(types); food.setAmenities(null); food.setSellpoints(sellpoints);
+		food.setCalories(200); food.setCarbs(15); food.setProteins(22); food.setFats(30);
 		foods.add(food);
 
     	/*Food food = new Food();
@@ -52,6 +53,7 @@ public class Dummy {
 		recipe.setFoodProduct(food);
 		recipe.setName("Avocado Toast"); recipe.setFoodProduct(foods.get(1)); recipe.setPublic(true); recipe.setTypes(types); recipe.setAmenities(amenities);
 		recipe.setTutorial("Lorem Ipsum\nlorem ipsum\nlOrem iPsum"); recipe.setIngredients(ingredients);
+		recipe.setCalories(210); recipe.setCarbs(40); recipe.setProteins(50); recipe.setFats(60);
 		recipes.add(recipe);
 
 		//DietLogs
@@ -93,7 +95,7 @@ public class Dummy {
     	adv = new Adviser();
     	adv.setFirstName("Viktorija"); adv.setLastName("Kolasnikova"); adv.setEmail("v@email.com"); adv.setRegistrationDate(new Date()); adv.setPwd(DataManager.getInstance().hashPassword(adv, "password"));
     	adv.getAssociatedCustomers().add(customers.get(0));
-    	customers.get(0).setAdviser(adv.getEmail()); customers.get(0).setPendingRequest(false);
+		customers.get(0).setAdviser(adv); customers.get(0).setPendingRequest(false);
     	advisers.add(adv);
 
     	

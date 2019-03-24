@@ -71,7 +71,7 @@ public class SearchItems extends AppCompatActivity{
 
         results = DataManager.getInstance().
                 searchItems(
-                        customer,
+                        customer, meal,
                         token, amenitiesFilters, foodTypeFilters, sellpointsFilters,
                         frequentlyEaten, selfMade, recommend
                 );

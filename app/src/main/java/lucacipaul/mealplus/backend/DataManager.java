@@ -4,6 +4,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.nio.charset.StandardCharsets;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class DataManager {
 
@@ -125,6 +127,39 @@ public class DataManager {
 			items.remove(e);
 	}
 
+	private static float getCaloriesForMealPercentage(Meal meal) {
+		switch (meal){
+			case Breakfast: return 0.15f;
+			case Lunch: return 0.25f;
+			case Dinner: return 0.15f;
+			default: return 0.15f; // Snack1/2/3.
+		}
+	}
+
+	private static void filterRecommendations(ArrayList<Items> items, int caloriesAvailable, int carbsAvailable, int fatsAvailable, int proteinsAvailable) {
+		// Remove items that are over the calorie budget.
+		for (int i = items.size() - 1; i >= 0; i--) {
+			Items item = items.get(i);
+			// Do not show items that exceed the available limits.
+			if((item.getCalories() > caloriesAvailable) ||
+                item.getCarbs() > carbsAvailable        ||
+                item.getFats() > fatsAvailable          ||
+                item.getProteins() > proteinsAvailable) items.remove(item);
+		}
+
+		// Once the items that are over the calorie budget removed, then we
+		// can sort everything by how close it is to our calorie budget.
+		// (should be sort by highest)
+		Collections.sort(items, new Comparator<Items>(){
+			public int compare(Items o1, Items o2)
+			{ return (int)(
+                    (o2.getCalories() + o2.getCarbs() + o2.getFats() + o2.getProteins())
+                    -
+                    (o1.getCalories() + o2.getCarbs() + o2.getFats() + o2.getProteins()));
+			}
+		});
+	}
+
 	/**
 	 * 
 	 * @param token
@@ -135,7 +170,7 @@ public class DataManager {
 	 * @param searchSelfMade
 	 * @param recommend
 	 */
-	public ArrayList<DietLogEntry> searchItems(Customer customer,
+	public ArrayList<DietLogEntry> searchItems(Customer customer, Meal meal,
 			String token,
 			ArrayList<Amenities> amenities, ArrayList<Types> types, ArrayList<Sellpoints> sellpoints,
 			boolean searchFrequentlyEaten, boolean searchSelfMade, boolean recommend)
@@ -164,7 +199,16 @@ public class DataManager {
 
         removeDislikedItems(filtered, dietLogEntriesToItems(customer.getDislikedItems()));
 
-		// TODO: recommendations.
+        if(recommend) {
+
+			int caloriesForMeal = (int)((customer.getCaloriesPerDay()-customer.getDietLog().getCaloriesTotal()) * getCaloriesForMealPercentage(meal));
+            int carbsForMeal = (int)((customer.getCarbsPerDay()-customer.getDietLog().getCarbsTotal()) * getCaloriesForMealPercentage(meal));
+            int fatsForMeal = (int)((customer.getFatsPerDay()-customer.getDietLog().getFatsTotal()) * getCaloriesForMealPercentage(meal));
+            int proteinsForMeal = (int)((customer.getProteinsPerDay()-customer.getDietLog().getProteinsTotal()) * getCaloriesForMealPercentage(meal));
+
+
+            filterRecommendations(filtered, caloriesForMeal, carbsForMeal, fatsForMeal, proteinsForMeal);
+		}
 
 		return itemsToDietLogEntries(removeDuplicates(filtered));
 	}
