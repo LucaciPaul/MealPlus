@@ -120,6 +120,7 @@ public class Settings extends AppCompatActivity {
 
     public void acceptRequestButtonClicked(View view) {
         ((Customer)user).setPendingRequest(false);
+        ((Customer)user).getAdviser().getAssociatedCustomers().add((Customer)user);
         findViewById(R.id.nutritionalSettingsLayout).setVisibility(View.GONE);
         findViewById(R.id.acceptRequestButton).setVisibility(View.GONE);
         findViewById(R.id.denyRequestButton).setVisibility(View.GONE);
@@ -134,5 +135,6 @@ public class Settings extends AppCompatActivity {
         ((Customer)user).setAdviser(null);
         findViewById(R.id.requestSettingsLayout).setVisibility(View.GONE);
         findViewById(R.id.nutritionalSettingsLayout).setVisibility(View.VISIBLE);
+        displayNutritionalSettings();
     }
 }
