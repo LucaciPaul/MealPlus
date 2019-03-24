@@ -415,6 +415,21 @@
                 app:layout_constraintTop_toBottomOf="@+id/dietLog" />
 
             <Button
+                android:id="@+id/createFoodButton"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="28dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:text="@string/create_food"
+                app:layout_constraintEnd_toStartOf="@+id/createRecipeButton"
+                app:layout_constraintHorizontal_bias="0.133"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/closeDietLogButton" />
+
+            <Button
                 android:id="@+id/createRecipeButton"
                 android:layout_width="130dp"
                 android:layout_height="wrap_content"
@@ -424,6 +439,21 @@
                 android:text="@string/create_recipe"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/closeDietLogButton" />
+
+            <Button
+                android:id="@+id/viewReportsButton"
+                android:layout_width="320dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:onClick="viewReportsButtonClicked"
+                android:text="@string/see_past_reports"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/createFoodButton" />
 
             <Button
                 android:id="@+id/settingsButton"
@@ -444,34 +474,23 @@
                 app:layout_constraintVertical_bias="0.0" />
 
             <Button
-                android:id="@+id/createFoodButton"
-                android:layout_width="130dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="28dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:text="@string/create_food"
-                app:layout_constraintEnd_toStartOf="@+id/createRecipeButton"
-                app:layout_constraintHorizontal_bias="0.133"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/closeDietLogButton" />
-
-            <Button
-                android:id="@+id/viewReportsButton"
+                android:id="@+id/loutOutCustomerButton"
                 android:layout_width="320dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
-                android:onClick="viewReportsButtonClicked"
-                android:text="@string/see_past_reports"
+                android:layout_marginBottom="8dp"
+                android:onClick="loutOutCustomerButtonClicked"
+                android:text="@string/log_out"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/createFoodButton" />
+                app:layout_constraintTop_toBottomOf="@+id/settingsButton"
+                app:layout_constraintVertical_bias="0.0" />
+
 
         </android.support.constraint.ConstraintLayout>
     </ScrollView>

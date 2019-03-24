@@ -215,4 +215,15 @@ public class CustomerDashboard extends AppCompatActivity
         intent.putExtra(EXTRA_DISPLAY_REPORTS, true);
         startActivity(intent);
     }
+
+
+    public void loutOutCustomerButtonClicked(View view) {
+        DataManager.getInstance().logout();
+        this.onBackPressed();
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
 }

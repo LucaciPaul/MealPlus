@@ -48,7 +48,13 @@ public class AdviserDashboard extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void logOutButtonClicked(View view) {
+    public void logOutAdviserButtonClicked(View view) {
         DataManager.getInstance().logout();
+        this.onBackPressed();
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
     }
 }
