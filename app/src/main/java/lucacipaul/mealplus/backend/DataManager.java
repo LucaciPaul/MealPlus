@@ -51,21 +51,10 @@ public class DataManager {
 		return users;
 	}
 	public User searchSpecificAccount(String email) {
-        for (User usr : Dummy.customers) {
-            if(usr.getEmail().equalsIgnoreCase(email))
-                return usr;
-        }
-        for (User usr : Dummy.advisers) {
-            if (usr.getEmail().equalsIgnoreCase(email))
-                return usr;
-        }
-        for (User usr : Dummy.admins) {
-            if (usr.getEmail().equalsIgnoreCase(email))
-                return usr;
-            }
 
-        // No account with that email found.
-        return null;
+        ArrayList<User> users = searchAccount(email, false);
+        if(users.isEmpty()) return null;
+        return users.get(0);
     }
 
 	private ArrayList<Items> filterItems(ArrayList<Items> items, ArrayList<Amenities> amenities, ArrayList<Types> types, ArrayList<Sellpoints> sellpoints) {
