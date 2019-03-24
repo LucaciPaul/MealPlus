@@ -1,13 +1,10 @@
 package lucacipaul.mealplus.backend;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class Customer extends User implements Parcelable {
+public class Customer extends User {
 
 	private String adviserEmail;
 	private DietLog dietLog;
@@ -29,68 +26,6 @@ public class Customer extends User implements Parcelable {
 	private HashMap<Items, Integer> frequentlyEaten = new HashMap<>();
 
 	public Customer() {}
-
-	protected Customer(Parcel in) {
-		super(in);
-		dietLog = in.readParcelable(DietLog.class.getClassLoader());
-		adviserEmail = in.readString();
-		reports = in.createTypedArrayList(Report.CREATOR);
-		ownedFood = in.createTypedArrayList(Food.CREATOR);
-		ownedRecipes = in.createTypedArrayList(Recipe.CREATOR);
-		age = in.readInt();
-		size = in.readFloat();
-		weight = in.readFloat();
-		gender = (Gender) in.readSerializable();
-		activityLevel = (ActivityLevel) in.readSerializable();
-		goal = (Goal) in.readSerializable();
-		pendingRequest = in.readByte() != 0;
-		carbsPerDay = in.readFloat();
-		proteinsPerDay = in.readFloat();
-		fatsPerDay = in.readFloat();
-		caloriesPerDay = in.readFloat();
-		dislikedItems = in.createTypedArrayList(DietLogEntry.CREATOR);
-		frequentlyEaten = (HashMap<Items, Integer>)in.readSerializable(); // Not tested
-	}
-
-	@Override
-	public void writeToParcel(Parcel dest, int flags) {
-		super.writeToParcel(dest, flags);
-		dest.writeParcelable(dietLog, flags);
-		dest.writeString(adviserEmail);
-		dest.writeTypedList(reports);
-		dest.writeTypedList(ownedFood);
-		dest.writeTypedList(ownedRecipes);
-		dest.writeInt(age);
-		dest.writeFloat(size);
-		dest.writeFloat(weight);
-		dest.writeSerializable(gender);
-		dest.writeSerializable(activityLevel);
-		dest.writeSerializable(goal);
-		dest.writeByte((byte) (pendingRequest ? 1 : 0));
-		dest.writeFloat(carbsPerDay);
-		dest.writeFloat(proteinsPerDay);
-		dest.writeFloat(fatsPerDay);
-		dest.writeFloat(caloriesPerDay);
-		dest.writeTypedList(dislikedItems);
-		dest.writeSerializable(frequentlyEaten);
-	}
-
-	@Override
-	public int describeContents() {
-		return 0;
-	}
-
-	public static final Creator<Customer> CREATOR = new Creator<Customer>() {
-		@Override
-		public Customer createFromParcel(Parcel in) {
-			return new Customer(in);
-		}
-
-		@Override
-		public Customer[] newArray(int size) {
-			return new Customer[size];
-		}
-	};
 
 	public int getAge() {
 		return this.age;

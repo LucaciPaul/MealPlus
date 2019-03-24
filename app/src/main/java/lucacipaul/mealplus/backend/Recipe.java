@@ -1,11 +1,8 @@
 package lucacipaul.mealplus.backend;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import java.util.*;
 
-public class Recipe extends Items implements Parcelable {
+public class Recipe extends Items {
 
 	private Food foodProduct;
 	private ArrayList<String> ingredients;
@@ -13,39 +10,7 @@ public class Recipe extends Items implements Parcelable {
 
 	public Recipe() {}
 
-	protected Recipe(Parcel in) {
-		super(in);
-		foodProduct = in.readParcelable(Food.class.getClassLoader());
-		ingredients = in.createStringArrayList();
-		tutorial = in.readString();
-	}
-
-	@Override
-	public void writeToParcel(Parcel dest, int flags) {
-		super.writeToParcel(dest, flags);
-		dest.writeParcelable(foodProduct, flags);
-		dest.writeStringList(ingredients);
-		dest.writeString(tutorial);
-	}
-
-	@Override
-	public int describeContents() {
-		return 0;
-	}
-
-	public static final Creator<Recipe> CREATOR = new Creator<Recipe>() {
-		@Override
-		public Recipe createFromParcel(Parcel in) {
-			return new Recipe(in);
-		}
-
-		@Override
-		public Recipe[] newArray(int size) {
-			return new Recipe[size];
-		}
-	};
-
-	public ArrayList<String> getIngredients() {
+    public ArrayList<String> getIngredients() {
 		return this.ingredients;
 	}
 

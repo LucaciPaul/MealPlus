@@ -1,11 +1,8 @@
 package lucacipaul.mealplus.backend;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import java.util.*;
 
-public class Adviser extends User implements Parcelable {
+public class Adviser extends User {
 
 	private ArrayList<Customer> customers = new ArrayList<>();
 	private String regNo;
@@ -17,48 +14,6 @@ public class Adviser extends User implements Parcelable {
 	private boolean approved;
 
 	public Adviser() {}
-
-	protected Adviser(Parcel in) {
-		super(in);
-		customers = in.createTypedArrayList(Customer.CREATOR);
-		regNo = in.readString();
-		occupation = in.readString();
-		addr1 = in.readString();
-		addr2 = in.readString();
-		postCode = in.readString();
-		phoneNo = in.readString();
-		approved = in.readByte() != 0;
-	}
-
-	@Override
-	public void writeToParcel(Parcel dest, int flags) {
-		super.writeToParcel(dest, flags);
-		dest.writeTypedList(customers);
-		dest.writeString(regNo);
-		dest.writeString(occupation);
-		dest.writeString(addr1);
-		dest.writeString(addr2);
-		dest.writeString(postCode);
-		dest.writeString(phoneNo);
-		dest.writeByte((byte) (approved ? 1 : 0));
-	}
-
-	@Override
-	public int describeContents() {
-		return 0;
-	}
-
-	public static final Creator<Adviser> CREATOR = new Creator<Adviser>() {
-		@Override
-		public Adviser createFromParcel(Parcel in) {
-			return new Adviser(in);
-		}
-
-		@Override
-		public Adviser[] newArray(int size) {
-			return new Adviser[size];
-		}
-	};
 
 	public String getRegNo() {
 		return this.regNo;
