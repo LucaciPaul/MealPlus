@@ -29,7 +29,7 @@ public class RegisterCustomer extends AppCompatActivity
 
     public static final String EXTRA_CUSTOMER_FINAL = "lucacipaul.mealplus.frontend.RegisterCustomer.EXTRA_CUSTOMER_FINAL";
 
-    private String[] genders = {"Female", "Male", "Other"};
+    private String[] genders = {"Male", "Female", "Other"};
     private String[] goals = {"Lose Weight", "Keep Weight", "Gain Weight"};
 
     private int activityProgress = 0;
