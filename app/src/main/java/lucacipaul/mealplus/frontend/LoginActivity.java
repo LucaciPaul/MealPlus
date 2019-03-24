@@ -3,8 +3,12 @@ package lucacipaul.mealplus.frontend;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import lucacipaul.mealplus.backend.Admin;
@@ -14,16 +18,26 @@ import lucacipaul.mealplus.backend.DataManager;
 import lucacipaul.mealplus.backend.Dummy;
 import lucacipaul.mealplus.backend.User;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements TextView.OnEditorActionListener {
 
     public static final String EXTRA_CUSTOMER_LOGIN = "lucacipaul.mealplus.frontend.LoginActivity.EXTRA_CUSTOMER_LOGIN";
     public static final String EXTRA_ADVISER_LOGIN = "lucacipaul.mealplus.frontend.LoginActivity.EXTRA_ADVISER_LOGIN";
+
+    EditText email, pwd;
+    Button login;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Dummy.set();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
+
+        email = (EditText)findViewById(R.id.emailField);
+        pwd = (EditText)findViewById(R.id.passwordField);
+
+        login = (Button)findViewById(R.id.loginButton);
+
+        pwd.setOnEditorActionListener(this);
     }
 
     public void mainRegisterButtonClicked(View view) {
@@ -32,8 +46,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void mainLoginButtonClicked(View view) {
-        EditText email = (EditText)findViewById(R.id.emailField);
-        EditText pwd = (EditText)findViewById(R.id.passwordField);
 
         User user = DataManager.getInstance().login(email.getText().toString(), pwd.getText().toString());
 
@@ -53,6 +65,14 @@ public class LoginActivity extends AppCompatActivity {
         } else {
             Toast.makeText(getApplicationContext(), "Invalid login", Toast.LENGTH_LONG).show();
         }
+    }
+
+    @Override
+    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+        if ((event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER) || (actionId == EditorInfo.IME_ACTION_DONE)) {
+            login.performClick();
+        }
+        return false;
     }
 }
 
