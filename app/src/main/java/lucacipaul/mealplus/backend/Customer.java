@@ -180,6 +180,7 @@ public class Customer extends User {
 		this.setCarbsPerDay((float)Math.round(this.caloriesPerDay*0.5/4*10)/10);
 		this.setFatsPerDay((float)Math.round(this.caloriesPerDay*0.3/8*10)/10);
 		this.setProteinsPerDay((float)Math.round(this.caloriesPerDay*0.2/4*10)/10);
+		this.setCaloriesPerDay((float)Math.round(this.caloriesPerDay*10)/10);
 	}
 
 	/**

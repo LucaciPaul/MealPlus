@@ -50,6 +50,23 @@ public class DataManager {
 		}
 		return users;
 	}
+	public User searchSpecificAccount(String email) {
+        for (User usr : Dummy.customers) {
+            if(usr.getEmail().equalsIgnoreCase(email))
+                return usr;
+        }
+        for (User usr : Dummy.advisers) {
+            if (usr.getEmail().equalsIgnoreCase(email))
+                return usr;
+        }
+        for (User usr : Dummy.admins) {
+            if (usr.getEmail().equalsIgnoreCase(email))
+                return usr;
+            }
+
+        // No account with that email found.
+        return null;
+    }
 
 	private ArrayList<Items> filterItems(ArrayList<Items> items, ArrayList<Amenities> amenities, ArrayList<Types> types, ArrayList<Sellpoints> sellpoints) {
 		ArrayList<Items> entries = new ArrayList<Items>();
@@ -245,9 +262,8 @@ public class DataManager {
 
 		// No need to sanitise parameters, as if they do not
 		// match then it will just return false.
-		ArrayList<User> users = searchAccount(email, false);
-		if(users.size() == 1 && users.get(0).getEmail().equalsIgnoreCase(email)) {
-			User user = users.get(0);
+		User user = searchSpecificAccount(email);
+		if(user != null) {
 			if(user.getPwd().equals(hashPassword(user, pwd))) { // Critical bug fixed here, make sure to have { } @Paul.
 				if(user instanceof Customer) {
 					loggedUser = (Customer)user;
@@ -289,8 +305,8 @@ public class DataManager {
 
 		// Sanity checks to make sure the email
 		// does not exist.
-		ArrayList<User> users = searchAccount(user.getEmail(), false);
-		if(!users.isEmpty()) {
+		User users = searchSpecificAccount(user.getEmail());
+		if(users != null) {
 			return false;
 		}
 
