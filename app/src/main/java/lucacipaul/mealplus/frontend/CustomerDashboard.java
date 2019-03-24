@@ -203,6 +203,7 @@ public class CustomerDashboard extends AppCompatActivity
 
     public void viewReportsButtonClicked(View view) {
         Intent intent = new Intent(this, SearchResults.class);
+        intent.putExtra(EXTRA_DISPLAY_REPORTS, true);
         startActivity(intent);
     }
 }
