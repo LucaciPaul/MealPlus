@@ -35,16 +35,16 @@ public class DataManager {
 		ArrayList<User> users = new ArrayList<User>();
 		
 		for (User usr : Dummy.customers) {
-			if(usr.getEmail().contains(email))
+			if(usr.getEmail().contains(email.toLowerCase()))
 					users.add((Customer)usr);
 		}
 		if(!customersOnly) {
 			for (User usr : Dummy.advisers) {
-				if (usr.getEmail().contains(email))
+				if (usr.getEmail().contains(email.toLowerCase()))
 					users.add((Adviser) usr);
 			}
 			for (User usr : Dummy.admins) {
-				if (usr.getEmail().contains(email))
+				if (usr.getEmail().contains(email.toLowerCase()))
 					users.add((Admin) usr);
 			}
 		}
@@ -329,7 +329,7 @@ public class DataManager {
 		
 		for(Adviser adviser : advisers){
 			if(adviser.getApproved() == approved) {
-				if(adviser.getEmail().contains(email)) {
+				if(adviser.getEmail().contains(email.toLowerCase())) {
 					advisers.add(adviser);
 				}
 			}
