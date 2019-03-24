@@ -1,5 +1,6 @@
 package lucacipaul.mealplus.frontend;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -37,12 +38,13 @@ public class CustomerDashboard extends AppCompatActivity
     public static ListView breakfast, snack1, lunch, snack2, dinner, snack3;
     public static ArrayAdapter breakfastAdapter, snack1Adapter, lunchAdapter, snack2Adapter, dinnerAdapter, snack3Adapter;
 
-
+    public static Context customerDashboardContext;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.customer_dashboard_activity);
 
+        customerDashboardContext = getBaseContext();
         if(getIntent().getBooleanExtra(LoginActivity.EXTRA_CUSTOMER_LOGIN, false)) {
             customer = (Customer) DataManager.getLoggedUser();
         } else if(getIntent().getBooleanExtra(RegisterCustomer.EXTRA_CUSTOMER_FINAL, false)) {
@@ -87,12 +89,12 @@ public class CustomerDashboard extends AppCompatActivity
     }
 
     public static void updateLists() {
-        breakfastAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, DataManager.parseItemNames(customer.getDietLog().getBreakfast()));
-        snack1Adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, DataManager.parseItemNames(customer.getDietLog().getSnack1()));
-        lunchAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, DataManager.parseItemNames(customer.getDietLog().getLunch()));
-        snack2Adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, DataManager.parseItemNames(customer.getDietLog().getSnack2()));
-        dinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, DataManager.parseItemNames(customer.getDietLog().getDinner()));
-        snack3Adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, DataManager.parseItemNames(customer.getDietLog().getSnack3()));
+        breakfastAdapter = new ArrayAdapter<String>(customerDashboardContext, android.R.layout.simple_list_item_1, DataManager.parseItemNames(customer.getDietLog().getBreakfast()));
+        snack1Adapter = new ArrayAdapter<String>(customerDashboardContext, android.R.layout.simple_list_item_1, DataManager.parseItemNames(customer.getDietLog().getSnack1()));
+        lunchAdapter = new ArrayAdapter<String>(customerDashboardContext, android.R.layout.simple_list_item_1, DataManager.parseItemNames(customer.getDietLog().getLunch()));
+        snack2Adapter = new ArrayAdapter<String>(customerDashboardContext, android.R.layout.simple_list_item_1, DataManager.parseItemNames(customer.getDietLog().getSnack2()));
+        dinnerAdapter = new ArrayAdapter<String>(customerDashboardContext, android.R.layout.simple_list_item_1, DataManager.parseItemNames(customer.getDietLog().getDinner()));
+        snack3Adapter = new ArrayAdapter<String>(customerDashboardContext, android.R.layout.simple_list_item_1, DataManager.parseItemNames(customer.getDietLog().getSnack3()));
 
         breakfast.setAdapter(breakfastAdapter);
         snack1.setAdapter(snack1Adapter);
