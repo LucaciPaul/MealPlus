@@ -104,7 +104,7 @@ public class Adviser extends User {
 	 * @param customer
 	 */
 	public void sendAssociationRequest(Customer customer) {
-		customer.setAdviser(this.getEmail());
+		customer.setAdviser(this);
 		customer.setPendingRequest(true);
 	}
 

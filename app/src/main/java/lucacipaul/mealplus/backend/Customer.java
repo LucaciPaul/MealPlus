@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 
 public class Customer extends User {
 
-	private String adviserEmail;
+	private Adviser adviser;
 	private DietLog dietLog;
 	private ArrayList<Report> reports = new ArrayList<Report>();
 	private ArrayList<Food> ownedFood = new ArrayList<Food>();
@@ -184,14 +184,18 @@ public class Customer extends User {
 
 	/**
 	 * 
-	 * @param adviserEmail
+	 * @param adviser
 	 */
-	public void setAdviser(String adviserEmail) {
-		this.adviserEmail = adviserEmail;
+	public void setAdviser(Adviser adviser) {
+		if(adviser == null) {
+			getAdviser().getAssociatedCustomers().remove(this);
+		}
+
+		this.adviser = adviser;
 	}
 
-	public String getAdviser() {
-		return this.adviserEmail;
+	public Adviser getAdviser() {
+		return this.adviser;
 	}
 
 	public ArrayList<Report> getReports() {
