@@ -55,9 +55,6 @@ public class ViewItem extends AppCompatActivity {
         carbs.setText(Float.toString(entry.getEntry().getCarbs()));
         proteins.setText(Float.toString(entry.getEntry().getProteins()));
         fats.setText(Float.toString(entry.getEntry().getFats()));
-
-
-
     }
 
     public void addToMealButtonClicked(View view) {

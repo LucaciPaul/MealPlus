@@ -117,4 +117,22 @@ public class Settings extends AppCompatActivity {
 
         }
     }
+
+    public void acceptRequestButtonClicked(View view) {
+        ((Customer)user).setPendingRequest(false);
+        findViewById(R.id.nutritionalSettingsLayout).setVisibility(View.GONE);
+        findViewById(R.id.acceptRequestButton).setVisibility(View.GONE);
+        findViewById(R.id.denyRequestButton).setVisibility(View.GONE);
+        findViewById(R.id.leaveAdviserButton).setVisibility(View.VISIBLE);
+    }
+    public void denyRequestButtonClicked(View view) {
+        ((Customer)user).setPendingRequest(false);
+        ((Customer)user).setAdviser(null);
+        findViewById(R.id.requestSettingsLayout).setVisibility(View.GONE);
+    }
+    public void leaveAdviserButtonClicked(View view) {
+        ((Customer)user).setAdviser(null);
+        findViewById(R.id.requestSettingsLayout).setVisibility(View.GONE);
+        findViewById(R.id.nutritionalSettingsLayout).setVisibility(View.VISIBLE);
+    }
 }

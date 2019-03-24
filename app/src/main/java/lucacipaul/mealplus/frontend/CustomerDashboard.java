@@ -12,8 +12,11 @@ import android.widget.TextView;
 
 import lucacipaul.mealplus.backend.Customer;
 import lucacipaul.mealplus.backend.DataManager;
+import lucacipaul.mealplus.backend.DietLog;
 import lucacipaul.mealplus.backend.DietLogEntry;
+import lucacipaul.mealplus.backend.Dummy;
 import lucacipaul.mealplus.backend.Meal;
+import lucacipaul.mealplus.backend.Report;
 
 public class CustomerDashboard extends AppCompatActivity
         implements AdapterView.OnItemClickListener {
@@ -171,12 +174,29 @@ public class CustomerDashboard extends AppCompatActivity
 
     public void settingsButtonClicked(View view) {
         Intent intent = new Intent(this, Settings.class);
-        intent.putExtra(EXTRA_ADVISER_CHANGES_NUTRITIONAL_SETTINGS, true);
+        if(getIntent().getBooleanExtra(LoginActivity.EXTRA_CUSTOMER_LOGIN, false)) {
+            intent.putExtra(EXTRA_CUSTOMER_CHANGES_SETTINGS, true);
+        } else if(getIntent().getBooleanExtra(SearchResults.EXTRA_ADVISER_VIEWS_CUSTOMER, false)) {
+            intent.putExtra(EXTRA_ADVISER_CHANGES_NUTRITIONAL_SETTINGS, true);
+        }
         startActivity(intent);
     }
+
     public void closeDietLogButtonClicked(View view) {
-        // TODO: Something will deffo happen in here, soon!
+        customer.getDietLog().setClosed(true);
+        Report report = new Report();
+        report.setDietLog(customer.getDietLog());
+        report.setCustomer(customer);
+        report.setCaloriesPerDay(customer.getCaloriesPerDay());
+        report.setCarbsPerDay(customer.getCarbsPerDay());
+        report.setProteinsPerDay(customer.getProteinsPerDay());
+        report.setFatsPerDay(customer.getFatsPerDay());
+        Dummy.reports.add(report);
+        customer.setDietLog(new DietLog());
+        updateFields();
+        updateLists();
     }
+
     public void viewReportsButtonClicked(View view) {
         Intent intent = new Intent(this, SearchResults.class);
         startActivity(intent);

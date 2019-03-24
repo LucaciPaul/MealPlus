@@ -12,8 +12,9 @@ public class Dummy {
 	public static ArrayList<Recipe> recipes = new ArrayList<Recipe>();
     public static ArrayList<Recipe> unPublishedRecipes = new ArrayList<Recipe>();
     public static ArrayList<DietLog> dietLogs = new ArrayList<DietLog>();
+    public static ArrayList<Report> reports = new ArrayList<>();
 
-	public static void set() {
+    public static void set() {
 		//Foods
 		Food food = new Food();
 

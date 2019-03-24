@@ -1,12 +1,9 @@
 package lucacipaul.mealplus.backend;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import java.io.Serializable;
 import java.util.*;
 
-public class DietLog implements Parcelable {
+public class DietLog {
 
 	private String email;
 	private Date date;
@@ -26,56 +23,6 @@ public class DietLog implements Parcelable {
 	    date = new Date();
     }
 
-
-	protected DietLog(Parcel in) {
-		email = in.readString();
-		date = (Date) in.readSerializable();
-		closed = in.readByte() != 0;
-		breakfast = in.createTypedArrayList(DietLogEntry.CREATOR);
-		snack1 = in.createTypedArrayList(DietLogEntry.CREATOR);
-		lunch = in.createTypedArrayList(DietLogEntry.CREATOR);
-		snack2 = in.createTypedArrayList(DietLogEntry.CREATOR);
-		dinner = in.createTypedArrayList(DietLogEntry.CREATOR);
-		snack3 = in.createTypedArrayList(DietLogEntry.CREATOR);
-		caloriesTotal = in.readFloat();
-		carbsTotal = in.readFloat();
-		fatsTotal = in.readFloat();
-		proteinsTotal = in.readFloat();
-	}
-
-	@Override
-	public void writeToParcel(Parcel dest, int flags) {
-		dest.writeString(email);
-		dest.writeSerializable(date);
-		dest.writeByte((byte) (closed ? 1 : 0));
-		dest.writeTypedList(breakfast);
-		dest.writeTypedList(snack1);
-		dest.writeTypedList(lunch);
-		dest.writeTypedList(snack2);
-		dest.writeTypedList(dinner);
-		dest.writeTypedList(snack3);
-		dest.writeFloat(caloriesTotal);
-		dest.writeFloat(carbsTotal);
-		dest.writeFloat(fatsTotal);
-		dest.writeFloat(proteinsTotal);
-	}
-
-	@Override
-	public int describeContents() {
-		return 0;
-	}
-
-	public static final Creator<DietLog> CREATOR = new Creator<DietLog>() {
-		@Override
-		public DietLog createFromParcel(Parcel in) {
-			return new DietLog(in);
-		}
-
-		@Override
-		public DietLog[] newArray(int size) {
-			return new DietLog[size];
-		}
-	};
 
 	public Date getDate() {
 		return this.date;
