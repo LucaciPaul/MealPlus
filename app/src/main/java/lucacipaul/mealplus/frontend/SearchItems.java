@@ -87,6 +87,7 @@ public class SearchItems extends AppCompatActivity{
 
     public void foodTypeButtonClicked(View view) {
         filtersList.removeAll(filtersList);
+        foodTypeFilters.removeAll(foodTypeFilters);
         selectFilters(foodType);
         for(String filter : filtersList) {
             if(filter.contains("-")) {
@@ -102,6 +103,7 @@ public class SearchItems extends AppCompatActivity{
 
     public void amenitiesButtonClicked(View view) {
         filtersList.removeAll(filtersList);
+        amenitiesFilters.removeAll(amenitiesFilters);
         selectFilters(amenities);
         for(String filter : filtersList) {
             if(filter.contains("-")) {
@@ -117,6 +119,7 @@ public class SearchItems extends AppCompatActivity{
 
     public void sellpointsButtonClicked(View view) {
         filtersList.removeAll(filtersList);
+        sellpointsFilters.removeAll(sellpointsFilters);
         selectFilters(sellpoints);
         for(String filter : filtersList) {
             if(filter.contains("-")) {
