@@ -49,7 +49,7 @@ public class Settings extends AppCompatActivity {
 
                 // Display Adviser's e-mail and recycle layout by hiding the 'Leave Adviser'
                 // The 'Accept' and 'Deny' buttons will appear instead
-                ((TextView)findViewById(R.id.adviserEmailText)).setText(((Customer)user).getAdviser().getFirstName() + ((Customer)user).getAdviser().getLastName());
+                ((TextView)findViewById(R.id.adviserEmailText)).setText(((Customer)user).getAdviser().getFirstName() + " " + ((Customer)user).getAdviser().getLastName());
                 findViewById(R.id.leaveAdviserButton).setVisibility(View.GONE);
 
                 // Allow the Customer to modify these settings until Adviser's invitation is accepted
@@ -71,7 +71,10 @@ public class Settings extends AppCompatActivity {
         } else if(getIntent().getBooleanExtra(CustomerDashboard.EXTRA_ADVISER_CHANGES_NUTRITIONAL_SETTINGS, false)) { // Adviser has searched Customer
             user = SearchResults.customer;
 
-            findViewById(R.id.accountSettingsLayout).setVisibility(View.GONE);
+            findViewById(R.id.titleSpinner).setVisibility(View.GONE);
+            findViewById(R.id.confirmEmailField).setVisibility(View.GONE);
+            findViewById(R.id.passwordField).setVisibility(View.GONE);
+            findViewById(R.id.confirmPasswordField).setVisibility(View.GONE);
             findViewById(R.id.customerSettingsLayout).setVisibility(View.GONE);
             findViewById(R.id.requestSettingsLayout).setVisibility(View.GONE);
             findViewById(R.id.adviserSettingsLayout).setVisibility(View.GONE);
