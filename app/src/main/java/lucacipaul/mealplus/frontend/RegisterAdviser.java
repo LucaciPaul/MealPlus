@@ -31,13 +31,14 @@ public class RegisterAdviser extends AppCompatActivity {
 
         if(!sanityCheckAdviser()) return;
 
-        Adviser adviser = getIntent().getParcelableExtra(RegisterUser.EXTRA_ADVISER);
+        Adviser adviser = RegisterUser.adviser;
         adviser.setRegNo(rNo.getText().toString());
         adviser.setOccupation(occupation.getText().toString());
         adviser.setAddr1(address1.getText().toString());
         adviser.setAddr1(address2.getText().toString());
         adviser.setPostCode(postCode.getText().toString());
         adviser.setPhoneNo(phone.getText().toString());
+        adviser.setApproved(false);
 
         if(!DataManager.getInstance().register(adviser)) {
             Toast.makeText(getApplicationContext(), "Go back and check e-mail and password!", Toast.LENGTH_LONG).show();
@@ -52,9 +53,9 @@ public class RegisterAdviser extends AppCompatActivity {
             occupation.getText().toString().isEmpty() ||
             address1.getText().toString().isEmpty() ||
             postCode.getText().toString().isEmpty() ||
-            phone.getText().toString().isEmpty() )
+            phone.getText().toString().isEmpty())
         {
-            Toast.makeText(getApplicationContext(), "Fill in mandatory fields empty!", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Fill in empty mandatory fields!", Toast.LENGTH_LONG).show();
             return false;
         }
 

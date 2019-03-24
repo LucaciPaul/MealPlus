@@ -11,10 +11,14 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import lucacipaul.mealplus.backend.DataManager;
 import lucacipaul.mealplus.backend.DietLogEntry;
 import lucacipaul.mealplus.backend.Report;
 
 public class ViewReport extends AppCompatActivity implements AdapterView.OnItemClickListener {
+
+    public static final String EXTRA_VIEW_ENTRY = "lucacipaul.mealplus.frontend.ViewReport.EXTRA_VIEW_ENTRY";
+
     TextView caloriesAllowed, carbsAllowed, proteinsAllowed, fatsAllowed;
     TextView caloriesUsed, carbsUsed, proteinsUsed, fatsUsed;
 
@@ -22,11 +26,12 @@ public class ViewReport extends AppCompatActivity implements AdapterView.OnItemC
     ArrayAdapter breakfastAdapter, snack1Adapter, lunchAdapter, snack2Adapter, dinnerAdapter, snack3Adapter;
 
     Report report;
+    public static DietLogEntry entry;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_report);
+        setContentView(R.layout.view_report_activity);
 
         report = SearchResults.report;
 
@@ -56,12 +61,12 @@ public class ViewReport extends AppCompatActivity implements AdapterView.OnItemC
     }
 
     private void updateLists() {
-        breakfastAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, CustomerDashboard.parseItemNames(report.getDietLog().getBreakfast()));
-        snack1Adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, CustomerDashboard.parseItemNames(report.getDietLog().getSnack1()));
-        lunchAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, CustomerDashboard.parseItemNames(report.getDietLog().getLunch()));
-        snack2Adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, CustomerDashboard.parseItemNames(report.getDietLog().getSnack2()));
-        dinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, CustomerDashboard.parseItemNames(report.getDietLog().getDinner()));
-        snack3Adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, CustomerDashboard.parseItemNames(report.getDietLog().getSnack3()));
+        breakfastAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, DataManager.parseItemNames(report.getDietLog().getBreakfast()));
+        snack1Adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, DataManager.parseItemNames(report.getDietLog().getSnack1()));
+        lunchAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, DataManager.parseItemNames(report.getDietLog().getLunch()));
+        snack2Adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, DataManager.parseItemNames(report.getDietLog().getSnack2()));
+        dinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, DataManager.parseItemNames(report.getDietLog().getDinner()));
+        snack3Adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, DataManager.parseItemNames(report.getDietLog().getSnack3()));
 
         breakfast.setAdapter(breakfastAdapter);
         snack1.setAdapter(snack1Adapter);
@@ -85,32 +90,30 @@ public class ViewReport extends AppCompatActivity implements AdapterView.OnItemC
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent(this, ViewItem.class);
+
         switch(parent.getId()) {
             case R.id.breakfastList:
-                intent.putExtra(EXTRA_VIEW_ENTRY, report.getDietLog().getBreakfast().get(position));
-                startActivity(intent);
+                entry = report.getDietLog().getBreakfast().get(position);
                 break;
             case R.id.snack1List:
-                intent.putExtra(EXTRA_VIEW_ENTRY, report.getDietLog().getSnack1().get(position));
-                startActivity(intent);
+                entry = report.getDietLog().getSnack1().get(position);
                 break;
             case R.id.lunchList:
-                intent.putExtra(EXTRA_VIEW_ENTRY, report.getDietLog().getLunch().get(position));
-                startActivity(intent);
+                entry = report.getDietLog().getLunch().get(position);
                 break;
             case R.id.snack2List:
-                intent.putExtra(EXTRA_VIEW_ENTRY, report.getDietLog().getSnack2().get(position));
-                startActivity(intent);
+                entry = report.getDietLog().getSnack2().get(position);
                 break;
             case R.id.dinnerList:
-                intent.putExtra(EXTRA_VIEW_ENTRY, report.getDietLog().getDinner().get(position));
-                startActivity(intent);
+                entry = report.getDietLog().getDinner().get(position);
                 break;
             case R.id.snack3List:
-                intent.putExtra(EXTRA_VIEW_ENTRY, report.getDietLog().getSnack3().get(position));
-                startActivity(intent);
+                entry = report.getDietLog().getSnack3().get(position);
                 break;
         }
+
+        intent.putExtra(EXTRA_VIEW_ENTRY, true);
+        startActivity(intent);
     }
 
     @Override

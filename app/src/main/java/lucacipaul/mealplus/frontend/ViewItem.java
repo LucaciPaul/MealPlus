@@ -18,8 +18,10 @@ public class ViewItem extends AppCompatActivity {
     TextView calories, carbs, proteins, fats, name, author;
     EditText quantity;
     Button dislike, confirm;
+
     public static DietLogEntry entry;
     public static Customer customer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,15 +37,15 @@ public class ViewItem extends AppCompatActivity {
         dislike = (Button)findViewById(R.id.dislikeButton);
         confirm = (Button)findViewById(R.id.addToMealButton);
 
-        entry = SearchResults.entry; // getIntent().getParcelableExtra(SearchResults.EXTRA_VIEW_ENTRY);
-        if(entry == null) {
-            entry = getIntent().getParcelableExtra(CustomerDashboard.EXTRA_VIEW_ENTRY);
-            quantity.setFocusable(false);
-            quantity.setText(Float.toString(entry.getQuantity()));
-            dislike.setVisibility(View.GONE);
-            confirm.setVisibility(View.GONE);
-        } else {
-            customer =  SearchResults.customer; // getIntent().getParcelableExtra(SearchResults.EXTRA_CUSTOMER);
+        if(getIntent().getBooleanExtra(SearchResults.EXTRA_VIEW_ENTRY, false)){
+            entry = SearchResults.entry;
+            customer =  SearchResults.customer;
+        } else if(getIntent().getBooleanExtra(CustomerDashboard.EXTRA_VIEW_ENTRY, false)) {
+            entry = CustomerDashboard.entry;
+            previewItemOnly();
+        } else if(getIntent().getBooleanExtra(ViewReport.EXTRA_VIEW_ENTRY, false)) {
+            entry = ViewReport.entry;
+            previewItemOnly();
         }
 
         name.setText(entry.getEntry().getName());
@@ -53,6 +55,9 @@ public class ViewItem extends AppCompatActivity {
         carbs.setText(Float.toString(entry.getEntry().getCarbs()));
         proteins.setText(Float.toString(entry.getEntry().getProteins()));
         fats.setText(Float.toString(entry.getEntry().getFats()));
+
+
+
     }
 
     public void addToMealButtonClicked(View view) {
@@ -65,5 +70,11 @@ public class ViewItem extends AppCompatActivity {
         } else {
             customer.dislikeRecipe(entry.getRecipe());
         }
+    }
+    public void previewItemOnly() {
+        quantity.setFocusable(false);
+        quantity.setText(Float.toString(entry.getQuantity()));
+        dislike.setVisibility(View.GONE);
+        confirm.setVisibility(View.GONE);
     }
 }

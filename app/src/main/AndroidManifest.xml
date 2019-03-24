@@ -21,7 +21,6 @@
         <activity android:name=".RegisterAdviser" />
         <activity android:name=".RegisterAdviserFinal" />
         <activity android:name=".RegisterCustomer" />
-        <activity android:name=".RegisterCustomerFinal" />
         <activity android:name=".RegisterUser" />
         <activity android:name=".CustomerDashboard" />
         <activity android:name=".ViewItem" />

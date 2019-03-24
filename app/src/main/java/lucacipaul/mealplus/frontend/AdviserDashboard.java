@@ -17,9 +17,8 @@ import lucacipaul.mealplus.backend.User;
 public class AdviserDashboard extends AppCompatActivity {
 
     public static final String EXTRA_LINKED_CUSTOMERS = "lucacipaul.mealplus.frontend.AdviserDashboard.EXTRA_LINKED_CUSTOMERS";
-    public static final String EXTRA_SEARCH_CUSTOMERS = "lucacipaul.mealplus.frontend.AdviserDashboard.EXTRA_SEARCH_CUSTOMERS";
-    public static final String EXTRA_NUTRITIONAL_SETTINGS = "lucacipaul.mealplus.frontend.AdviserDashboard.EXTRA_NUTRITIONAL_SETTINGS";
-    public static final String EXTRA_ADVISER_SETTINGS = "lucacipaul.mealplus.frontend.AdviserDashboard.EXTRA_ADVISER_SETTINGS";
+    public static final String EXTRA_ADVISER_SEARCHES_CUSTOMER = "lucacipaul.mealplus.frontend.AdviserDashboard.EXTRA_SEARCH_CUSTOMERS";
+    public static final String EXTRA_ADVISER_CHANGES_SETTINGS = "lucacipaul.mealplus.frontend.AdviserDashboard.EXTRA_ADVISER_SETTINGS";
 
     Adviser adviser;
     public static ArrayList<Customer> linkedCustomers = new ArrayList<>();
@@ -29,7 +28,7 @@ public class AdviserDashboard extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.adviser_dashboard_activity);
-        if(getIntent().getBooleanExtra(LoginActivity.EXTRA_ADVISER_LOGIN, true)) {
+        if(getIntent().getBooleanExtra(LoginActivity.EXTRA_ADVISER_LOGIN, false)) {
             adviser = (Adviser) DataManager.getLoggedUser();
             linkedCustomers = adviser.getAssociatedCustomers();
         }
@@ -43,14 +42,9 @@ public class AdviserDashboard extends AppCompatActivity {
 
     public void searchCustomersButtonClicked(View view) {
         Intent intent;
-        customerAccounts = DataManager.getInstance().searchAccount(((EditText)findViewById(R.id.searchCustomerField)).getText().toString());
-        if(customerAccounts.size() > 1) {
-            intent = new Intent(this, Settings.class);
-            intent.putExtra(EXTRA_NUTRITIONAL_SETTINGS, true);
-        } else {
-            intent = new Intent(this, SearchResults.class);
-            intent.putExtra(EXTRA_SEARCH_CUSTOMERS, true);
-        }
+        customerAccounts = DataManager.getInstance().searchAccount(((EditText)findViewById(R.id.searchCustomerField)).getText().toString(), true);
+        intent = new Intent(this, SearchResults.class);
+        intent.putExtra(EXTRA_ADVISER_SEARCHES_CUSTOMER, true);
         startActivity(intent);
     }
 

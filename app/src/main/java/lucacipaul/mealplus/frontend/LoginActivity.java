@@ -31,7 +31,7 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void mainLoginButtonClicked(View view) throws IllegalAccessException {
+    public void mainLoginButtonClicked(View view) {
         EditText email = (EditText)findViewById(R.id.emailField);
         EditText pwd = (EditText)findViewById(R.id.passwordField);
 

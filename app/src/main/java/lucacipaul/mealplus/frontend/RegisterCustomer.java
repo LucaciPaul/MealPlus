@@ -28,6 +28,7 @@ public class RegisterCustomer extends AppCompatActivity
         implements OnItemSelectedListener, OnSeekBarChangeListener {
 
     public static final String EXTRA_CUSTOMER_FINAL = "lucacipaul.mealplus.frontend.RegisterCustomer.EXTRA_CUSTOMER_FINAL";
+
     private String[] genders = {"Female", "Male", "Other"};
     private String[] goals = {"Lose Weight", "Keep Weight", "Gain Weight"};
 
@@ -90,7 +91,7 @@ public class RegisterCustomer extends AppCompatActivity
 
         if(!sanityCheckCustomer()) return;
 
-        Customer customer = getIntent().getParcelableExtra(RegisterUser.EXTRA_CUSTOMER);
+        Customer customer = RegisterUser.customer;
         customer.setAge(Integer.parseInt(age.getText().toString()));
         customer.setWeight(Float.parseFloat(weight.getText().toString()));
         customer.setSize(Float.parseFloat(size.getText().toString()));
@@ -98,13 +99,13 @@ public class RegisterCustomer extends AppCompatActivity
         customer.setGoal(Goal.values()[goalSpinPos]);
         customer.setGender(Gender.values()[genderSpinPos]);
         customer.setDietLog(new DietLog());
-        //customer.setDefaultNutritionalValues();
+        customer.setDefaultNutritionalValues();
 
         if(!DataManager.getInstance().register(customer)) {
             Toast.makeText(getApplicationContext(), "Go back and check e-mail and password!", Toast.LENGTH_LONG).show();
         } else {
             Intent intent = new Intent(this, CustomerDashboard.class);
-            intent.putExtra(EXTRA_CUSTOMER_FINAL, customer);
+            intent.putExtra(EXTRA_CUSTOMER_FINAL, true);
             startActivity(intent);
         }
     }
@@ -129,7 +130,7 @@ public class RegisterCustomer extends AppCompatActivity
                 size.getText().toString().isEmpty() ||
                 weight.getText().toString().isEmpty() )
         {
-            Toast.makeText(getApplicationContext(), "Fill in mandatory fields empty!", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Fill in empty mandatory fields!", Toast.LENGTH_LONG).show();
             return false;
         }
 

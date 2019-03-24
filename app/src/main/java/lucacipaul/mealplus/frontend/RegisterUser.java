@@ -20,14 +20,13 @@ import lucacipaul.mealplus.backend.Title;
 
 public class RegisterUser extends AppCompatActivity implements OnItemSelectedListener {
 
-    public static final String EXTRA_CUSTOMER = "lucacipaul.mealplus.frontend.RegisterUser.EXTRA_CUSTOMER";
-    public static final String EXTRA_ADVISER = "lucacipaul.mealplus.frontend.RegisterUser.EXTRA_ADVISER";
-
     String[] titles={"Mx", "Mrs", "Ms", "Mr"};
-
     private int titleSpinPos = 0;
 
     EditText firstName, lastName, email, cemail, pwd, cpwd;
+
+    public static Customer customer;
+    public static Adviser adviser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +70,7 @@ public class RegisterUser extends AppCompatActivity implements OnItemSelectedLis
         if (s.isChecked()){
             Intent intent = new Intent(this, RegisterAdviser.class);
 
-            Adviser adviser = new Adviser();
+            adviser = new Adviser();
             adviser.setTitle(Title.values()[titleSpinPos]);
             adviser.setFirstName(firstName.getText().toString());
             adviser.setLastName(lastName.getText().toString());
@@ -79,12 +78,11 @@ public class RegisterUser extends AppCompatActivity implements OnItemSelectedLis
             adviser.setPwd(pwd.getText().toString());
             adviser.setRegistrationDate(new Date());
 
-            intent.putExtra(EXTRA_ADVISER, adviser);
             startActivity(intent);
         } else {
             Intent intent = new Intent(this, RegisterCustomer.class);
 
-            Customer customer = new Customer();
+            customer = new Customer();
             customer.setTitle(Title.values()[titleSpinPos]);
             customer.setFirstName(firstName.getText().toString());
             customer.setLastName(lastName.getText().toString());
@@ -92,7 +90,6 @@ public class RegisterUser extends AppCompatActivity implements OnItemSelectedLis
             customer.setPwd(pwd.getText().toString());
             customer.setRegistrationDate(new Date());
 
-            intent.putExtra(EXTRA_CUSTOMER, customer);
             startActivity(intent);
         }
     }
@@ -104,7 +101,7 @@ public class RegisterUser extends AppCompatActivity implements OnItemSelectedLis
                 email.getText().toString().isEmpty() ||
                 pwd.getText().toString().isEmpty() )
         {
-            Toast.makeText(getApplicationContext(), "Fill in mandatory fields empty!", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Fill in empty mandatory fields!", Toast.LENGTH_LONG).show();
             return false;
         }
 
@@ -119,7 +116,6 @@ public class RegisterUser extends AppCompatActivity implements OnItemSelectedLis
             Toast.makeText(getApplicationContext(), "Please confirm your password!", Toast.LENGTH_LONG).show();
             return false;
         }
-
 
         return true;
     }

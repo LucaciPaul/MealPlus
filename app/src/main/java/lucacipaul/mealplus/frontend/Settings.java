@@ -32,7 +32,7 @@ public class Settings extends AppCompatActivity {
         proteins = ((EditText)findViewById(R.id.proteinsField));
         fats = ((EditText)findViewById(R.id.fatsField));
 
-        if(getIntent().getBooleanExtra(CustomerDashboard.EXTRA_CUSTOMER_SETTINGS, true)) { // Customer changing own settings
+        if(getIntent().getBooleanExtra(CustomerDashboard.EXTRA_CUSTOMER_CHANGES_SETTINGS, false)) { // Customer changing own settings
             findViewById(R.id.adviserSettingsLayout).setVisibility(View.GONE);
             user = CustomerDashboard.customer;
 
@@ -68,7 +68,7 @@ public class Settings extends AppCompatActivity {
             }
 
             displayAccountSettings();
-        } else if(getIntent().getBooleanExtra(SearchResults.EXTRA_CUSTOMER, true)) { // Adviser has searched Customer
+        } else if(getIntent().getBooleanExtra(CustomerDashboard.EXTRA_ADVISER_CHANGES_NUTRITIONAL_SETTINGS, false)) { // Adviser has searched Customer
             user = SearchResults.customer;
 
             findViewById(R.id.accountSettingsLayout).setVisibility(View.GONE);
@@ -86,7 +86,7 @@ public class Settings extends AppCompatActivity {
             displayAccountSettings();
             displayNutritionalSettings();
 
-        } else if(getIntent().getBooleanExtra(AdviserDashboard.EXTRA_ADVISER_SETTINGS, true)) { // Adviser changing own settings
+        } else if(getIntent().getBooleanExtra(AdviserDashboard.EXTRA_ADVISER_CHANGES_SETTINGS, false)) { // Adviser changing own settings
             user = (Adviser) DataManager.getLoggedUser();
             findViewById(R.id.customerSettingsLayout).setVisibility(View.GONE);
             findViewById(R.id.requestSettingsLayout).setVisibility(View.GONE);

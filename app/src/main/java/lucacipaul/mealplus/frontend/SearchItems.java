@@ -26,8 +26,7 @@ import lucacipaul.mealplus.backend.Types;
 
 public class SearchItems extends AppCompatActivity{
 
-    public static final String EXTRA_RESULTS = "lucacipaul.mealplus.frontend.SearchItems.EXTRA_RESULTS";
-    public static final String EXTRA_CUSTOMER = "lucacipaul.mealplus.frontend.SearchItems.EXTRA_CUSTOMER";
+    public static final String EXTRA_SEARCH_ITEMS = "lucacipaul.mealplus.frontend.SearchItems.EXTRA_SEARCH_ITEMS";
 
     String[] foodType =
     {
@@ -56,8 +55,8 @@ public class SearchItems extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_item_activity);
 
-        meal = CustomerDashboard.meal; // (Meal) getIntent().getSerializableExtra(CustomerDashboard.EXTRA_MEAL);
-        customer = (Customer) CustomerDashboard.customer; // getIntent().getParcelableExtra(CustomerDashboard.EXTRA_CUSTOMER);
+        meal = CustomerDashboard.meal;
+        customer = CustomerDashboard.customer;
     }
 
 
@@ -82,8 +81,7 @@ public class SearchItems extends AppCompatActivity{
         }
 
         Intent intent = new Intent(this, SearchResults.class);
-        intent.putParcelableArrayListExtra(EXTRA_RESULTS, results);
-        //intent.putExtra(EXTRA_CUSTOMER, customer);
+        intent.putExtra(EXTRA_SEARCH_ITEMS, true);
         startActivity(intent);
     }
 

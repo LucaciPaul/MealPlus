@@ -1,7 +1,6 @@
 package lucacipaul.mealplus.frontend;
 
 import android.content.Intent;
-import android.opengl.Visibility;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -11,11 +10,6 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
-import lucacipaul.mealplus.backend.Adviser;
 import lucacipaul.mealplus.backend.Customer;
 import lucacipaul.mealplus.backend.DataManager;
 import lucacipaul.mealplus.backend.DietLogEntry;
@@ -25,11 +19,13 @@ public class CustomerDashboard extends AppCompatActivity
         implements AdapterView.OnItemClickListener {
 
     public static final String EXTRA_VIEW_ENTRY = "lucacipaul.mealplus.frontend.CustomerDashboard.EXTRA_VIEW_ENTRY";
-    public static final String EXTRA_MEAL = "lucacipaul.mealplus.frontend.CustomerDashboard.EXTRA_MEAL";
-    public static final String EXTRA_CUSTOMER = "lucacipaul.mealplus.frontend.CustomerDashboard.EXTRA_CUSTOMER";
-    public static final String EXTRA_CUSTOMER_SETTINGS = "lucacipaul.mealplus.frontend.CustomerDashboard.EXTRA_CUSTOMER_SETTINGS";
+    public static final String EXTRA_CUSTOMER_CHANGES_SETTINGS = "lucacipaul.mealplus.frontend.CustomerDashboard.EXTRA_CUSTOMER_CHANGES_SETTINGS";
+    public static final String EXTRA_DISPLAY_REPORTS = "lucacipaul.mealplus.frontend.CustomerDashboard.EXTRA_DISPLAY_REPORTS";
+    public static final String EXTRA_ADVISER_CHANGES_NUTRITIONAL_SETTINGS = "lucacipaul.mealplus.frontend.CustomerDashboard.EXTRA_ADVISER_CHANGES_NUTRITIONAL_SETTINGS";
 
     public static Customer customer;
+    public static DietLogEntry entry;
+    public static Meal meal;
 
     TextView caloriesAllowed, carbsAllowed, proteinsAllowed, fatsAllowed;
     TextView caloriesUsed, carbsUsed, proteinsUsed, fatsUsed;
@@ -37,17 +33,18 @@ public class CustomerDashboard extends AppCompatActivity
     ListView breakfast, snack1, lunch, snack2, dinner, snack3;
     ArrayAdapter breakfastAdapter, snack1Adapter, lunchAdapter, snack2Adapter, dinnerAdapter, snack3Adapter;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.customer_dashboard_activity);
 
-        customer = getIntent().getParcelableExtra(RegisterCustomer.EXTRA_CUSTOMER_FINAL);
-        if(customer == null) {
-            customer = (Customer) DataManager.getLoggedUser(); // getIntent().getParcelableExtra(LoginActivity.EXTRA_CUSTOMER_LOGIN);
-        }
-        if (customer == null) {
-            customer = getIntent().getParcelableExtra(SearchResults.EXTRA_CUSTOMER);
+        if(getIntent().getBooleanExtra(LoginActivity.EXTRA_CUSTOMER_LOGIN, false)) {
+            customer = (Customer) DataManager.getLoggedUser();
+        } else if(getIntent().getBooleanExtra(RegisterCustomer.EXTRA_CUSTOMER_FINAL, false)) {
+            customer = (Customer) DataManager.getLoggedUser();
+        } else if(getIntent().getBooleanExtra(SearchResults.EXTRA_ADVISER_VIEWS_CUSTOMER, false)) {
+            customer = SearchResults.customer;
 
             ((Button)findViewById(R.id.addBreakfastButton)).setVisibility(View.GONE);
             ((Button)findViewById(R.id.addSnack1Button)).setVisibility(View.GONE);
@@ -86,12 +83,12 @@ public class CustomerDashboard extends AppCompatActivity
     }
 
     private void updateLists() {
-        breakfastAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, parseItemNames(customer.getDietLog().getBreakfast()));
-        snack1Adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, parseItemNames(customer.getDietLog().getSnack1()));
-        lunchAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, parseItemNames(customer.getDietLog().getLunch()));
-        snack2Adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, parseItemNames(customer.getDietLog().getSnack2()));
-        dinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, parseItemNames(customer.getDietLog().getDinner()));
-        snack3Adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, parseItemNames(customer.getDietLog().getSnack3()));
+        breakfastAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, DataManager.parseItemNames(customer.getDietLog().getBreakfast()));
+        snack1Adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, DataManager.parseItemNames(customer.getDietLog().getSnack1()));
+        lunchAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, DataManager.parseItemNames(customer.getDietLog().getLunch()));
+        snack2Adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, DataManager.parseItemNames(customer.getDietLog().getSnack2()));
+        dinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, DataManager.parseItemNames(customer.getDietLog().getDinner()));
+        snack3Adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, DataManager.parseItemNames(customer.getDietLog().getSnack3()));
 
         breakfast.setAdapter(breakfastAdapter);
         snack1.setAdapter(snack1Adapter);
@@ -100,17 +97,6 @@ public class CustomerDashboard extends AppCompatActivity
         dinner.setAdapter(dinnerAdapter);
         snack3.setAdapter(snack3Adapter);
     }
-
-    public static ArrayList<String> parseItemNames(ArrayList<DietLogEntry> items) {
-        ArrayList<String> itemNames = new ArrayList<String>();
-
-        for(DietLogEntry item : items) {
-            itemNames.add(item.getFood() != null? "Food: " + item.getEntry().getName():"Recipe: " + item.getEntry().getName());
-        }
-
-        return itemNames;
-    }
-
     private void updateFields() {
         caloriesAllowed.setText(Float.toString(customer.getCaloriesPerDay()));
         caloriesUsed.setText(Float.toString(customer.getDietLog().getCaloriesTotal()));
@@ -125,75 +111,74 @@ public class CustomerDashboard extends AppCompatActivity
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent(this, ViewItem.class);
+
         switch(parent.getId()) {
             case R.id.breakfastList:
-                intent.putExtra(EXTRA_VIEW_ENTRY, customer.getDietLog().getBreakfast().get(position));
-                startActivity(intent);
+                entry = customer.getDietLog().getBreakfast().get(position);
                 break;
             case R.id.snack1List:
-                intent.putExtra(EXTRA_VIEW_ENTRY, customer.getDietLog().getSnack1().get(position));
-                startActivity(intent);
+                entry = customer.getDietLog().getSnack1().get(position);
                 break;
             case R.id.lunchList:
-                intent.putExtra(EXTRA_VIEW_ENTRY, customer.getDietLog().getLunch().get(position));
-                startActivity(intent);
+                entry = customer.getDietLog().getLunch().get(position);
                 break;
             case R.id.snack2List:
-                intent.putExtra(EXTRA_VIEW_ENTRY, customer.getDietLog().getSnack2().get(position));
-                startActivity(intent);
+                entry = customer.getDietLog().getSnack2().get(position);
                 break;
             case R.id.dinnerList:
-                intent.putExtra(EXTRA_VIEW_ENTRY, customer.getDietLog().getDinner().get(position));
-                startActivity(intent);
+                entry = customer.getDietLog().getDinner().get(position);
                 break;
             case R.id.snack3List:
-                intent.putExtra(EXTRA_VIEW_ENTRY, customer.getDietLog().getSnack3().get(position));
-                startActivity(intent);
+                entry = customer.getDietLog().getSnack3().get(position);
                 break;
         }
+
+        intent.putExtra(EXTRA_VIEW_ENTRY, true);
+        startActivity(intent);
     }
 
-    public static Meal meal;
     public void addBreakfastButtonClicked(View view) {
         meal = Meal.Breakfast;
         Intent intent = new Intent(this, SearchItems.class);
-        //intent.putExtra(EXTRA_MEAL, Meal.Breakfast);
-        //intent.putExtra(EXTRA_CUSTOMER, customer);
         startActivity(intent);
     }
     public void addSnack1ButtonClicked(View view) {
         meal = Meal.SnackOne;
         Intent intent = new Intent(this, SearchItems.class);
-        //intent.putExtra(EXTRA_MEAL, Meal.SnackOne);
-        //intent.putExtra(EXTRA_CUSTOMER, customer);
         startActivity(intent);
     }
     public void addLunchButtonClicked(View view) {
         meal = Meal.Lunch;
         Intent intent = new Intent(this, SearchItems.class);
-        //intent.putExtra(EXTRA_MEAL, Meal.Lunch);
-        //intent.putExtra(EXTRA_CUSTOMER, customer);
         startActivity(intent);
     }
     public void addSnack2ButtonClicked(View view) {
         meal = Meal.SnackTwo;
         Intent intent = new Intent(this, SearchItems.class);
-        //intent.putExtra(EXTRA_MEAL, Meal.SnackTwo);
-        //intent.putExtra(EXTRA_CUSTOMER, customer);
         startActivity(intent);
     }
     public void addDinnerButtonClicked(View view) {
         meal = Meal.Dinner;
         Intent intent = new Intent(this, SearchItems.class);
-        //intent.putExtra(EXTRA_MEAL, Meal.Dinner);
-        //intent.putExtra(EXTRA_CUSTOMER, customer);
         startActivity(intent);
     }
     public void addSnack3ButtonClicked(View view) {
         meal = Meal.SnackThree;
         Intent intent = new Intent(this, SearchItems.class);
-        //intent.putExtra(EXTRA_MEAL, Meal.SnackThree);
-        //intent.putExtra(EXTRA_CUSTOMER, customer);
+        startActivity(intent);
+    }
+
+
+    public void settingsButtonClicked(View view) {
+        Intent intent = new Intent(this, Settings.class);
+        intent.putExtra(EXTRA_ADVISER_CHANGES_NUTRITIONAL_SETTINGS, true);
+        startActivity(intent);
+    }
+    public void closeDietLogButtonClicked(View view) {
+        // TODO: Something will deffo happen in here, soon!
+    }
+    public void viewReportsButtonClicked(View view) {
+        Intent intent = new Intent(this, SearchResults.class);
         startActivity(intent);
     }
 }

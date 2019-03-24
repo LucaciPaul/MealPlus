@@ -27,6 +27,7 @@ public class DataManager {
 	/**
 	 * 
 	 * @param email
+	 * @param customersOnly
 	 */
 	public ArrayList<User> searchAccount(String email, boolean customersOnly) {
 		ArrayList<User> users = new ArrayList<User>();
@@ -156,12 +157,6 @@ public class DataManager {
             concatItems(unfiltered, Dummy.foods);
             concatItems(unfiltered, Dummy.recipes);
 		}
-		
-		
-		/**
-		 * 1. X How does the code from above avoid duplicates into unfiltered? self-made items can also be under frequently-eaten.
-		 * 2. TODO: TEST What happens if the self-made and frequently-eaten are empty arrays?
-		 */
 
 		// Filter items by token and other settings.
 		ArrayList<Items> tokenSearchedItems = searchUnpublishedItems(token, true, unfiltered);
@@ -208,19 +203,18 @@ public class DataManager {
 		// match then it will just return false.
 		ArrayList<User> users = searchAccount(email, false);
 		if(users.size() == 1 && users.get(0).getEmail().equalsIgnoreCase(email)) {
-			User usr = users.get(0);
-			if(usr.getPwd().equals(hashPassword(usr, pwd))) { // Critical bug fixed here, make sure to have { } @Paul.
-				if(usr instanceof Customer) {
-					loggedUser = (Customer)usr;
-					return (Customer)usr;
-				} else if(usr instanceof Adviser) {
-					loggedUser = (Adviser)usr;
-					return (Adviser)usr;
-				}else if(usr instanceof Admin) {
-					loggedUser = (Admin)usr;
-					return (Admin)usr;
+			User user = users.get(0);
+			if(user.getPwd().equals(hashPassword(user, pwd))) { // Critical bug fixed here, make sure to have { } @Paul.
+				if(user instanceof Customer) {
+					loggedUser = (Customer)user;
+					return (Customer)user;
+				} else if(user instanceof Adviser) {
+					loggedUser = (Adviser)user;
+					return (Adviser)user;
+				}else if(user instanceof Admin) {
+					loggedUser = (Admin)user;
+					return (Admin)user;
 				}
-
 			}
 		}
 		// Email was not found in the users array.
@@ -256,7 +250,10 @@ public class DataManager {
 			return false;
 		}
 
-		if(user instanceof Customer) return Dummy.customers.add((Customer) user);
+		if(user instanceof Customer) {
+			loggedUser = (Customer)user;
+			return Dummy.customers.add((Customer) user);
+		}
 		if(user instanceof Adviser) return Dummy.advisers.add((Adviser) user);
 		return false;
 	}
@@ -318,7 +315,6 @@ public class DataManager {
 	 * @param dietLog
 	 */
 	public void removeReport(DietLog dietLog) {
-		// TODO - implement DataManager.removeReport
 		throw new UnsupportedOperationException();
 	}
 
@@ -374,4 +370,15 @@ public class DataManager {
 		}
 		return true;
 	}
+
+	public static ArrayList<String> parseItemNames(ArrayList<DietLogEntry> items) {
+		ArrayList<String> itemNames = new ArrayList<String>();
+
+		for(DietLogEntry item : items) {
+			itemNames.add(item.getFood() != null? "Food: " + item.getEntry().getName():"Recipe: " + item.getEntry().getName());
+		}
+
+		return itemNames;
+	}
+
 }
