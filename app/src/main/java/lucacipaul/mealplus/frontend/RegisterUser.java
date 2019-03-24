@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import java.util.Date;
 
@@ -66,8 +67,8 @@ public class RegisterUser extends AppCompatActivity implements OnItemSelectedLis
 
         if(!sanityCheckUser()) return;
 
-        Switch s = findViewById(R.id.accountSwitch);
-        if (s.isChecked()){
+        ToggleButton accountToggle = findViewById(R.id.accountToggle);
+        if (accountToggle.isChecked()){
             Intent intent = new Intent(this, RegisterAdviser.class);
 
             adviser = new Adviser();

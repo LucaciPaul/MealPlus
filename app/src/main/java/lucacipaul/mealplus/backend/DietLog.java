@@ -237,4 +237,18 @@ public class DietLog {
 			default: throw new IllegalArgumentException("Meal type not implemented in getMealArray().");
 		}
 	}
+
+	public boolean isEmpty(){
+
+		if(breakfast.isEmpty() &&
+				snack1.isEmpty() &&
+				lunch.isEmpty() &&
+				snack2.isEmpty() &&
+				dinner.isEmpty() &&
+				snack3.isEmpty()) {
+			return true;
+		}
+
+		return false;
+	}
 }

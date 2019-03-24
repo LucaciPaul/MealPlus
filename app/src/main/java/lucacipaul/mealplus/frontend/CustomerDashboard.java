@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import lucacipaul.mealplus.backend.Customer;
 import lucacipaul.mealplus.backend.DataManager;
@@ -30,11 +31,11 @@ public class CustomerDashboard extends AppCompatActivity
     public static DietLogEntry entry;
     public static Meal meal;
 
-    TextView caloriesAllowed, carbsAllowed, proteinsAllowed, fatsAllowed;
-    TextView caloriesUsed, carbsUsed, proteinsUsed, fatsUsed;
+    public static TextView caloriesAllowed, carbsAllowed, proteinsAllowed, fatsAllowed,
+                            caloriesUsed, carbsUsed, proteinsUsed, fatsUsed;
 
-    ListView breakfast, snack1, lunch, snack2, dinner, snack3;
-    ArrayAdapter breakfastAdapter, snack1Adapter, lunchAdapter, snack2Adapter, dinnerAdapter, snack3Adapter;
+    public static ListView breakfast, snack1, lunch, snack2, dinner, snack3;
+    public static ArrayAdapter breakfastAdapter, snack1Adapter, lunchAdapter, snack2Adapter, dinnerAdapter, snack3Adapter;
 
 
     @Override
@@ -85,7 +86,7 @@ public class CustomerDashboard extends AppCompatActivity
         snack3.setOnItemClickListener(this);
     }
 
-    private void updateLists() {
+    public static void updateLists() {
         breakfastAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, DataManager.parseItemNames(customer.getDietLog().getBreakfast()));
         snack1Adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, DataManager.parseItemNames(customer.getDietLog().getSnack1()));
         lunchAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, DataManager.parseItemNames(customer.getDietLog().getLunch()));
@@ -100,7 +101,7 @@ public class CustomerDashboard extends AppCompatActivity
         dinner.setAdapter(dinnerAdapter);
         snack3.setAdapter(snack3Adapter);
     }
-    private void updateFields() {
+    public static void updateFields() {
         caloriesAllowed.setText(Float.toString(customer.getCaloriesPerDay()));
         caloriesUsed.setText(Float.toString(customer.getDietLog().getCaloriesTotal()));
         carbsAllowed.setText(Float.toString(customer.getCarbsPerDay()));
@@ -183,6 +184,11 @@ public class CustomerDashboard extends AppCompatActivity
     }
 
     public void closeDietLogButtonClicked(View view) {
+        if(customer.getDietLog().isEmpty()) {
+            Toast.makeText(getApplicationContext(), "Empty diet logs will be closed by the system at midnight!", Toast.LENGTH_LONG).show();
+            return;
+        }
+
         customer.getDietLog().setClosed(true);
 
         Report report = new Report();
