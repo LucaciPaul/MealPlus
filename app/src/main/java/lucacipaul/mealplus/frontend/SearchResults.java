@@ -51,17 +51,28 @@ public class SearchResults extends AppCompatActivity implements AdapterView.OnIt
         } else if(getIntent().getBooleanExtra(AdviserDashboard.EXTRA_LINKED_CUSTOMERS, false)) {
             linkedCustomers = AdviserDashboard.linkedCustomers;
             ArrayList<String> results = new ArrayList<String>();
-            results.add(linkedCustomers.iterator().next().getEmail());
+
+            for(User user : linkedCustomers) {
+                results.add(user.getEmail());
+            }
             resultsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, results);
         } else if(getIntent().getBooleanExtra(AdviserDashboard.EXTRA_ADVISER_SEARCHES_CUSTOMER, false)) {
             users = AdviserDashboard.customerAccounts;
             ArrayList<String> results = new ArrayList<String>();
-            results.add(users.iterator().next().getEmail());
+
+            for(User user : users) {
+                results.add(user.getEmail());
+            }
+
             resultsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, results);
         } else if(getIntent().getBooleanExtra(CustomerDashboard.EXTRA_DISPLAY_REPORTS, false)) {
             customer = CustomerDashboard.customer;
             ArrayList<String> results = new ArrayList<String>();
-            results.add(customer.getReports().iterator().next().getDietLog().getDate().toString());
+
+            for(Report report : customer.getReports()) {
+                results.add(report.getDietLog().getDate().toString());
+            }
+
             resultsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, results);
         }
 
