@@ -58,6 +58,7 @@ public class ViewItem extends AppCompatActivity {
     }
 
     public void addToMealButtonClicked(View view) {
+        customer.addFrequentlyEaten(entry);
         customer.getDietLog().addMealEntry(entry, entry.getMeal());
         CustomerDashboard.updateFields();
         CustomerDashboard.updateLists();
