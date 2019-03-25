@@ -226,6 +226,16 @@ public class DietLog {
 		this.proteinsTotal = proteinsTotal;
 	}
 
+	public float getCaloriesForMeal(Meal meal) {
+		float total = 0;
+		ArrayList<DietLogEntry> items = getMealArray(meal);
+
+		for(DietLogEntry item : items)
+			total += item.getEntry().getCalories();
+
+		return total;
+	}
+
 	private ArrayList<DietLogEntry> getMealArray(Meal meal) {
 		switch (meal) {
 			case Breakfast: return this.breakfast;
