@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -58,6 +59,11 @@ public class ViewItem extends AppCompatActivity {
     }
 
     public void addToMealButtonClicked(View view) {
+        if(((EditText)findViewById(R.id.quantityInput)).getText().toString().isEmpty()) {
+            Toast.makeText(getApplicationContext(), "Enter quantity first!", Toast.LENGTH_LONG).show();
+            return;
+        }
+        entry.setQuantity(Float.parseFloat(((EditText)findViewById(R.id.quantityInput)).getText().toString()));
         customer.addFrequentlyEaten(entry);
         customer.getDietLog().addMealEntry(entry, entry.getMeal());
         CustomerDashboard.updateFields();
@@ -72,7 +78,10 @@ public class ViewItem extends AppCompatActivity {
         } else {
             customer.dislikeRecipe(entry.getRecipe());
         }
+        SearchResults.removeItemEntryFromResults(entry);
+        finish();
     }
+
     public void previewItemOnly() {
         quantity.setFocusable(false);
         quantity.setText(Float.toString(entry.getQuantity()));

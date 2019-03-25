@@ -32,17 +32,16 @@ public class CustomerDashboard extends AppCompatActivity
     public static DietLogEntry entry;
     public static Meal meal;
 
+    private static Context customerDashboardContext;
     public static Intent customerDashboardIntent;
 
     public static TextView caloriesAllowed, carbsAllowed, proteinsAllowed, fatsAllowed,
-                            caloriesUsed, carbsUsed, proteinsUsed, fatsUsed,
-                            breakfastText, snack1Text, lunchText, snack2Text, dinnerText,
-                            snack3Text;
+                           caloriesUsed, carbsUsed, proteinsUsed, fatsUsed,
+                           breakfastText, snack1Text, lunchText, snack2Text, dinnerText, snack3Text;
 
     public static ListView breakfast, snack1, lunch, snack2, dinner, snack3;
     public static ArrayAdapter breakfastAdapter, snack1Adapter, lunchAdapter, snack2Adapter, dinnerAdapter, snack3Adapter;
 
-    public static Context customerDashboardContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

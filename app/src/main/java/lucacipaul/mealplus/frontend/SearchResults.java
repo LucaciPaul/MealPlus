@@ -1,5 +1,6 @@
 package lucacipaul.mealplus.frontend;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Parcelable;
 import android.provider.ContactsContract;
@@ -25,8 +26,10 @@ public class SearchResults extends AppCompatActivity implements AdapterView.OnIt
     public static final String EXTRA_VIEW_REPORT = "lucacipaul.mealplus.frontend.SearchResults.EXTRA_VIEW_REPORT";
     public static final String EXTRA_ADVISER_VIEWS_CUSTOMER = "lucacipaul.mealplus.frontend.SearchResults.EXTRA_ADVISER_VIEW_CUSTOMER";
 
-    ListView resultsListView;
-    ArrayAdapter resultsAdapter;
+    private static ListView resultsListView;
+    private static ArrayAdapter resultsAdapter;
+
+    private static Context searchResultsContext;
 
     public static Customer customer;
     public static Adviser adviser;
@@ -40,6 +43,8 @@ public class SearchResults extends AppCompatActivity implements AdapterView.OnIt
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_results_activity);
+
+        searchResultsContext = getBaseContext();
 
         resultsListView = (ListView)findViewById(R.id.resultsList);
         resultsListView.setOnItemClickListener(this);
@@ -127,6 +132,12 @@ public class SearchResults extends AppCompatActivity implements AdapterView.OnIt
         Intent intent = new Intent(this, ViewReport.class);
         intent.putExtra(EXTRA_VIEW_REPORT, true);
         startActivity(intent);
+    }
+
+    public static void removeItemEntryFromResults(DietLogEntry entry) {
+        entries.remove(entry);
+        resultsAdapter = new ArrayAdapter<>(searchResultsContext, android.R.layout.simple_list_item_1, DataManager.parseItemNames(entries));
+        resultsListView.setAdapter(resultsAdapter);
     }
 
 }
