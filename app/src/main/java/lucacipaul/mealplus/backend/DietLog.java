@@ -5,7 +5,7 @@ import java.util.*;
 
 public class DietLog {
 
-	private String email;
+	private Customer customer;
 	private Date date;
 	private boolean closed;
 	private ArrayList<DietLogEntry> breakfast = new ArrayList<DietLogEntry>();
@@ -72,16 +72,16 @@ public class DietLog {
 		return this.snack3;
 	}
 
-	public String getCustomer() {
-		return this.email;
+	public Customer getCustomer() {
+		return this.customer;
 	}
 
 	/**
 	 * 
-	 * @param email
+	 * @param customer
 	 */
-	public void setCustomer(String email) {
-		this.email = email;
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
 
 	/**
@@ -143,10 +143,11 @@ public class DietLog {
 
 	public float getCaloriesForMeal(Meal meal) {
 		float total = 0;
-		ArrayList<DietLogEntry> items = getMealArray(meal);
+		ArrayList<DietLogEntry> entries = getMealArray(meal);
 
-		for(DietLogEntry item : items)
-			total += item.getEntry().getCalories();
+		for(DietLogEntry entry : entries) {
+			total += (entry.getQuantity()*entry.getEntry().getCalories()) / 100;
+		}
 
 		return total;
 	}

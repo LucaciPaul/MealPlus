@@ -1,8 +1,6 @@
 package lucacipaul.mealplus.backend;
 
-import java.io.Serializable;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Customer extends User {
 
@@ -17,11 +15,20 @@ public class Customer extends User {
 	private Gender gender;
 	private ActivityLevel activityLevel;
 	private Goal goal;
+
+	// Check end of file for more details
 	private boolean pendingRequest;
+
+	// Current nutritional values
 	private float carbsPerDay;
 	private float proteinsPerDay;
 	private float fatsPerDay;
 	private float caloriesPerDay;
+	// These values CAN be changed if Customer's Adviser(if there is any)
+	// decides to change Customer's Nutritional Settings.
+	// These nutritional values WILL be passed to the newly generated report if the
+	// DietLog will be closed.
+
 	private ArrayList<DietLogEntry> dislikedItems = new ArrayList<>();
 	private HashMap<Items, Integer> frequentlyEaten = new HashMap<>();
 
@@ -162,8 +169,11 @@ public class Customer extends User {
 	public void setDefaultNutritionalValues() {
 
 		// Formula calculated by the Harris-Benedict equation (https://www.livestrong.com/article/178764-caloric-intake-formula/)
-		if(this.gender == Gender.Female) this.caloriesPerDay = (int)(655.1 + 9.563*this.getWeight() + 1.850*this.getSize()-4.676*this.getAge());
-		else 							 this.caloriesPerDay = (int)(66.5 + 13.75*this.getWeight() + 5.003*this.getSize()-6.755*this.getAge());
+		if(this.gender == Gender.Female) {
+			this.caloriesPerDay = (int) (655.1 + 9.563 * this.getWeight() + 1.850 * this.getSize() - 4.676 * this.getAge());
+		} else {
+			this.caloriesPerDay = (int)(66.5 + 13.75*this.getWeight() + 5.003*this.getSize()-6.755*this.getAge());
+		}
 
 		if(this.goal == Goal.GainWeight) this.caloriesPerDay *= 1.1;
 		else if(this.goal == Goal.LoseWeight) this.caloriesPerDay *= 0.9;

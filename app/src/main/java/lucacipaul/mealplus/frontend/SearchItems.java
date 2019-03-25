@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
@@ -19,7 +18,6 @@ import java.util.ArrayList;
 import lucacipaul.mealplus.backend.Amenities;
 import lucacipaul.mealplus.backend.Customer;
 import lucacipaul.mealplus.backend.DataManager;
-import lucacipaul.mealplus.backend.DietLog;
 import lucacipaul.mealplus.backend.DietLogEntry;
 import lucacipaul.mealplus.backend.Meal;
 import lucacipaul.mealplus.backend.Sellpoints;
@@ -181,13 +179,13 @@ public class SearchItems extends AppCompatActivity{
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                // Do something when click the negative button
+                // [Prototype] Nothing
             }
         });
         builder.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                // Do something when click the neutral button
+                // [Prototype] Nothing
             }
         });
 

@@ -157,7 +157,8 @@ public class DataManager {
 		// (should be sort by highest)
 		Collections.sort(items, new Comparator<Items>(){
 			public int compare(Items o1, Items o2)
-			{ return (int)(
+			{
+				return (int)(
                     (o2.getCalories() + o2.getCarbs() + o2.getFats() + o2.getProteins())
                     -
                     (o1.getCalories() + o2.getCarbs() + o2.getFats() + o2.getProteins()));
@@ -232,12 +233,23 @@ public class DataManager {
 	 * @param dietLog
 	 */
 	public Report generateReport(DietLog dietLog) {
-		Report report = new Report();
 		dietLog.setClosed(true);
+
+		Report report = new Report();
 		report.setDietLog(dietLog);
-		
-		// compute nutritional values - yet corrupt
-		
+
+		Customer customer = dietLog.getCustomer();
+		report.setCustomer(customer);
+
+		report.setCaloriesPerDay(customer.getCaloriesPerDay());
+		report.setCarbsPerDay(customer.getCarbsPerDay());
+		report.setProteinsPerDay(customer.getProteinsPerDay());
+		report.setFatsPerDay(customer.getFatsPerDay());
+		Dummy.reports.add(report);
+
+		Dummy.dietLogs.add(new DietLog());
+		customer.setDietLog(Dummy.dietLogs.get(Dummy.dietLogs.size()-1));
+
 		return report;
 	}
 
@@ -341,6 +353,7 @@ public class DataManager {
 
 		return searchUnpublishedItems(token, isPublic, all);
 	}
+
 	public ArrayList<Items> searchUnpublishedItems(String token, boolean isPublic, ArrayList<Items> all) {
 		ArrayList<Items> items = new ArrayList<Items>();
 

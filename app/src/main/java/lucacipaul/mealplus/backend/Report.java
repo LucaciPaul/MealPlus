@@ -3,11 +3,23 @@ package lucacipaul.mealplus.backend;
 public class Report {
 
 	private Customer customer;
+
+	// The closed DietLog
 	private DietLog dietLog;
+
+	// The nutritional values that once used to be Customer's.
+	// Future implementations could allow comparing these values with
+	// Customer's current ones and potentially draw charts.
+
 	private float caloriesPerDay;
 	private float carbsPerDay;
 	private float fatsPerDay;
 	private float proteinsPerDay;
+	// These values CAN NO LONGER be changed if Customer's Adviser(if there is any)
+	// decides to change Customer's Nutritional Settings.
+	// However, if an Adviser changed Customer's Nutritional Settings and then the DietLog is closed,
+	// these values will appear in the report the way the Adviser changed them, but they can't be changed
+	// once the report is generated.
 
 	public Report() {}
 

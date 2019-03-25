@@ -1,6 +1,5 @@
 package lucacipaul.mealplus.frontend;
 
-import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,7 +8,6 @@ import android.widget.TextView;
 
 import lucacipaul.mealplus.backend.Adviser;
 import lucacipaul.mealplus.backend.Customer;
-import lucacipaul.mealplus.backend.DataManager;
 import lucacipaul.mealplus.backend.User;
 
 public class Settings extends AppCompatActivity {
@@ -144,6 +142,7 @@ public class Settings extends AppCompatActivity {
         }
         displayNutritionalSettings();
         CustomerDashboard.updateFields();
+        CustomerDashboard.updateLists();
     }
 
     public void acceptRequestButtonClicked(View view) {

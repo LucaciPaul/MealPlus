@@ -1,7 +1,6 @@
 package lucacipaul.mealplus.frontend;
 
 import android.content.Intent;
-import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.AdapterView;
@@ -13,8 +12,6 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.Spinner;
 import android.widget.Toast;
 import android.view.View;
-
-import java.util.Date;
 
 import lucacipaul.mealplus.backend.ActivityLevel;
 import lucacipaul.mealplus.backend.Customer;

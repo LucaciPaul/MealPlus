@@ -10,10 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
 import lucacipaul.mealplus.backend.Customer;
-import lucacipaul.mealplus.backend.DataManager;
 import lucacipaul.mealplus.backend.DietLogEntry;
 
 public class ViewItem extends AppCompatActivity implements TextWatcher {

@@ -9,21 +9,21 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
 import lucacipaul.mealplus.backend.DataManager;
 import lucacipaul.mealplus.backend.DietLogEntry;
+import lucacipaul.mealplus.backend.Meal;
 import lucacipaul.mealplus.backend.Report;
 
 public class ViewReport extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     public static final String EXTRA_VIEW_ENTRY = "lucacipaul.mealplus.frontend.ViewReport.EXTRA_VIEW_ENTRY";
 
-    TextView caloriesAllowed, carbsAllowed, proteinsAllowed, fatsAllowed;
-    TextView caloriesUsed, carbsUsed, proteinsUsed, fatsUsed;
+    private TextView caloriesAllowed, carbsAllowed, proteinsAllowed, fatsAllowed,
+            caloriesUsed, carbsUsed, proteinsUsed, fatsUsed,
+            breakfastText, snack1Text, lunchText, snack2Text, dinnerText, snack3Text;
 
-    ListView breakfast, snack1, lunch, snack2, dinner, snack3;
-    ArrayAdapter breakfastAdapter, snack1Adapter, lunchAdapter, snack2Adapter, dinnerAdapter, snack3Adapter;
+    private ListView breakfast, snack1, lunch, snack2, dinner, snack3;
+    private ArrayAdapter breakfastAdapter, snack1Adapter, lunchAdapter, snack2Adapter, dinnerAdapter, snack3Adapter;
 
     Report report;
     public static DietLogEntry entry;
@@ -45,6 +45,14 @@ public class ViewReport extends AppCompatActivity implements AdapterView.OnItemC
         fatsUsed = (TextView) findViewById(R.id.fatsUsage);
         updateFields();
 
+
+        breakfastText = (TextView) findViewById(R.id.breakfastText);
+        snack1Text = (TextView) findViewById(R.id.snack1Text);
+        lunchText = (TextView) findViewById(R.id.lunchText);
+        snack2Text = (TextView) findViewById(R.id.snack2Text);
+        dinnerText = (TextView) findViewById(R.id.dinnerText);
+        snack3Text = (TextView) findViewById(R.id.snack3Text);
+
         breakfast = (ListView) findViewById(R.id.breakfastList);
         snack1 = (ListView) findViewById(R.id.snack1List);
         lunch = (ListView) findViewById(R.id.lunchList);
@@ -52,6 +60,7 @@ public class ViewReport extends AppCompatActivity implements AdapterView.OnItemC
         dinner = (ListView) findViewById(R.id.dinnerList);
         snack3 = (ListView) findViewById(R.id.snack3List);
         updateLists();
+
         breakfast.setOnItemClickListener(this);
         snack1.setOnItemClickListener(this);
         lunch.setOnItemClickListener(this);
@@ -67,6 +76,13 @@ public class ViewReport extends AppCompatActivity implements AdapterView.OnItemC
         snack2Adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, DataManager.parseItemNames(report.getDietLog().getSnack2()));
         dinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, DataManager.parseItemNames(report.getDietLog().getDinner()));
         snack3Adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, DataManager.parseItemNames(report.getDietLog().getSnack3()));
+
+        breakfastText.setText("Breakfast (" + report.getDietLog().getCaloriesForMeal(Meal.Breakfast) + " / " + report.getCaloriesPerDay() + ")");
+        snack1Text.setText("Snack1 (" + report.getDietLog().getCaloriesForMeal(Meal.SnackOne) + " / " + report.getCaloriesPerDay() + ")");
+        lunchText.setText("Lunch (" + report.getDietLog().getCaloriesForMeal(Meal.Lunch) + " / " + report.getCaloriesPerDay() + ")");
+        snack2Text.setText("Snack2 (" + report.getDietLog().getCaloriesForMeal(Meal.SnackTwo) + " / " + report.getCaloriesPerDay() + ")");
+        dinnerText.setText("Dinner (" + report.getDietLog().getCaloriesForMeal(Meal.Dinner) + " / " + report.getCaloriesPerDay() + ")");
+        snack3Text.setText("Snack3 (" + report.getDietLog().getCaloriesForMeal(Meal.SnackThree) + " / " + report.getCaloriesPerDay() + ")");
 
         breakfast.setAdapter(breakfastAdapter);
         snack1.setAdapter(snack1Adapter);

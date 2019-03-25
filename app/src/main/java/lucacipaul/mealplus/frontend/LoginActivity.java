@@ -28,6 +28,13 @@ public class LoginActivity extends AppCompatActivity implements TextView.OnEdito
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        // [Prototype] Set dummy values only ONCE!
+        // Dummy.set() could end up being called more than once as we "finish();" this Activity as
+        // soon as we Login to an account
+        // Upon logout, LoginActivity.Java is reopened with a new instance and Dummy.set() could
+        // end up being called more than once without verifying Dummy.magicHappenedOnce.
+
         if(!Dummy.magicHappenedOnce) {
             Dummy.set();
         }
@@ -72,6 +79,8 @@ public class LoginActivity extends AppCompatActivity implements TextView.OnEdito
         }
     }
 
+    // Perform login if User presses "ENTER" button or "IME_ACTION_DONE" button from phone's keyboard
+    // ... rather than register(as per usual)
     @Override
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
         if ((event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER) || (actionId == EditorInfo.IME_ACTION_DONE)) {

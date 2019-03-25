@@ -2,6 +2,7 @@ package lucacipaul.mealplus.frontend;
 
 import android.content.Context;
 import android.content.Intent;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -112,12 +113,12 @@ public class CustomerDashboard extends AppCompatActivity
         dinnerAdapter = new ArrayAdapter<String>(customerDashboardContext, android.R.layout.simple_list_item_1, DataManager.parseItemNames(customer.getDietLog().getDinner()));
         snack3Adapter = new ArrayAdapter<String>(customerDashboardContext, android.R.layout.simple_list_item_1, DataManager.parseItemNames(customer.getDietLog().getSnack3()));
 
-        breakfastText.setText("Breakfast " + customer.getDietLog().getCaloriesForMeal(Meal.Breakfast));
-        snack1Text.setText("Snack1 " + customer.getDietLog().getCaloriesForMeal(Meal.SnackOne));
-        lunchText.setText("Lunch " + customer.getDietLog().getCaloriesForMeal(Meal.Lunch));
-        snack2Text.setText("Snack2 " + customer.getDietLog().getCaloriesForMeal(Meal.SnackTwo));
-        dinnerText.setText("Dinner " + customer.getDietLog().getCaloriesForMeal(Meal.Dinner));
-        snack3Text.setText("Snack3 " + customer.getDietLog().getCaloriesForMeal(Meal.SnackThree));
+        breakfastText.setText("Breakfast (" + customer.getDietLog().getCaloriesForMeal(Meal.Breakfast) + " / " + customer.getCaloriesPerDay() + ")");
+        snack1Text.setText("Snack1 (" + customer.getDietLog().getCaloriesForMeal(Meal.SnackOne) + " / " + customer.getCaloriesPerDay() + ")");
+        lunchText.setText("Lunch (" + customer.getDietLog().getCaloriesForMeal(Meal.Lunch) + " / " + customer.getCaloriesPerDay() + ")");
+        snack2Text.setText("Snack2 (" + customer.getDietLog().getCaloriesForMeal(Meal.SnackTwo) + " / " + customer.getCaloriesPerDay() + ")");
+        dinnerText.setText("Dinner (" + customer.getDietLog().getCaloriesForMeal(Meal.Dinner) + " / " + customer.getCaloriesPerDay());
+        snack3Text.setText("Snack3 (" + customer.getDietLog().getCaloriesForMeal(Meal.SnackThree) + " / " + customer.getCaloriesPerDay() + ")");
 
         breakfast.setAdapter(breakfastAdapter);
         snack1.setAdapter(snack1Adapter);
@@ -216,19 +217,8 @@ public class CustomerDashboard extends AppCompatActivity
             return;
         }
 
-        customer.getDietLog().setClosed(true);
-
-        Report report = new Report();
-        report.setDietLog(customer.getDietLog());
-        report.setCustomer(customer);
-        report.setCaloriesPerDay(customer.getCaloriesPerDay());
-        report.setCarbsPerDay(customer.getCarbsPerDay());
-        report.setProteinsPerDay(customer.getProteinsPerDay());
-        report.setFatsPerDay(customer.getFatsPerDay());
+        Report report = DataManager.getInstance().generateReport(customer.getDietLog());
         customer.getReports().add(report);
-        Dummy.reports.add(report);
-
-        customer.setDietLog(new DietLog());
 
         updateFields();
         updateLists();
@@ -239,6 +229,7 @@ public class CustomerDashboard extends AppCompatActivity
             Toast.makeText(getApplicationContext(), "No reports so far!", Toast.LENGTH_LONG).show();
             return;
         }
+
         Intent intent = new Intent(this, SearchResults.class);
         intent.putExtra(EXTRA_DISPLAY_REPORTS, true);
         startActivity(intent);
