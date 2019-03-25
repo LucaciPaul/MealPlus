@@ -110,7 +110,12 @@ public class CustomerDashboard extends AppCompatActivity
         dinnerAdapter = new ArrayAdapter<String>(customerDashboardContext, android.R.layout.simple_list_item_1, DataManager.parseItemNames(customer.getDietLog().getDinner()));
         snack3Adapter = new ArrayAdapter<String>(customerDashboardContext, android.R.layout.simple_list_item_1, DataManager.parseItemNames(customer.getDietLog().getSnack3()));
 
-        //breakfastText.append(" " + customer.getDietLog().);
+        breakfastText.setText("Breakfast " + customer.getDietLog().getCaloriesForMeal(Meal.Breakfast));
+        snack1Text.setText("Snack1 " + customer.getDietLog().getCaloriesForMeal(Meal.SnackOne));
+        lunchText.setText("Lunch " + customer.getDietLog().getCaloriesForMeal(Meal.Lunch));
+        snack2Text.setText("Snack2 " + customer.getDietLog().getCaloriesForMeal(Meal.SnackTwo));
+        dinnerText.setText("Dinner " + customer.getDietLog().getCaloriesForMeal(Meal.Dinner));
+        snack3Text.setText("Snack3 " + customer.getDietLog().getCaloriesForMeal(Meal.SnackThree));
 
         breakfast.setAdapter(breakfastAdapter);
         snack1.setAdapter(snack1Adapter);
