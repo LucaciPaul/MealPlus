@@ -137,12 +137,13 @@ public class Settings extends AppCompatActivity {
 
     public void submitChangesButtonClicked(View view) {
         if(user instanceof Customer) {
-            
-        } else if(user instanceof Adviser) {
-
-        } else {
-
+            ((Customer)user).setCaloriesPerDay(Float.parseFloat(calories.getText().toString()));
+            ((Customer)user).setCarbsPerDay(Float.parseFloat(carbs.getText().toString()));
+            ((Customer)user).setProteinsPerDay(Float.parseFloat(proteins.getText().toString()));
+            ((Customer)user).setFatsPerDay(Float.parseFloat(fats.getText().toString()));
         }
+        displayNutritionalSettings();
+        CustomerDashboard.updateFields();
     }
 
     public void acceptRequestButtonClicked(View view) {
