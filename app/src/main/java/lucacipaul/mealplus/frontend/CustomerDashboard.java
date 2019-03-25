@@ -33,12 +33,15 @@ public class CustomerDashboard extends AppCompatActivity
     public static Meal meal;
 
     public static TextView caloriesAllowed, carbsAllowed, proteinsAllowed, fatsAllowed,
-                            caloriesUsed, carbsUsed, proteinsUsed, fatsUsed;
+                            caloriesUsed, carbsUsed, proteinsUsed, fatsUsed,
+                            breakfastText, snack1Text, lunchText, snack2Text, dinnerText,
+                            snack3Text;
 
     public static ListView breakfast, snack1, lunch, snack2, dinner, snack3;
     public static ArrayAdapter breakfastAdapter, snack1Adapter, lunchAdapter, snack2Adapter, dinnerAdapter, snack3Adapter;
 
     public static Context customerDashboardContext;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +65,7 @@ public class CustomerDashboard extends AppCompatActivity
             ((Button)findViewById(R.id.closeDietLogButton)).setVisibility(View.GONE);
             ((Button)findViewById(R.id.createFoodButton)).setVisibility(View.GONE);
             ((Button)findViewById(R.id.createRecipeButton)).setVisibility(View.GONE);
+            ((Button)findViewById(R.id.logOutCustomerButton)).setVisibility(View.GONE);
         }
 
         caloriesAllowed = (TextView) findViewById(R.id.totalCaloriesAllowed);
@@ -74,13 +78,22 @@ public class CustomerDashboard extends AppCompatActivity
         fatsUsed = (TextView) findViewById(R.id.fatsUsage);
         updateFields();
 
+        breakfastText = (TextView) findViewById(R.id.breakfastText);
+        snack1Text = (TextView) findViewById(R.id.snack1Text);
+        lunchText = (TextView) findViewById(R.id.lunchText);
+        snack2Text = (TextView) findViewById(R.id.snack2Text);
+        dinnerText = (TextView) findViewById(R.id.dinnerText);
+        snack3Text = (TextView) findViewById(R.id.snack3Text);
+
         breakfast = (ListView) findViewById(R.id.breakfastList);
         snack1 = (ListView) findViewById(R.id.snack1List);
         lunch = (ListView) findViewById(R.id.lunchList);
         snack2 = (ListView) findViewById(R.id.snack2List);
         dinner = (ListView) findViewById(R.id.dinnerList);
         snack3 = (ListView) findViewById(R.id.snack3List);
+
         updateLists();
+
         breakfast.setOnItemClickListener(this);
         snack1.setOnItemClickListener(this);
         lunch.setOnItemClickListener(this);
@@ -96,6 +109,8 @@ public class CustomerDashboard extends AppCompatActivity
         snack2Adapter = new ArrayAdapter<String>(customerDashboardContext, android.R.layout.simple_list_item_1, DataManager.parseItemNames(customer.getDietLog().getSnack2()));
         dinnerAdapter = new ArrayAdapter<String>(customerDashboardContext, android.R.layout.simple_list_item_1, DataManager.parseItemNames(customer.getDietLog().getDinner()));
         snack3Adapter = new ArrayAdapter<String>(customerDashboardContext, android.R.layout.simple_list_item_1, DataManager.parseItemNames(customer.getDietLog().getSnack3()));
+
+        //breakfastText.append(" " + customer.getDietLog().);
 
         breakfast.setAdapter(breakfastAdapter);
         snack1.setAdapter(snack1Adapter);
@@ -176,7 +191,7 @@ public class CustomerDashboard extends AppCompatActivity
     }
 
 
-    public void settingsButtonClicked(View view) {
+    public void customerSettingsButtonClicked(View view) {
         Intent intent = new Intent(this, Settings.class);
         if(getIntent().getBooleanExtra(LoginActivity.EXTRA_CUSTOMER_LOGIN, false)) {
             intent.putExtra(EXTRA_CUSTOMER_CHANGES_SETTINGS, true);
@@ -217,7 +232,7 @@ public class CustomerDashboard extends AppCompatActivity
     }
 
 
-    public void loutOutCustomerButtonClicked(View view) {
+    public void logOutCustomerButtonClicked(View view) {
         DataManager.getInstance().logout();
         this.onBackPressed();
     }
