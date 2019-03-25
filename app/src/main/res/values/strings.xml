@@ -31,7 +31,7 @@
     <string name="mainPageNavBar">Main</string>
     <string name="customerRegistrationNavBar2"><![CDATA[Registration < Customer < Fitness Data]]></string>
     <string name="ageField">Age</string>
-    <string name="sizeField">Size (m)</string>
+    <string name="sizeField">Height  (cm)</string>
     <string name="weightField">Weight (kg)</string>
     <string name="activityLevel">Activity level</string>
     <string name="seekBarLow">Low</string>

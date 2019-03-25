@@ -141,7 +141,7 @@ public class RegisterCustomer extends AppCompatActivity
         }
         int sizeNr = Integer.parseInt(size.getText().toString());
         if(sizeNr > 300 || sizeNr < 10) {
-            Toast.makeText(getApplicationContext(), "Make sure that your size is between 10 and 300!", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Make sure that your height is between 10 and 300!", Toast.LENGTH_LONG).show();
             return false;
         }
         int weightNr = Integer.parseInt(weight.getText().toString());
