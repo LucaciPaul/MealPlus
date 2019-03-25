@@ -193,7 +193,9 @@ public class CustomerDashboard extends AppCompatActivity
 
     public void customerSettingsButtonClicked(View view) {
         Intent intent = new Intent(this, Settings.class);
-        if(getIntent().getBooleanExtra(LoginActivity.EXTRA_CUSTOMER_LOGIN, false)) {
+        if(getIntent().getBooleanExtra(LoginActivity.EXTRA_CUSTOMER_LOGIN, false) ||
+                getIntent().getBooleanExtra(RegisterCustomer.EXTRA_CUSTOMER_FINAL, false))
+        {
             intent.putExtra(EXTRA_CUSTOMER_CHANGES_SETTINGS, true);
         } else if(getIntent().getBooleanExtra(SearchResults.EXTRA_ADVISER_VIEWS_CUSTOMER, false)) {
             intent.putExtra(EXTRA_ADVISER_CHANGES_NUTRITIONAL_SETTINGS, true);

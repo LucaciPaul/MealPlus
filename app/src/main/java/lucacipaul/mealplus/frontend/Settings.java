@@ -49,7 +49,7 @@ public class Settings extends AppCompatActivity {
 
                 // Display Adviser's e-mail and recycle layout by hiding the 'Leave Adviser'
                 // The 'Accept' and 'Deny' buttons will appear instead
-                ((TextView)findViewById(R.id.adviserEmailText)).setText(((Customer)user).getAdviser().getLastName() + ", " +((Customer)user).getAdviser().getFirstName() );
+                ((TextView)findViewById(R.id.adviserEmailText)).setText(((Customer)user).getAdviser().getLastName() + ", " +((Customer)user).getAdviser().getFirstName());
                 findViewById(R.id.leaveAdviserButton).setVisibility(View.GONE);
 
                 // Allow the Customer to modify these settings until Adviser's invitation is accepted
@@ -62,7 +62,7 @@ public class Settings extends AppCompatActivity {
 
                 // Display Adviser's e-mail and recycle layout by hiding the 'Accept' and 'Deny' buttons
                 // The 'Leave Adviser' button will appear instead
-                ((TextView)findViewById(R.id.adviserEmailText)).setText(((Customer)user).getAdviser().getLastName() + ", " +((Customer)user).getAdviser().getFirstName() );
+                ((TextView)findViewById(R.id.adviserEmailText)).setText(((Customer)user).getAdviser().getLastName() + ", " +((Customer)user).getAdviser().getFirstName());
                 findViewById(R.id.acceptRequestButton).setVisibility(View.GONE);
                 findViewById(R.id.denyRequestButton).setVisibility(View.GONE);
             }
