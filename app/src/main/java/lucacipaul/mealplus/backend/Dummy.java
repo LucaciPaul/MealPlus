@@ -14,7 +14,10 @@ public class Dummy {
     public static ArrayList<DietLog> dietLogs = new ArrayList<DietLog>();
     public static ArrayList<Report> reports = new ArrayList<>();
 
+    public static boolean magicHappenedOnce = false;
+
     public static void set() {
+    	magicHappenedOnce = true;
 		//Foods
 		Food food = new Food();
 

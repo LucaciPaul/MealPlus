@@ -49,23 +49,26 @@ public class ViewItem extends AppCompatActivity implements TextWatcher {
         if(getIntent().getBooleanExtra(SearchResults.EXTRA_VIEW_ENTRY, false)){
             entry = SearchResults.entry;
             customer =  SearchResults.customer;
+
+            caloriesText.setText(Float.toString(entry.getEntry().getCalories()) + " / 100gr");
+            carbsText.setText(Float.toString(entry.getEntry().getCarbs()) + " / 100gr");
+            proteinsText.setText(Float.toString(entry.getEntry().getProteins()) + " / 100gr");
+            fatsText.setText(Float.toString(entry.getEntry().getFats()) + " / 100gr");
         } else if(getIntent().getBooleanExtra(CustomerDashboard.EXTRA_VIEW_ENTRY, false)) {
             entry = CustomerDashboard.entry;
             previewItemOnly();
+
+            setNutritionalValues(entry.getQuantity());
         } else if(getIntent().getBooleanExtra(ViewReport.EXTRA_VIEW_ENTRY, false)) {
             entry = ViewReport.entry;
             previewItemOnly();
+
+            setNutritionalValues(entry.getQuantity());
         }
 
         nameText.setText(entry.getEntry().getName());
         authorText.setText("by ");
         authorText.append(entry.getEntry().getAuthor()==null? "MealPlus":entry.getEntry().getAuthor().getFirstName());
-
-        caloriesText.setText(Float.toString(entry.getEntry().getCalories()) + " / 100gr");
-        carbsText.setText(Float.toString(entry.getEntry().getCarbs()) + " / 100gr");
-        proteinsText.setText(Float.toString(entry.getEntry().getProteins()) + " / 100gr");
-        fatsText.setText(Float.toString(entry.getEntry().getFats()) + " / 100gr");
-
     }
 
     public void addToMealButtonClicked(View view) {

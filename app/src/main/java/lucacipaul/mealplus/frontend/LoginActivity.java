@@ -28,7 +28,10 @@ public class LoginActivity extends AppCompatActivity implements TextView.OnEdito
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Dummy.set();
+        if(!Dummy.magicHappenedOnce) {
+            Dummy.set();
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
 
