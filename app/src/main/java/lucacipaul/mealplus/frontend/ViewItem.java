@@ -70,7 +70,7 @@ public class ViewItem extends AppCompatActivity implements TextWatcher {
 
     public void addToMealButtonClicked(View view) {
         if(((EditText)findViewById(R.id.quantityInput)).getText().toString().isEmpty() ||
-                ((EditText)findViewById(R.id.quantityInput)).getText().toString() == "0")
+                ((EditText)findViewById(R.id.quantityInput)).getText().toString().equalsIgnoreCase("0"))
         {
             Toast.makeText(getApplicationContext(), "Enter quantity first!", Toast.LENGTH_LONG).show();
             return;
