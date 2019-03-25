@@ -32,6 +32,8 @@ public class CustomerDashboard extends AppCompatActivity
     public static DietLogEntry entry;
     public static Meal meal;
 
+    public static Intent customerDashboardIntent;
+
     public static TextView caloriesAllowed, carbsAllowed, proteinsAllowed, fatsAllowed,
                             caloriesUsed, carbsUsed, proteinsUsed, fatsUsed,
                             breakfastText, snack1Text, lunchText, snack2Text, dinnerText,
@@ -48,6 +50,7 @@ public class CustomerDashboard extends AppCompatActivity
         setContentView(R.layout.customer_dashboard_activity);
 
         customerDashboardContext = getBaseContext();
+        customerDashboardIntent = getIntent();
 
         if(getIntent().getBooleanExtra(LoginActivity.EXTRA_CUSTOMER_LOGIN, false)) {
             customer = (Customer) DataManager.getLoggedUser();

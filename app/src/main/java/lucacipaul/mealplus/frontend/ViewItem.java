@@ -62,6 +62,8 @@ public class ViewItem extends AppCompatActivity {
         customer.getDietLog().addMealEntry(entry, entry.getMeal());
         CustomerDashboard.updateFields();
         CustomerDashboard.updateLists();
+        finish();
+        startActivity(CustomerDashboard.customerDashboardIntent);
     }
 
     public void dislikeButtonClicked(View view) {
