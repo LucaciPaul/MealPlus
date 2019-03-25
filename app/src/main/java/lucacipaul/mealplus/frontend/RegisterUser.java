@@ -3,6 +3,7 @@ package lucacipaul.mealplus.frontend;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -43,7 +44,9 @@ public class RegisterUser extends AppCompatActivity implements OnItemSelectedLis
         titleSpin.setAdapter(titleAdapter);
 
         firstName = (EditText)findViewById(R.id.forenameField);
+        firstName.setRawInputType(InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
         lastName = (EditText)findViewById(R.id.surnameField);
+        lastName.setRawInputType(InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
         email = (EditText)findViewById(R.id.emailField);
         cemail = (EditText)findViewById(R.id.confirmEmailField);
         pwd = (EditText)findViewById(R.id.passwordField);
@@ -92,7 +95,6 @@ public class RegisterUser extends AppCompatActivity implements OnItemSelectedLis
 
             Intent intent = new Intent(this, RegisterCustomer.class);
             startActivity(intent);
-
         }
     }
 

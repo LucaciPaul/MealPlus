@@ -69,4 +69,11 @@ public class AdviserDashboard extends AppCompatActivity {
         intent.putExtra(EXTRA_ADVISER_CHANGES_SETTINGS, true);
         startActivity(intent);
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        startActivity(new Intent(this, LoginActivity.class));
+    }
 }
