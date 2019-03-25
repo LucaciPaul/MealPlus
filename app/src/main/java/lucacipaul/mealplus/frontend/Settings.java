@@ -49,7 +49,7 @@ public class Settings extends AppCompatActivity {
 
                 // Display Adviser's e-mail and recycle layout by hiding the 'Leave Adviser'
                 // The 'Accept' and 'Deny' buttons will appear instead
-                ((TextView)findViewById(R.id.adviserEmailText)).setText(((Customer)user).getAdviser().getFirstName() + " " + ((Customer)user).getAdviser().getLastName());
+                ((TextView)findViewById(R.id.adviserEmailText)).setText(((Customer)user).getAdviser().getLastName() + ", " +((Customer)user).getAdviser().getFirstName() );
                 findViewById(R.id.leaveAdviserButton).setVisibility(View.GONE);
 
                 // Allow the Customer to modify these settings until Adviser's invitation is accepted
@@ -62,12 +62,25 @@ public class Settings extends AppCompatActivity {
 
                 // Display Adviser's e-mail and recycle layout by hiding the 'Accept' and 'Deny' buttons
                 // The 'Leave Adviser' button will appear instead
-                ((TextView)findViewById(R.id.adviserEmailText)).setText(((Customer)user).getAdviser().getFirstName() + ((Customer)user).getAdviser().getLastName());
+                ((TextView)findViewById(R.id.adviserEmailText)).setText(((Customer)user).getAdviser().getLastName() + ", " +((Customer)user).getAdviser().getFirstName() );
                 findViewById(R.id.acceptRequestButton).setVisibility(View.GONE);
                 findViewById(R.id.denyRequestButton).setVisibility(View.GONE);
             }
 
+            // Make fields non-editable for prototype purposes ONLY! [For submission]
+            firstName.setFocusable(false);
+            lastName.setFocusable(false);
+            email.setFocusable(false);
+
+            // Hide these settings for prototype purposes ONLY! [For submission]
+            findViewById(R.id.titleSpinner).setVisibility(View.GONE);
+            findViewById(R.id.confirmEmailField).setVisibility(View.GONE);
+            findViewById(R.id.passwordField).setVisibility(View.GONE);
+            findViewById(R.id.confirmPasswordField).setVisibility(View.GONE);
+            findViewById(R.id.customerSettingsLayout).setVisibility(View.GONE);
+
             displayAccountSettings();
+
         } else if(getIntent().getBooleanExtra(CustomerDashboard.EXTRA_ADVISER_CHANGES_NUTRITIONAL_SETTINGS, false)) { // Adviser has searched Customer
             user = SearchResults.customer;
 
@@ -75,29 +88,40 @@ public class Settings extends AppCompatActivity {
             findViewById(R.id.confirmEmailField).setVisibility(View.GONE);
             findViewById(R.id.passwordField).setVisibility(View.GONE);
             findViewById(R.id.confirmPasswordField).setVisibility(View.GONE);
+
             findViewById(R.id.customerSettingsLayout).setVisibility(View.GONE);
             findViewById(R.id.requestSettingsLayout).setVisibility(View.GONE);
             findViewById(R.id.adviserSettingsLayout).setVisibility(View.GONE);
 
-            firstName.setVisibility(View.VISIBLE);
             firstName.setFocusable(false);
-            lastName.setVisibility(View.VISIBLE);
             lastName.setFocusable(false);
-            email.setVisibility(View.VISIBLE);
             email.setFocusable(false);
 
             displayAccountSettings();
             displayNutritionalSettings();
 
         } else if(getIntent().getBooleanExtra(AdviserDashboard.EXTRA_ADVISER_CHANGES_SETTINGS, false)) { // Adviser changing own settings
-            user = (Adviser) DataManager.getLoggedUser();
+            user = (Adviser) AdviserDashboard.adviser;
+
+            // Make fields non-editable for prototype purposes ONLY! [For submission]
+            firstName.setFocusable(false);
+            lastName.setFocusable(false);
+            email.setFocusable(false);
+
+            // Hide these settings for prototype purposes ONLY! [For submission]
+            findViewById(R.id.titleSpinner).setVisibility(View.GONE);
+            findViewById(R.id.confirmEmailField).setVisibility(View.GONE);
+            findViewById(R.id.passwordField).setVisibility(View.GONE);
+            findViewById(R.id.confirmPasswordField).setVisibility(View.GONE);
+            findViewById(R.id.adviserSettingsLayout).setVisibility(View.GONE);
+
             findViewById(R.id.customerSettingsLayout).setVisibility(View.GONE);
             findViewById(R.id.requestSettingsLayout).setVisibility(View.GONE);
             findViewById(R.id.nutritionalSettingsLayout).setVisibility(View.GONE);
+
             displayAccountSettings();
         }
     }
-
     public void displayAccountSettings() {
         firstName.setText(user.getFirstName());
         lastName.setText(user.getLastName());
@@ -136,6 +160,8 @@ public class Settings extends AppCompatActivity {
     }
     public void leaveAdviserButtonClicked(View view) {
         ((Customer)user).setAdviser(null);
+        ((Customer)user).setDefaultNutritionalValues();
+        CustomerDashboard.updateFields();
         findViewById(R.id.requestSettingsLayout).setVisibility(View.GONE);
         findViewById(R.id.nutritionalSettingsLayout).setVisibility(View.VISIBLE);
         displayNutritionalSettings();

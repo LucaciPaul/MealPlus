@@ -20,7 +20,7 @@ public class AdviserDashboard extends AppCompatActivity {
     public static final String EXTRA_ADVISER_SEARCHES_CUSTOMER = "lucacipaul.mealplus.frontend.AdviserDashboard.EXTRA_SEARCH_CUSTOMERS";
     public static final String EXTRA_ADVISER_CHANGES_SETTINGS = "lucacipaul.mealplus.frontend.AdviserDashboard.EXTRA_ADVISER_SETTINGS";
 
-    Adviser adviser;
+    public static Adviser adviser;
     public static ArrayList<Customer> linkedCustomers = new ArrayList<>();
     public static ArrayList<User> customerAccounts = new ArrayList<>();
 
@@ -56,5 +56,11 @@ public class AdviserDashboard extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         finish();
+    }
+
+    public void adviserSettingsButtonClicked(View view) {
+        Intent intent = new Intent(this, Settings.class);
+        intent.putExtra(EXTRA_ADVISER_CHANGES_SETTINGS, true);
+        startActivity(intent);
     }
 }

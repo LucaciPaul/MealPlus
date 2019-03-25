@@ -456,7 +456,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/createFoodButton" />
 
             <Button
-                android:id="@+id/settingsButton"
+                android:id="@+id/customerSettingsButton"
                 android:layout_width="320dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -465,7 +465,7 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginBottom="8dp"
-                android:onClick="settingsButtonClicked"
+                android:onClick="customerSettingsButtonClicked"
                 android:text="@string/settings"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -474,7 +474,7 @@
                 app:layout_constraintVertical_bias="0.0" />
 
             <Button
-                android:id="@+id/loutOutCustomerButton"
+                android:id="@+id/logOutCustomerButton"
                 android:layout_width="320dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -483,12 +483,12 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginBottom="8dp"
-                android:onClick="loutOutCustomerButtonClicked"
+                android:onClick="logOutCustomerButtonClicked"
                 android:text="@string/log_out"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/settingsButton"
+                app:layout_constraintTop_toBottomOf="@+id/customerSettingsButton"
                 app:layout_constraintVertical_bias="0.0" />
 
 
