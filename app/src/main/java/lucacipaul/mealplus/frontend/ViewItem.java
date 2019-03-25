@@ -79,9 +79,14 @@ public class ViewItem extends AppCompatActivity {
             customer.dislikeRecipe(entry.getRecipe());
         }
         SearchResults.removeItemEntryFromResults(entry);
-        finish();
+        this.onBackPressed();
     }
 
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
+    
     public void previewItemOnly() {
         quantity.setFocusable(false);
         quantity.setText(Float.toString(entry.getQuantity()));
