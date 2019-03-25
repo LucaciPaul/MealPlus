@@ -235,19 +235,19 @@ public class CustomerDashboard extends AppCompatActivity
     }
 
     public void viewReportsButtonClicked(View view) {
+        if(customer.getReports().isEmpty()) {
+            Toast.makeText(getApplicationContext(), "No reports so far!", Toast.LENGTH_LONG).show();
+            return;
+        }
         Intent intent = new Intent(this, SearchResults.class);
         intent.putExtra(EXTRA_DISPLAY_REPORTS, true);
         startActivity(intent);
     }
 
-
     public void logOutCustomerButtonClicked(View view) {
         DataManager.getInstance().logout();
-        this.onBackPressed();
-    }
 
-    @Override
-    public void onBackPressed() {
         finish();
+        startActivity(new Intent(this, LoginActivity.class));
     }
 }

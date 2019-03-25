@@ -2,10 +2,10 @@ package lucacipaul.mealplus.frontend;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -35,27 +35,33 @@ public class AdviserDashboard extends AppCompatActivity {
     }
 
     public void linkedCustomersButtonClicked(View view) {
+        if(linkedCustomers.isEmpty()) {
+            Toast.makeText(getApplicationContext(), "No linked Customers so far!", Toast.LENGTH_LONG).show();
+            return;
+        }
         Intent intent = new Intent(this, SearchResults.class);
         intent.putExtra(EXTRA_LINKED_CUSTOMERS, true);
         startActivity(intent);
     }
 
     public void searchCustomersButtonClicked(View view) {
-        Intent intent;
         customerAccounts = DataManager.getInstance().searchAccount(((EditText)findViewById(R.id.searchCustomerField)).getText().toString(), true);
-        intent = new Intent(this, SearchResults.class);
+
+        if(customerAccounts.isEmpty()) {
+            Toast.makeText(getApplicationContext(), "No matches found!", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        Intent intent = new Intent(this, SearchResults.class);
         intent.putExtra(EXTRA_ADVISER_SEARCHES_CUSTOMER, true);
         startActivity(intent);
     }
 
     public void logOutAdviserButtonClicked(View view) {
         DataManager.getInstance().logout();
-        this.onBackPressed();
-    }
 
-    @Override
-    public void onBackPressed() {
         finish();
+        startActivity(new Intent(this, LoginActivity.class));
     }
 
     public void adviserSettingsButtonClicked(View view) {

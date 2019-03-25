@@ -14,6 +14,8 @@ public class RegisterAdviser extends AppCompatActivity {
 
     EditText rNo, occupation, address1, address2, postCode, phone;
 
+    Adviser adviser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,7 +33,7 @@ public class RegisterAdviser extends AppCompatActivity {
 
         if(!sanityCheckAdviser()) return;
 
-        Adviser adviser = RegisterUser.adviser;
+        adviser = RegisterUser.adviser;
         adviser.setRegNo(rNo.getText().toString());
         adviser.setOccupation(occupation.getText().toString());
         adviser.setAddr1(address1.getText().toString());
@@ -59,8 +61,7 @@ public class RegisterAdviser extends AppCompatActivity {
             return false;
         }
 
-        if(!rNo.getText().toString().matches("^DT\\d{5}$"))
-        {
+        if(!rNo.getText().toString().matches("^DT\\d{5}$")) {
             Toast.makeText(getApplicationContext(), "Invalid registration number!", Toast.LENGTH_LONG).show();
             return false;
         }

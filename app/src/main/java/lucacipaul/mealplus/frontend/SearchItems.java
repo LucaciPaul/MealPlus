@@ -11,6 +11,7 @@ import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import java.util.ArrayList;
@@ -78,6 +79,11 @@ public class SearchItems extends AppCompatActivity{
 
         for(DietLogEntry result : results) {
             result.setMeal(meal);
+        }
+
+        if(results.isEmpty()) {
+            Toast.makeText(getApplicationContext(), "No matches found!", Toast.LENGTH_LONG).show();
+            return;
         }
 
         Intent intent = new Intent(this, SearchResults.class);

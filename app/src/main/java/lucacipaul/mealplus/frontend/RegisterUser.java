@@ -69,7 +69,6 @@ public class RegisterUser extends AppCompatActivity implements OnItemSelectedLis
 
         ToggleButton accountToggle = findViewById(R.id.accountToggle);
         if (accountToggle.isChecked()){
-            Intent intent = new Intent(this, RegisterAdviser.class);
 
             adviser = new Adviser();
             adviser.setTitle(Title.values()[titleSpinPos]);
@@ -79,9 +78,9 @@ public class RegisterUser extends AppCompatActivity implements OnItemSelectedLis
             adviser.setPwd(pwd.getText().toString());
             adviser.setRegistrationDate(new Date());
 
+            Intent intent = new Intent(this, RegisterAdviser.class);
             startActivity(intent);
         } else {
-            Intent intent = new Intent(this, RegisterCustomer.class);
 
             customer = new Customer();
             customer.setTitle(Title.values()[titleSpinPos]);
@@ -91,7 +90,9 @@ public class RegisterUser extends AppCompatActivity implements OnItemSelectedLis
             customer.setPwd(pwd.getText().toString());
             customer.setRegistrationDate(new Date());
 
+            Intent intent = new Intent(this, RegisterCustomer.class);
             startActivity(intent);
+
         }
     }
 

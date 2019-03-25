@@ -60,14 +60,22 @@ public class ViewItem extends AppCompatActivity implements TextWatcher {
         nameText.setText(entry.getEntry().getName());
         authorText.setText("by ");
         authorText.append(entry.getEntry().getAuthor()==null? "MealPlus":entry.getEntry().getAuthor().getFirstName());
-        setNutritionalValues(entry.getQuantity());
+
+        caloriesText.setText(Float.toString(entry.getEntry().getCalories()) + " / 100gr");
+        carbsText.setText(Float.toString(entry.getEntry().getCarbs()) + " / 100gr");
+        proteinsText.setText(Float.toString(entry.getEntry().getProteins()) + " / 100gr");
+        fatsText.setText(Float.toString(entry.getEntry().getFats()) + " / 100gr");
+
     }
 
     public void addToMealButtonClicked(View view) {
-        if(((EditText)findViewById(R.id.quantityInput)).getText().toString().isEmpty()) {
+        if(((EditText)findViewById(R.id.quantityInput)).getText().toString().isEmpty() ||
+                ((EditText)findViewById(R.id.quantityInput)).getText().toString() == "0")
+        {
             Toast.makeText(getApplicationContext(), "Enter quantity first!", Toast.LENGTH_LONG).show();
             return;
         }
+
         entry.setQuantity(Float.parseFloat(((EditText)findViewById(R.id.quantityInput)).getText().toString()));
         customer.addFrequentlyEaten(entry);
         customer.getDietLog().addMealEntry(entry, entry.getMeal());
@@ -79,6 +87,7 @@ public class ViewItem extends AppCompatActivity implements TextWatcher {
 
         CustomerDashboard.updateFields();
         CustomerDashboard.updateLists();
+
         finish();
         startActivity(CustomerDashboard.customerDashboardIntent);
     }
@@ -90,11 +99,7 @@ public class ViewItem extends AppCompatActivity implements TextWatcher {
             customer.dislikeRecipe(entry.getRecipe());
         }
         SearchResults.removeItemEntryFromResults(entry);
-        this.onBackPressed();
-    }
 
-    @Override
-    public void onBackPressed() {
         finish();
     }
 
@@ -124,9 +129,9 @@ public class ViewItem extends AppCompatActivity implements TextWatcher {
         proteins = (quantity*entry.getEntry().getProteins())/100;
         fats = (quantity*entry.getEntry().getFats())/100;
 
-        caloriesText.setText(Float.toString(calories));
-        carbsText.setText(Float.toString(carbs));
-        proteinsText.setText(Float.toString(proteins));
-        fatsText.setText(Float.toString(fats));
+        caloriesText.setText(Float.toString(calories) + " / " + quantity + " gr");
+        carbsText.setText(Float.toString(carbs) + " / " + quantity + " gr");
+        proteinsText.setText(Float.toString(proteins) + " / " + quantity + " gr");
+        fatsText.setText(Float.toString(fats) + " / " + quantity + " gr");
     }
 }

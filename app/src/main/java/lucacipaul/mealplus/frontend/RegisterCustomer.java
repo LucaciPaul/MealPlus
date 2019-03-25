@@ -36,17 +36,20 @@ public class RegisterCustomer extends AppCompatActivity
     private int genderSpinPos = 0;
     private int goalSpinPos = 0;
 
+    Spinner genderSpin, goalSpin;
+    SeekBar activityBar;
     EditText age, size, weight;
+
+    Customer customer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register_customer_activity);
 
-        //Getting the instance of Spinner and applying OnItemSelectedListener on it
-        Spinner genderSpin = findViewById(R.id.genderSpinner);
-        Spinner goalSpin = findViewById(R.id.goalSpinner);
-        SeekBar activityBar = findViewById(R.id.activitySeekBar);
+        genderSpin = findViewById(R.id.genderSpinner);
+        goalSpin = findViewById(R.id.goalSpinner);
+        activityBar = findViewById(R.id.activitySeekBar);
 
         genderSpin.setOnItemSelectedListener(this);
         goalSpin.setOnItemSelectedListener(this);
@@ -91,7 +94,7 @@ public class RegisterCustomer extends AppCompatActivity
 
         if(!sanityCheckCustomer()) return;
 
-        Customer customer = RegisterUser.customer;
+        customer = RegisterUser.customer;
         customer.setAge(Integer.parseInt(age.getText().toString()));
         customer.setWeight(Float.parseFloat(weight.getText().toString()));
         customer.setSize(Float.parseFloat(size.getText().toString()));
@@ -100,6 +103,7 @@ public class RegisterCustomer extends AppCompatActivity
         customer.setGender(Gender.values()[genderSpinPos]);
         customer.setDietLog(new DietLog());
         customer.setDefaultNutritionalValues();
+
 
         if(!DataManager.getInstance().register(customer)) {
             Toast.makeText(getApplicationContext(), "Go back and check e-mail and password!", Toast.LENGTH_LONG).show();

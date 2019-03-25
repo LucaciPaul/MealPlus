@@ -54,10 +54,12 @@ public class LoginActivity extends AppCompatActivity implements TextView.OnEdito
             if(user instanceof Customer){
                 intent = new Intent(this, CustomerDashboard.class);
                 intent.putExtra(EXTRA_CUSTOMER_LOGIN, true);
+                finish();
                 startActivity(intent);
             } else if(user instanceof Adviser) {
                 intent = new Intent(this, AdviserDashboard.class);
                 intent.putExtra(EXTRA_ADVISER_LOGIN, true);
+                finish();
                 startActivity(intent);
             } else if(user instanceof Admin) {
                 // [Prototype] No Admin Dashboard available
