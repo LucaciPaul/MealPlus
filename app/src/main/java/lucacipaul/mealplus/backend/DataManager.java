@@ -61,11 +61,10 @@ public class DataManager {
 		ArrayList<Items> entries = new ArrayList<Items>();
 		for(Items item : items) {
 
-			// Special sellpoint check if item is Food
+			// Special sellpoint check if item is Food or Recipe.
 			// (because only Food has sellpoints).
-			if(item instanceof Food) {
-				if(!DataManager.hasFilter(sellpoints, ((Food) item).getSellpoints())) continue;
-			}
+			if(item instanceof Food) if(!DataManager.hasFilter(sellpoints, ((Food) item).getSellpoints())) continue;
+			if(item instanceof Recipe) if(sellpoints != null && sellpoints.size() > 0) continue;
 			
 			// Do a general filter on items.
 			if(DataManager.hasFilter(amenities, item.getAmenities()) &&
@@ -282,8 +281,10 @@ public class DataManager {
 
 		// Sanity checks for user inputted data.
 		if(user == null) return false;
-		if(!user.getEmail().contains("@") || !sanityCheckInputField(user.getEmail(), false)) return false;
-		if(!sanityCheckInputField(user.getFirstName(), false) || !sanityCheckInputField(user.getLastName(), false)) return false;
+		if(!user.getEmail().contains("@") || !sanityCheckInputField(user.getEmail(), false))
+		    return false;
+		if(!sanityCheckInputField(user.getFirstName(), false) || !sanityCheckInputField(user.getLastName(), false))
+		    return false;
 		if(!sanityCheckInputField(user.getPwd(), true)) return false;
 
 		// Sanity checks for advisers.
@@ -393,7 +394,7 @@ public class DataManager {
 
 	private static boolean sanityCheckInputField(String input, boolean password) {
 		if(input == null ||
-		   input.length() <= (password?6:1) || // Password must be at least 6 characters long for security purposes.
+		   input.length() <= (password?5:0) || // Password must be at least 6 characters long for security purposes.
 		   input.length() > 512) return false;
 		return true;
 	}
@@ -414,7 +415,6 @@ public class DataManager {
 	// true if unique, false otherwise.
 	private static boolean sanityCheckAdviser(Adviser adviser) {
 		for (Adviser other : Dummy.advisers) {
-			System.out.println("i");
 			if(adviser.getRegNo().equals(other.getRegNo()) || adviser.getPhoneNo().equals(other.getPhoneNo()))
 				return false;
 		}

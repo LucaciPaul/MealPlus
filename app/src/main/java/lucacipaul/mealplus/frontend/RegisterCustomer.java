@@ -134,6 +134,22 @@ public class RegisterCustomer extends AppCompatActivity
             return false;
         }
 
+        int ageNr = Integer.parseInt(age.getText().toString());
+        if(ageNr > 100 || ageNr < 16) {
+            Toast.makeText(getApplicationContext(), "Make sure that your age is between 16 and 100!", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        int sizeNr = Integer.parseInt(size.getText().toString());
+        if(sizeNr > 300 || sizeNr < 10) {
+            Toast.makeText(getApplicationContext(), "Make sure that your size is between 10 and 300!", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        int weightNr = Integer.parseInt(weight.getText().toString());
+        if(weightNr > 300 || weightNr < 10) {
+            Toast.makeText(getApplicationContext(), "Make sure that your weight is between 10 and 300!", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
         return true;
     }
 }
