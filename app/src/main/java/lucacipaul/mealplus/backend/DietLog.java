@@ -14,10 +14,10 @@ public class DietLog {
 	private ArrayList<DietLogEntry> snack2 = new ArrayList<DietLogEntry>();
 	private ArrayList<DietLogEntry> dinner = new ArrayList<DietLogEntry>();
 	private ArrayList<DietLogEntry> snack3 = new ArrayList<DietLogEntry>();
-	private float caloriesTotal;
-	private float carbsTotal;
-	private float fatsTotal;
-	private float proteinsTotal;
+	private float caloriesTotal = 0;
+	private float carbsTotal = 0;
+	private float fatsTotal = 0;
+	private float proteinsTotal = 0;
 
 	public DietLog() {
 	    date = new Date();
@@ -94,103 +94,18 @@ public class DietLog {
 	}
 
 	public float getCaloriesTotal() {
-		float calories=0;
-		for (DietLogEntry entry: getBreakfast()) {
-			calories += entry.getEntry().getCalories();
-		}
-		for (DietLogEntry entry: getSnack1()) {
-			calories += entry.getEntry().getCalories();
-		}
-		for (DietLogEntry entry: getLunch()) {
-			calories += entry.getEntry().getCalories();
-		}
-		for (DietLogEntry entry: getSnack2()) {
-			calories += entry.getEntry().getCalories();
-		}
-		for (DietLogEntry entry: getDinner()) {
-			calories += entry.getEntry().getCalories();
-		}
-		for (DietLogEntry entry: getSnack3()) {
-			calories += entry.getEntry().getCalories();
-		}
-
-		System.out.println(calories);
-		this.setCaloriesTotal(calories);
 		return this.caloriesTotal;
 	}
 
 	public float getCarbsTotal() {
-		float carbs=0;
-		for (DietLogEntry entry: getBreakfast()) {
-			carbs += entry.getEntry().getCarbs();
-		}
-		for (DietLogEntry entry: getSnack1()) {
-			carbs += entry.getEntry().getCarbs();
-		}
-		for (DietLogEntry entry: getLunch()) {
-			carbs += entry.getEntry().getCarbs();
-		}
-		for (DietLogEntry entry: getSnack2()) {
-			carbs += entry.getEntry().getCarbs();
-		}
-		for (DietLogEntry entry: getDinner()) {
-			carbs += entry.getEntry().getCarbs();
-		}
-		for (DietLogEntry entry: getSnack3()) {
-			carbs += entry.getEntry().getCarbs();
-		}
-
-		setCarbsTotal(carbs);
 		return this.carbsTotal;
 	}
 
 	public float getFatsTotal() {
-		float fats=0;
-		for (DietLogEntry entry: getBreakfast()) {
-			fats += entry.getEntry().getFats();
-		}
-		for (DietLogEntry entry: getSnack1()) {
-			fats += entry.getEntry().getFats();
-		}
-		for (DietLogEntry entry: getLunch()) {
-			fats += entry.getEntry().getFats();
-		}
-		for (DietLogEntry entry: getSnack2()) {
-			fats += entry.getEntry().getFats();
-		}
-		for (DietLogEntry entry: getDinner()) {
-			fats += entry.getEntry().getFats();
-		}
-		for (DietLogEntry entry: getSnack3()) {
-			fats += entry.getEntry().getFats();
-		}
-
-		setFatsTotal(fats);
 		return this.fatsTotal;
 	}
 
 	public float getProteinsTotal() {
-		float proteins=0;
-		for (DietLogEntry entry: getBreakfast()) {
-			proteins += entry.getEntry().getProteins();
-		}
-		for (DietLogEntry entry: getSnack1()) {
-			proteins += entry.getEntry().getProteins();
-		}
-		for (DietLogEntry entry: getLunch()) {
-			proteins += entry.getEntry().getProteins();
-		}
-		for (DietLogEntry entry: getSnack2()) {
-			proteins += entry.getEntry().getProteins();
-		}
-		for (DietLogEntry entry: getDinner()) {
-			proteins += entry.getEntry().getProteins();
-		}
-		for (DietLogEntry entry: getSnack3()) {
-			proteins += entry.getEntry().getProteins();
-		}
-
-		setProteinsTotal(proteins);
 		return this.proteinsTotal;
 	}
 
